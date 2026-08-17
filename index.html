@@ -539,6 +539,12 @@
         </div>
       </div>
 
+      <div id="iqc-time-field" class="field" style="display:none;">
+        <label for="iqc-time">Waktu (jam)</label>
+        <input type="text" id="iqc-time" placeholder="Contoh: 9:41 AM">
+        <p class="field-hint">Ini yang tampil sebagai jam di status bar kartu quote.</p>
+      </div>
+
       <div id="fakedev-fields" style="display:none;">
         <div class="field">
           <label for="fd-name">Nama Developer</label>
@@ -653,7 +659,7 @@
       { id: 'yt_engine', name: 'YouTube', desc: 'Unduh MP4 (480p-1080p) & MP3', longDesc: 'Ambil info video dulu (thumbnail & judul), lalu pilih resolusi MP4 (360p-1080p) atau unduh sebagai MP3.', tag: 'MP4/MP3', cat: 'downloader', theme: 'youtube', apiName: 'NexRay API', apiSub: 'Online via NexRay', iconSVG: '<path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>', type: 'yt_combo' },
 
       { id: 'brat_gen', name: 'Brat Generator', desc: 'Buat stiker BRAT (Static & Animated)', longDesc: 'Ketik teks untuk menghasilkan stiker Brat statis atau animasi GIF.', tag: 'BRAT', cat: 'maker', theme: 'brat', apiName: 'Siputzx API', apiSub: 'Online via Siputzx', iconSVG: '<path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>', paramKey: 'text', type: 'brat_custom', ep: 'https://api.siputzx.my.id/api/m/brat' },
-      { id: 'iqc', name: 'iPhone Quote Create', desc: 'Buat kartu quote ala iPhone Notes', longDesc: 'Ubah teks quote menjadi gaya iOS visual.', tag: 'IQC', cat: 'maker', theme: 'iqc', apiName: 'NexRay API', apiSub: 'Online via NexRay', iconSVG: '<circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 2-3 4"></path><line x1="12" y1="17" x2="12.01" y2="17"></line>', paramKey: 'text', ep: 'https://api.nexray.eu.cc/maker/iqc', type: 'image_url' },
+      { id: 'iqc', name: 'iPhone Quote Create', desc: 'Buat kartu quote ala iPhone Notes', longDesc: 'Ubah teks quote menjadi gaya iOS visual.', tag: 'IQC', cat: 'maker', theme: 'iqc', apiName: 'NexRay API', apiSub: 'Online via NexRay', iconSVG: '<circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 2-3 4"></path><line x1="12" y1="17" x2="12.01" y2="17"></line>', paramKey: 'text', ep: 'https://api.fazzcode.eu.cc/iqctext', extraParams: 'api_key=fcs_live_272a4b37b4582273cd9eb51dc83c112b1fb283fd', type: 'image_url' },
       { id: 'sertifikat_tolol', name: 'Sertifikat Tolol', desc: 'Buat sertifikat meme kocak', longDesc: 'Isi teks nama untuk mencetak gambar sertifikat lucu.', tag: 'MEME', cat: 'maker', theme: 'maker', apiName: 'Siputzx API', apiSub: 'Online via Siputzx', iconSVG: '<circle cx="12" cy="8" r="5"></circle><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12"></path>', paramKey: 'text', ep: 'https://api.siputzx.my.id/api/canvas/sertifikat-tolol', type: 'image_url' },
       { id: 'lobby_ml', name: 'Fake Lobby ML', desc: 'Buat SS Lobby Mobile Legends', longDesc: 'Masukkan Nickname & Upload Avatar untuk membuat Fake Lobby ML.', tag: 'LOBBY', cat: 'maker', theme: 'maker', apiName: 'NexRay API', apiSub: 'Online via NexRay', iconSVG: '<rect x="2" y="6" width="20" height="12" rx="2"></rect><path d="M6 12h4m-2-2v4m10-2h.01m-3-1h.01"></path>', ep: 'https://api.nexray.eu.cc/maker/fakelobyml', type: 'lobby_upload' },
       { id: 'lobby_ff', name: 'Fake Lobby FF', desc: 'Buat SS Lobby Free Fire', longDesc: 'Masukkan Nickname untuk membuat gambar Fake Lobby FF.', tag: 'LOBBY', cat: 'maker', theme: 'maker', apiName: 'NexRay API', apiSub: 'Online via NexRay', iconSVG: '<rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="8" cy="12" r="2"></circle><line x1="14" y1="10" x2="18" y2="10"></line><line x1="14" y1="14" x2="18" y2="14"></line>', paramKey: 'nickname', ep: 'https://api.nexray.eu.cc/maker/fakelobyff', type: 'image_url' },
@@ -874,6 +880,7 @@
       const filePreview = document.getElementById('file-preview-img');
       const fileInput = document.getElementById('image-file-input');
       const fakedevFields = document.getElementById('fakedev-fields');
+      const iqcTimeField = document.getElementById('iqc-time-field');
       const submitText = document.getElementById('submit-btn-text');
       const resBox = document.getElementById('result-container');
       const historyBox = document.getElementById('dl-history-container');
@@ -882,6 +889,8 @@
       filePreview.style.display = 'none';
       filePreview.src = '';
       fakedevFields.style.display = 'none';
+      iqcTimeField.style.display = 'none';
+      document.getElementById('iqc-time').value = '';
       bratOptions.style.display = 'none';
       inputVal.style.display = 'block';
       inputLabel.style.display = 'none';
@@ -924,6 +933,8 @@
           fileContainer.style.display = 'block';
         } else if (tool.type === 'tiktok') {
           renderTiktokHistory();
+        } else if (tool.id === 'iqc') {
+          iqcTimeField.style.display = 'block';
         }
       }
     }
@@ -1324,7 +1335,8 @@
         }
         else if (currentTool.type === 'image_url') {
           if (!inputVal) throw new Error('Input teks wajib diisi!');
-          const finalUrl = `${currentTool.ep}?${currentTool.paramKey}=${encodeURIComponent(inputVal)}`;
+          const timeVal = document.getElementById('iqc-time').value.trim();
+          const finalUrl = `${currentTool.ep}?${currentTool.paramKey}=${encodeURIComponent(inputVal)}${currentTool.extraParams ? '&' + currentTool.extraParams + '&time=' + encodeURIComponent(timeVal || Date.now()) : ''}`;
           resContent.innerHTML = `
             <img src="${finalUrl}" class="preview-img">
             <a href="${finalUrl}" target="_blank" class="action-btn">Simpan Gambar</a>
