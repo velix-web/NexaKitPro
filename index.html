@@ -168,10 +168,11 @@
     background:var(--bg);border:1px solid var(--border);border-bottom:none;
     border-top-left-radius:20px;border-top-right-radius:20px;
     padding:10px 16px calc(18px + env(safe-area-inset-bottom));
-    z-index:80;transform:translateY(100%);transition:transform var(--dur-slow) var(--ease);
+    z-index:80;transform:translateY(100%);transition:transform var(--dur-slow) var(--ease), opacity var(--dur) var(--ease);
     box-shadow:0 -10px 28px rgba(0,0,0,.14);
+    pointer-events:none;
   }
-  .feedback-modal.open{transform:translateY(0);}
+  .feedback-modal.open{transform:translateY(0);pointer-events:auto;}
   .sheet-handle{width:36px;height:4px;border-radius:99px;background:var(--border-strong);margin:0 auto 14px;}
   textarea{
     width:100%;font-family:inherit;font-size:14.5px;color:var(--text);
