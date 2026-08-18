@@ -1027,6 +1027,26 @@
     let tiktokData = null;
     let tiktokSelectedFormat = 'hd';
 
+    async function fetchTiktokApi(inputVal) {
+      const targetUrl = `https://www.tikwm.com/api/?url=${encodeURIComponent(inputVal)}&hd=1`;
+      const urlsToTry = [
+        targetUrl,
+        `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`
+      ];
+      let lastErr = null;
+      for (const u of urlsToTry) {
+        try {
+          const res = await fetch(u);
+          const text = await res.text();
+          if (!text) { lastErr = new Error('Server TikTok API sedang penuh, coba lagi beberapa saat.'); continue; }
+          return JSON.parse(text);
+        } catch (e) {
+          lastErr = e;
+        }
+      }
+      throw lastErr || new Error('Gagal menghubungi server TikTok.');
+    }
+
     async function previewTiktok() {
       const inputVal = document.getElementById('input-val').value.trim();
       const resBox = document.getElementById('result-container');
@@ -1036,8 +1056,7 @@
       resContent.innerHTML = '<div style="color:var(--text-sub); font-size:12px;">⏳ Mengambil preview... Harap tunggu.</div>';
       try {
         if (!inputVal) throw new Error('Link TikTok tidak boleh kosong!');
-        const res = await fetch(`https://www.tikwm.com/api/?url=${encodeURIComponent(inputVal)}`);
-        const json = await res.json();
+        const json = await fetchTiktokApi(inputVal);
         if (json.code !== 0 || !json.data) throw new Error('Video TikTok tidak ditemukan / link invalid.');
         tiktokData = json.data;
         tiktokSelectedFormat = tiktokData.hdplay ? 'hd' : (tiktokData.play ? 'sd' : 'wm');
