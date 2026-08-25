@@ -538,6 +538,91 @@
   @keyframes statusPulse{0%,100%{opacity:1;}50%{opacity:.35;}}
   @media(max-width:430px){.hero-content{padding:20px 16px 17px}.hero-section h1{font-size:30px}}
 
+
+  /* ===== NexaKit Pro Premium Workspace Upgrade ===== */
+  .shell{max-width:1180px;}
+  .hero-section{position:relative;overflow:hidden;border:1px solid var(--border);border-radius:18px;padding:28px 28px 24px;margin-bottom:20px;background:var(--bg);box-shadow:var(--shadow-sm);}
+  .hero-content{position:relative;z-index:1;max-width:760px;}
+  .hero-section h1{font-size:clamp(32px,5vw,52px);line-height:1.05;letter-spacing:-.045em;margin:10px 0 12px;}
+  .hero-section p{max-width:620px;font-size:15px;color:var(--text-sub);margin:0 0 16px;}
+  .hero-metrics{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px;}
+  .hero-metric{display:inline-flex;align-items:center;min-height:30px;padding:5px 10px;border:1px solid var(--border);border-radius:999px;background:var(--bg-alt);font-size:11.5px;font-weight:700;color:var(--text-sub);}
+  .status-row{gap:7px;}
+  .status-dot{animation:statusPulse 2.2s ease-in-out infinite;}
+  @keyframes statusPulse{0%,100%{box-shadow:0 0 0 0 rgba(21,128,61,.18)}50%{box-shadow:0 0 0 5px rgba(21,128,61,0)}}
+  .tool-discovery{margin-bottom:20px;}
+  .discovery-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:12px;}
+  .discovery-kicker{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .discovery-title{font-family:var(--font-display);font-size:21px;font-weight:700;letter-spacing:-.025em;margin:0;}
+  .discovery-sub{font-size:12px;color:var(--text-sub);margin:3px 0 0;}
+  .tool-search{position:relative;margin-bottom:10px;}
+  .tool-search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--text-faint);pointer-events:none;}
+  .tool-search input{padding-left:40px;padding-right:42px;min-height:46px;border-radius:12px;background:var(--bg);}
+  .tool-search-kbd{position:absolute;right:10px;top:50%;transform:translateY(-50%);border:1px solid var(--border);background:var(--bg-alt);border-radius:6px;padding:2px 6px;font-size:10px;color:var(--text-faint);}
+  .tool-categories{display:flex;gap:7px;overflow-x:auto;padding:2px 1px 5px;margin-bottom:16px;scrollbar-width:none;}
+  .tool-categories::-webkit-scrollbar{display:none;}
+  .category-btn{border:1px solid var(--border);background:var(--bg);color:var(--text-sub);border-radius:999px;padding:8px 12px;min-height:38px;font:600 12px var(--font);white-space:nowrap;cursor:pointer;transition:all var(--dur-fast) var(--ease);}
+  .category-btn:hover{border-color:var(--text-faint);color:var(--text);transform:translateY(-1px);}
+  .category-btn.active{background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 35%,var(--border));color:var(--accent);}
+  .tool-section-label{font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);margin:0 0 9px;}
+  .tool-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;}
+  .tool-discovery-card{min-height:84px;text-align:left;border:1px solid var(--border);background:var(--bg);border-radius:12px;padding:12px;cursor:pointer;color:var(--text);font:inherit;display:flex;gap:10px;align-items:flex-start;box-shadow:var(--shadow-sm);transition:transform var(--dur-fast) var(--ease),border-color var(--dur-fast) var(--ease),background var(--dur-fast) var(--ease),box-shadow var(--dur-fast) var(--ease);}
+  .tool-discovery-card:hover{transform:translateY(-2px);border-color:var(--border-strong);box-shadow:0 8px 20px rgba(16,24,40,.08);}
+  .tool-discovery-card:focus-visible,.category-btn:focus-visible,.tool-search input:focus-visible{outline:3px solid var(--accent-soft);outline-offset:1px;border-color:var(--accent);}
+  .tool-discovery-icon{width:34px;height:34px;display:grid;place-items:center;flex:0 0 34px;border-radius:9px;background:var(--accent-soft);color:var(--accent);}
+  .tool-discovery-icon svg{width:18px;height:18px;stroke:currentColor;}
+  .tool-discovery-copy{min-width:0;flex:1;}
+  .tool-discovery-name{font-size:12.5px;font-weight:800;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .tool-discovery-desc{font-size:10.5px;color:var(--text-sub);margin-top:3px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .tool-discovery-arrow{color:var(--text-faint);font-size:16px;line-height:1;align-self:center;}
+  .tool-empty{border:1px dashed var(--border-strong);border-radius:12px;padding:22px;text-align:center;color:var(--text-sub);font-size:12px;background:var(--bg-alt);}
+  .tool-workspace{scroll-margin-top:16px;}
+  .tool-workspace .card{border-radius:16px;padding:20px;box-shadow:0 10px 30px rgba(16,24,40,.07);}
+  .tool-workspace .tool-info{margin-bottom:20px;}
+  .tool-workspace .tool-info svg{width:24px;height:24px;}
+  .tool-workspace .tool-title-row h3{font-size:19px;}
+  .tool-workspace .tool-desc{font-size:13px;}
+  .workspace-badge{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;color:var(--text-faint);margin-top:7px;}
+  .workspace-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--success);}
+  .quick-access{margin:4px 0 20px;}
+  .quick-grid{display:flex;gap:8px;overflow-x:auto;padding:1px 1px 5px;scrollbar-width:none;}
+  .quick-grid::-webkit-scrollbar{display:none;}
+  .quick-card{flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;min-height:42px;border:1px solid var(--border);background:var(--bg);border-radius:10px;padding:8px 11px;color:var(--text);font:700 11.5px var(--font);cursor:pointer;transition:all var(--dur-fast) var(--ease);}
+  .quick-card:hover{transform:translateY(-2px);border-color:var(--text-faint);}
+  .quick-card svg{width:16px;height:16px;color:var(--accent);}
+  .tool-workspace.is-hidden{display:none;}
+  @media (min-width:680px){
+    body{padding:36px 24px 64px;}
+    .shell{border:0;background:transparent;box-shadow:none;padding:0;}
+    .site-header{padding:4px 2px 18px;}
+    .hero-section{padding:34px 36px 28px;}
+    .tool-workspace .card{padding:24px;}
+  }
+  @media (max-width:679px){
+    .shell{max-width:100%;}
+    .hero-section{padding:22px 18px 20px;border-radius:15px;}
+    .hero-section h1{font-size:36px;}
+    .hero-section p{font-size:13px;}
+    .hero-metrics{gap:6px;}
+    .hero-metric{font-size:10.5px;padding:5px 8px;}
+    .discovery-head{display:block;}
+    .discovery-title{font-size:19px;}
+    .tool-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}
+    .tool-discovery-card{min-height:78px;padding:10px;}
+    .tool-discovery-icon{width:30px;height:30px;flex-basis:30px;}
+    .tool-discovery-icon svg{width:16px;height:16px;}
+    .tool-discovery-name{font-size:11.5px;}
+    .tool-discovery-desc{font-size:9.8px;}
+    .tool-workspace .card{padding:16px;border-radius:14px;}
+  }
+  @media (max-width:390px){
+    body{padding-left:12px;padding-right:12px;}
+    .hero-section h1{font-size:32px;}
+    .tool-grid{gap:7px;}
+    .tool-discovery-card{padding:9px;}
+    .tool-discovery-arrow{display:none;}
+  }
+
 </style>
 </head>
 <body>
@@ -582,17 +667,31 @@
     </div>
   </section>
 
-  <div class="tool-picker field">
-    <label for="tool-select-btn" data-i18n="chooseTool">Mau pakai fitur apa?</label>
-    <button type="button" class="tool-select-trigger" id="tool-select-btn"
-            onclick="toggleToolMenu()" aria-haspopup="listbox" aria-expanded="false">
-      <svg class="tool-select-icon" id="tool-select-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg>
-      <span class="tool-select-label" id="tool-select-label">Pilih fitur</span>
-      <svg class="tool-select-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-    </button>
-    <div class="tool-select-panel" id="tool-select-panel" role="listbox" aria-hidden="true"></div>
-  </div>
+  <section class="tool-discovery" aria-labelledby="tool-discovery-title">
+    <div class="discovery-head">
+      <div>
+        <div class="discovery-kicker">NexaKit Workspace</div>
+        <h2 class="discovery-title" id="tool-discovery-title">What do you want to do?</h2>
+        <p class="discovery-sub">Cari tool atau pilih kategori untuk mulai.</p>
+      </div>
+    </div>
+    <div class="tool-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+      <input id="tool-search-input" type="search" autocomplete="off" spellcheck="false" aria-label="Search tools" placeholder="Search tools...">
+      <span class="tool-search-kbd" aria-hidden="true">/</span>
+    </div>
+    <div class="tool-categories" id="tool-categories" role="tablist" aria-label="Tool categories"></div>
+    <div class="tool-section-label" id="tool-results-label">Popular</div>
+    <div class="tool-grid" id="tool-grid" aria-live="polite"></div>
+    <div class="tool-empty" id="tool-empty" hidden>No tools found. Try another keyword.</div>
+  </section>
 
+  <section class="quick-access" aria-labelledby="quick-access-title">
+    <div class="tool-section-label" id="quick-access-title">Quick access</div>
+    <div class="quick-grid" id="quick-grid"></div>
+  </section>
+
+  <div class="tool-workspace is-hidden" id="tool-workspace" aria-live="polite">
   <div class="card">
     <div class="tool-info">
       <svg id="tool-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg>
@@ -602,6 +701,7 @@
           <span class="tool-tag" id="tool-tag" style="display:none;"></span>
         </div>
         <p class="tool-desc" id="tool-desc"></p>
+        <div class="workspace-badge">Fast processing · No login required</div>
       </div>
     </div>
     <div id="form-container">
@@ -651,6 +751,7 @@
     </div>
 
     <button id="submit-btn" class="btn-submit" onclick="processAction()"><span id="submit-btn-text" data-i18n="processNow">Proses Sekarang</span></button>
+  </div>
   </div>
 
   <div id="result-container" style="display:none;" aria-live="polite">
@@ -865,7 +966,8 @@
       if(net) net.textContent = navigator.onLine ? t('online') : t('offline');
       const st = document.getElementById('status-text');
       if(st && !st.dataset.busy) st.textContent = navigator.onLine ? t('ready') : t('offline');
-      renderToolSelect();
+      renderToolDiscovery();
+      renderQuickAccess();
       if(currentTool){
         const localizedTool = TOOLS.find(tool => tool.id === currentTool.id);
         if(localizedTool) openTool(localizedTool);
@@ -1089,53 +1191,86 @@
 
     const CAT_LABELS = { downloader: 'Downloader', maker: 'Maker', tools: 'Image Tools' };
 
-    function renderToolSelect() {
-      const panel = document.getElementById('tool-select-panel');
-      const cats = [...new Set(TOOLS.map(t => t.cat))];
-      panel.innerHTML = cats.map(cat => `
-        <div class="tool-select-group-label">${CAT_LABELS[cat] || cat}</div>
-        ${TOOLS.filter(t => t.cat === cat).map(t => `
-          <button type="button" class="tool-select-item" id="tool-item-${t.id}" role="option"
-                  onclick="selectTool('${t.id}')">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${t.iconSVG}</svg>
-            <span>${t.name}</span>
-            <svg class="item-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          </button>
-        `).join('')}
-      `).join('');
-      selectTool(TOOLS[0].id);
-    }
+    const CATEGORY_META = [
+      { id:'all', label:'All' },
+      { id:'downloader', label:'Downloader' },
+      { id:'maker', label:'Creator' },
+      { id:'image', label:'Image' },
+      { id:'tools', label:'Utility' }
+    ];
+    const POPULAR_TOOL_IDS = ['tt','yt_engine','ig','rmbg','enh','brat_gen'];
+    const QUICK_TOOL_IDS = ['tt','yt_engine','ig','rmbg','enh','brat_gen'];
+    let activeToolCategory = 'all';
 
-    function toggleToolMenu() {
-      const isOpen = document.getElementById('tool-select-panel').classList.contains('open');
-      if (isOpen) closeToolMenu(); else openToolMenu();
+    function normalizedCategory(tool){
+      if (tool.cat === 'downloader') return 'downloader';
+      if (tool.cat === 'maker') return 'maker';
+      if (['tools','image'].includes(tool.cat)) return tool.id === 'rmbg' || tool.id === 'enh' || tool.id === 'img2link' ? 'image' : 'tools';
+      return 'tools';
     }
-    function openToolMenu() {
-      document.getElementById('tool-select-panel').classList.add('open');
-      document.getElementById('tool-select-panel').setAttribute('aria-hidden', 'false');
-      document.getElementById('tool-select-btn').setAttribute('aria-expanded', 'true');
-      document.addEventListener('click', onOutsideToolClick);
+    function toolMatches(tool, query){
+      if (!query) return true;
+      const haystack = [tool.name, tool.desc, tool.longDesc, tool.tag, tool.cat].filter(Boolean).join(' ').toLowerCase();
+      return haystack.includes(query.toLowerCase());
     }
-    function closeToolMenu() {
-      document.getElementById('tool-select-panel').classList.remove('open');
-      document.getElementById('tool-select-panel').setAttribute('aria-hidden', 'true');
-      document.getElementById('tool-select-btn').setAttribute('aria-expanded', 'false');
-      document.removeEventListener('click', onOutsideToolClick);
+    function renderToolCard(tool){
+      return `<button type="button" class="tool-discovery-card" data-tool-id="${escapeHtml(tool.id)}" aria-label="Open ${escapeHtml(tool.name)}">
+        <span class="tool-discovery-icon">${tool.iconSVG ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${tool.iconSVG}</svg>` : icon('zap')}</span>
+        <span class="tool-discovery-copy"><span class="tool-discovery-name">${escapeHtml(tool.name)}</span><span class="tool-discovery-desc">${escapeHtml(tool.desc || '')}</span></span>
+        <span class="tool-discovery-arrow" aria-hidden="true">→</span>
+      </button>`;
     }
-    function onOutsideToolClick(e) {
-      if (!document.querySelector('.tool-picker').contains(e.target)) closeToolMenu();
+    function renderCategories(){
+      const box=document.getElementById('tool-categories');
+      box.innerHTML=CATEGORY_META.map(cat=>`<button type="button" role="tab" aria-selected="${activeToolCategory===cat.id}" class="category-btn ${activeToolCategory===cat.id?'active':''}" data-category="${cat.id}">${cat.label}</button>`).join('');
+      box.querySelectorAll('.category-btn').forEach(btn=>btn.addEventListener('click',()=>{
+        activeToolCategory=btn.dataset.category;
+        renderToolDiscovery();
+      }));
     }
-
+    function renderToolDiscovery(){
+      renderCategories();
+      const query=(document.getElementById('tool-search-input')?.value || '').trim().toLowerCase();
+      const base=TOOLS.filter(tool=>activeToolCategory==='all' || normalizedCategory(tool)===activeToolCategory);
+      let filtered=base.filter(tool=>toolMatches(tool,query));
+      const isDefault=!query && activeToolCategory==='all';
+      if(isDefault){
+        const popular=POPULAR_TOOL_IDS.map(id=>TOOLS.find(t=>t.id===id)).filter(Boolean);
+        const popularSet=new Set(popular.map(t=>t.id));
+        filtered=[...popular,...base.filter(t=>!popularSet.has(t.id))];
+      }
+      const grid=document.getElementById('tool-grid');
+      const empty=document.getElementById('tool-empty');
+      const label=document.getElementById('tool-results-label');
+      label.textContent=query ? `Search results (${filtered.length})` : (activeToolCategory==='all'?'Popular':'Tools');
+      grid.innerHTML=filtered.map(renderToolCard).join('');
+      empty.hidden=filtered.length!==0;
+      grid.hidden=filtered.length===0;
+      grid.querySelectorAll('[data-tool-id]').forEach(btn=>btn.addEventListener('click',()=>selectTool(btn.dataset.toolId)));
+    }
+    function renderQuickAccess(){
+      const box=document.getElementById('quick-grid');
+      box.innerHTML=QUICK_TOOL_IDS.map(id=>TOOLS.find(t=>t.id===id)).filter(Boolean).map(t=>`<button type="button" class="quick-card" data-quick-tool="${escapeHtml(t.id)}"><span>${t.iconSVG?`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${t.iconSVG}</svg>`:icon('zap')}</span>${escapeHtml(t.name)}</button>`).join('');
+      box.querySelectorAll('[data-quick-tool]').forEach(btn=>btn.addEventListener('click',()=>selectTool(btn.dataset.quickTool)));
+    }
     function selectTool(id) {
-      const tool = TOOLS.find(t => t.id === id);
-      if (!tool) return;
-      document.querySelectorAll('.tool-select-item.selected').forEach(el => el.classList.remove('selected'));
-      const activeItem = document.getElementById('tool-item-' + id);
-      if (activeItem) activeItem.classList.add('selected');
-      document.getElementById('tool-select-icon').innerHTML = tool.iconSVG || '';
-      document.getElementById('tool-select-label').innerText = tool.name;
-      closeToolMenu();
+      const tool=TOOLS.find(t=>t.id===id);
+      if(!tool) return;
       openTool(tool);
+      const workspace=document.getElementById('tool-workspace');
+      workspace.classList.remove('is-hidden');
+      playIn(workspace);
+      requestAnimationFrame(()=>workspace.scrollIntoView({behavior:'smooth',block:'start'}));
+    }
+    function setupToolDiscovery(){
+      renderToolDiscovery();
+      renderQuickAccess();
+      const input=document.getElementById('tool-search-input');
+      input.addEventListener('input',renderToolDiscovery);
+      document.addEventListener('keydown',e=>{
+        if(e.key==='/' && !/input|textarea|select/i.test(document.activeElement?.tagName||'')){e.preventDefault();input.focus();}
+        if(e.key==='Escape' && document.activeElement===input){input.value='';renderToolDiscovery();input.blur();}
+      });
     }
 
     // Per-tool field copy: a persistent label (not a placeholder that vanishes when
@@ -1749,14 +1884,13 @@
       if (e.key !== 'Escape') return;
       if (document.getElementById('feedback-modal').classList.contains('open')) closeFeedback();
       else if (document.getElementById('side-menu').classList.contains('open')) closeMenu();
-      else if (document.getElementById('tool-select-panel').classList.contains('open')) closeToolMenu();
     });
 
     function initApp(){
       applyTheme();
       applyLanguage();
       setNetworkState();
-      renderToolSelect();
+      setupToolDiscovery();
       const el = document.getElementById('boot-loader');
       requestAnimationFrame(() => el && el.classList.add('hide'));
       // Service worker is optional; the page still works if SW is unavailable.
