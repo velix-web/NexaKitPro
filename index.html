@@ -1896,6 +1896,12 @@
       // Service worker is optional; the page still works if SW is unavailable.
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./sw.js').catch(() => {});
+        let swReloaded = false;
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          if (swReloaded) return;
+          swReloaded = true;
+          window.location.reload();
+        });
       }
     }
     // pakai DOMContentLoaded (bukan 'load') biar gak nunggu gambar eksternal
