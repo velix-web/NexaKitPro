@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Download video TikTok tanpa watermark dengan preview, pilihan format MP4 HD, standar, watermark, dan MP3 di NexaKit Pro.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#2454e0">
+  <link rel="canonical" href="https://nexakitpro.my.id/tools/tiktok/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="TikTok Downloader — NexaKit Pro">
+  <meta property="og:description" content="Download video TikTok tanpa watermark dengan workspace yang fokus dan cepat.">
+  <meta property="og:site_name" content="NexaKit Pro">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <link rel="stylesheet" href="/assets/css/global.css">
+  <title>TikTok Downloader — NexaKit Pro</title>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"TikTok Downloader — NexaKit Pro","url":"https://nexakitpro.my.id/tools/tiktok/","applicationCategory":"MultimediaApplication","operatingSystem":"Web","description":"Download video TikTok tanpa watermark dengan preview dan pilihan format."}
+  </script>
+</head>
+<body class="tool-page">
+  <main class="tool-shell">
+    <header class="tool-header">
+      <div class="tool-header-left">
+        <a class="back-link" href="/tools/" aria-label="Kembali ke Tools">&larr; Tools</a>
+        <a class="tool-header-brand" href="/" aria-label="NexaKit Pro Home">NexaKit Pro</a>
+      </div>
+      <div class="tool-header-actions">
+        <button class="icon-btn" id="theme-toggle" type="button" aria-label="Ganti ke mode gelap"><svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg></button>
+      </div>
+    </header>
+
+    <section class="workspace-top" aria-labelledby="workspace-title">
+      <div class="workspace-breadcrumb"><a href="/">Home</a> / <a href="/tools/">Tools</a> / TikTok Downloader</div>
+      <div class="workspace-kicker">Downloader</div>
+      <h1 class="workspace-title" id="workspace-title">TikTok Downloader</h1>
+      <p class="workspace-description">Download video TikTok tanpa watermark. Preview dulu, pilih format, lalu download.</p>
+      <div class="workspace-status" id="workspace-status" aria-live="polite">Siap digunakan</div>
+    </section>
+
+    <section class="workspace-card input-card" aria-labelledby="input-title">
+      <label id="input-title" for="tiktok-url">TikTok URL</label>
+      <div class="input-row">
+        <input id="tiktok-url" type="url" inputmode="url" autocomplete="url" placeholder="https://www.tiktok.com/..." aria-describedby="input-hint">
+        <button class="primary-btn" id="preview-tiktok" type="button">Preview Video</button>
+      </div>
+      <p class="tool-hint" id="input-hint">Tempel link TikTok publik. NexaKit Pro memprosesnya melalui backend API yang sudah ada.</p>
+    </section>
+
+    <section class="workspace-card result-card" id="result-container" hidden aria-labelledby="result-title" aria-live="polite">
+      <h2 id="result-title" class="sr-only">Preview dan hasil TikTok</h2>
+      <div id="result-content"></div>
+    </section>
+
+    <section class="history-section" id="dl-history-container" aria-labelledby="history-title"></section>
+
+    <section class="related-section" aria-labelledby="related-title">
+      <div class="section-head"><div><span class="eyebrow">Continue exploring</span><h2 id="related-title">Related tools</h2></div></div>
+      <div class="related-grid" id="related-tools"></div>
+    </section>
+
+    <footer class="tool-footer">NexaKit Pro · by Shakz ✓ · PWA Ready</footer>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="/assets/js/registry.js"></script>
+  <script src="/assets/js/core.js"></script>
+  <script src="/assets/js/tools/tiktok.js"></script>
+  <script>
+    function renderRelatedTools(){
+      const current=getToolBySlug('tiktok');
+      const items=getRelatedTools(current?.id,4);
+      document.getElementById('related-tools').innerHTML=items.map(tool=>`<a class="related-card" href="${tool.path}"><strong>${escapeHtml(tool.title)}</strong><span>${escapeHtml(tool.description)}</span></a>`).join('');
+    }
+    document.addEventListener('DOMContentLoaded',()=>{initCore();initTiktok();renderRelatedTools();document.getElementById('theme-toggle')?.addEventListener('click',toggleTheme);});
+  </script>
+</body>
+</html>

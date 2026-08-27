@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="YouTube Downloader NexaKit Pro untuk mengambil metadata video lalu memilih MP4 360p hingga 1080p atau MP3.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#2454e0">
+  <link rel="canonical" href="https://nexakitpro.my.id/tools/youtube/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="YouTube Downloader — NexaKit Pro">
+  <meta property="og:description" content="Ambil info video YouTube, pilih kualitas MP4 atau MP3, lalu download melalui backend NexaKit Pro.">
+  <meta property="og:site_name" content="NexaKit Pro">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <link rel="stylesheet" href="/assets/css/global.css">
+  <title>YouTube Downloader — NexaKit Pro</title>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"YouTube Downloader — NexaKit Pro","url":"https://nexakitpro.my.id/tools/youtube/","applicationCategory":"MultimediaApplication","operatingSystem":"Web","description":"Ambil info video YouTube dan pilih output MP4 atau MP3 melalui NexaKit Pro."}
+  </script>
+</head>
+<body class="tool-page">
+  <main class="tool-shell">
+    <header class="tool-header">
+      <div class="tool-header-left">
+        <a class="back-link" href="/tools/" aria-label="Kembali ke Tools">&larr; Tools</a>
+        <a class="tool-header-brand" href="/" aria-label="NexaKit Pro Home">NexaKit Pro</a>
+      </div>
+      <div class="tool-header-actions">
+        <button class="icon-btn" id="theme-toggle" type="button" aria-label="Ganti ke mode gelap"><svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg></button>
+      </div>
+    </header>
+
+    <section class="workspace-top" aria-labelledby="workspace-title">
+      <div class="workspace-breadcrumb"><a href="/">Home</a> / <a href="/tools/">Tools</a> / YouTube Downloader</div>
+      <div class="workspace-kicker">Downloader</div>
+      <h1 class="workspace-title" id="workspace-title">YouTube Downloader</h1>
+      <p class="workspace-description">Ambil info video, pilih kualitas MP4 atau MP3, lalu download dari workspace yang fokus.</p>
+      <div class="workspace-status" id="workspace-status" aria-live="polite">Siap digunakan</div>
+    </section>
+
+    <section class="workspace-card input-card" aria-labelledby="input-title">
+      <label id="input-title" for="youtube-url">YouTube URL</label>
+      <div class="input-row">
+        <input id="youtube-url" type="url" inputmode="url" autocomplete="url" placeholder="https://www.youtube.com/watch?v=..." aria-describedby="input-hint">
+        <button class="primary-btn" id="preview-youtube" type="button">Cek Video</button>
+      </div>
+      <p class="tool-hint" id="input-hint">Bisa link video biasa atau Shorts. Metadata diambil dari YouTube, sedangkan proses download tetap melalui backend NexaKit Pro.</p>
+    </section>
+
+    <section class="workspace-card result-card" id="result-container" hidden aria-labelledby="result-title" aria-live="polite">
+      <h2 id="result-title" class="sr-only">Preview dan hasil YouTube</h2>
+      <div id="result-content"></div>
+    </section>
+
+    <section class="history-section" id="dl-history-container" aria-labelledby="history-title"></section>
+
+    <section class="related-section" aria-labelledby="related-title">
+      <div class="section-head"><div><span class="eyebrow">Continue exploring</span><h2 id="related-title">Related tools</h2></div></div>
+      <div class="related-grid" id="related-tools"></div>
+    </section>
+
+    <footer class="tool-footer">NexaKit Pro · by Shakz ✓ · PWA Ready</footer>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="/assets/js/registry.js"></script>
+  <script src="/assets/js/core.js"></script>
+  <script src="/assets/js/tools/youtube.js"></script>
+  <script>
+    function renderRelatedTools(){
+      const current=getToolBySlug('youtube');
+      const items=getRelatedTools(current?.id,4);
+      document.getElementById('related-tools').innerHTML=items.map(tool=>`<a class="related-card" href="${tool.path}"><strong>${escapeHtml(tool.title)}</strong><span>${escapeHtml(tool.description)}</span></a>`).join('');
+    }
+    document.addEventListener('DOMContentLoaded',()=>{initCore();initYoutube();renderRelatedTools();document.getElementById('theme-toggle')?.addEventListener('click',toggleTheme);});
+  </script>
+</body>
+</html>
