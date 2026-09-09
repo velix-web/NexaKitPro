@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#090615"><meta name="description" content="NexaKit Pro — modern creative and utility toolkit"><link rel="manifest" href="/manifest.json"><title>NexaKit Pro</title><style>
+:root{
+ --bg:#090615;--bg-2:#0e091d;--surface:#120b24;--surface-2:#18102e;--surface-3:#21153d;
+ --border:rgba(171,118,255,.18);--border-strong:rgba(151,91,255,.38);
+ --text:#f3effa;--muted:#9b8eaf;--primary:#8f4cff;--primary-2:#bd72ff;
+ --cyan:#4fd8ff;--success:#49d88a;--warning:#f5c64d;--danger:#ff6b86;
+ --radius-sm:14px;--radius:22px;--radius-lg:30px;
+ --shadow:0 20px 70px rgba(0,0,0,.34);--glow:0 0 35px rgba(143,76,255,.16);
+ --fast:150ms;--normal:250ms;--slow:400ms;--page:600ms;
+}
+*{box-sizing:border-box}
+html{background:var(--bg);scroll-behavior:smooth}
+body{margin:0;min-height:100vh;background:
+ radial-gradient(circle at 10% 0%,rgba(123,61,255,.15),transparent 32%),
+ radial-gradient(circle at 90% 15%,rgba(47,174,255,.08),transparent 28%),
+ linear-gradient(180deg,#0a0613 0%,#090615 55%,#07040f 100%);
+ color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+ font-size:16px;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,black,transparent 75%);z-index:-1}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+[hidden]{display:none!important}
+
+/* boot */
+.boot{position:fixed;inset:0;display:grid;place-items:center;background:#090615;z-index:1000;transition:opacity var(--page) ease,visibility var(--page)}
+.boot.hide{opacity:0;visibility:hidden}
+.boot-inner{text-align:center;width:min(88vw,360px)}
+.brand-mark{width:72px;height:72px;margin:0 auto 18px;border-radius:22px;display:grid;place-items:center;font-weight:900;font-size:26px;background:linear-gradient(135deg,var(--primary),var(--cyan));box-shadow:0 0 50px rgba(143,76,255,.45);animation:float 2.8s ease-in-out infinite}
+.boot-title{font-size:22px;font-weight:850;letter-spacing:.02em}.boot-sub{color:var(--muted);margin-top:6px}
+.boot-track{height:5px;background:#201832;border-radius:999px;overflow:hidden;margin-top:28px}.boot-bar{height:100%;width:0;background:linear-gradient(90deg,var(--primary),var(--cyan));border-radius:999px;transition:width 300ms ease}.boot-step{font-size:12px;color:var(--muted);margin-top:10px}
+
+/* auth */
+.auth-screen{min-height:100vh;display:grid;place-items:center;padding:24px;position:relative}
+.auth-orb{position:absolute;width:340px;height:340px;border-radius:50%;filter:blur(70px);opacity:.16;background:var(--primary);animation:drift 8s ease-in-out infinite}
+.auth-card{position:relative;width:min(100%,440px);padding:30px;border:1px solid var(--border);background:rgba(18,11,36,.82);backdrop-filter:blur(22px);border-radius:30px;box-shadow:var(--shadow),var(--glow)}
+.auth-brand{display:flex;align-items:center;gap:12px;margin-bottom:24px}.mini-logo{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(135deg,var(--primary),var(--cyan));font-weight:900}
+.auth-card h1{font-size:30px;margin:0 0 6px}.auth-card p{color:var(--muted);margin:0 0 24px;line-height:1.6}
+.auth-tabs{display:grid;grid-template-columns:1fr 1fr;background:#0c0717;border-radius:14px;padding:4px;margin-bottom:22px}.auth-tabs button{border:0;background:transparent;color:var(--muted);padding:11px;border-radius:11px}.auth-tabs button.active{background:var(--surface-3);color:var(--text);box-shadow:0 8px 20px rgba(0,0,0,.2)}
+.field{margin:0 0 16px}.field label{display:block;color:#c8bdd7;font-size:13px;font-weight:700;margin:0 0 8px}.field-row{position:relative}.field input,.field textarea,.field select{width:100%;border:1px solid var(--border);background:#0e081b;color:var(--text);border-radius:16px;padding:14px 15px;min-height:50px;transition:border-color var(--normal),box-shadow var(--normal),transform var(--normal)}.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--border-strong);box-shadow:0 0 0 4px rgba(143,76,255,.1)}
+.password-toggle{position:absolute;right:8px;top:7px;min-height:36px;padding:0 10px;border:0;background:transparent;color:var(--muted)}
+.primary-btn{width:100%;min-height:52px;border:0;border-radius:17px;color:white;font-weight:800;background:linear-gradient(135deg,#7b38f2,#b35cff);box-shadow:0 12px 32px rgba(143,76,255,.22);transition:transform var(--fast),filter var(--normal),box-shadow var(--normal)}.primary-btn:hover{transform:translateY(-1px);filter:brightness(1.06);box-shadow:0 15px 40px rgba(143,76,255,.3)}.primary-btn:active{transform:translateY(1px) scale(.99)}
+.form-error{min-height:20px;color:#ff9caf;font-size:13px;margin:8px 0}.auth-note{font-size:11px;color:#756981;margin-top:16px;line-height:1.5}
+
+/* app chrome */
+.app-shell{min-height:100vh;display:flex}.sidebar{width:240px;position:fixed;inset:0 auto 0 0;background:rgba(11,7,22,.84);backdrop-filter:blur(18px);border-right:1px solid var(--border);padding:22px 14px;z-index:40;display:flex;flex-direction:column}.side-brand{display:flex;align-items:center;gap:10px;padding:4px 10px 24px;font-weight:900}.side-logo{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--primary),var(--cyan));font-size:14px}.side-nav{display:grid;gap:6px}.nav-btn{display:flex;align-items:center;gap:12px;width:100%;border:1px solid transparent;background:transparent;color:var(--muted);padding:12px 13px;border-radius:14px;text-align:left;transition:all var(--normal)}.nav-btn:hover,.nav-btn.active{color:var(--text);background:rgba(143,76,255,.1);border-color:var(--border)}.side-bottom{margin-top:auto;border-top:1px solid var(--border);padding-top:14px}.main{width:calc(100% - 240px);margin-left:240px;padding:18px 24px 60px}.topbar{height:64px;display:flex;align-items:center;justify-content:space-between;gap:14px;max-width:1220px;margin:auto}.mobile-menu{display:none}.top-left{display:flex;align-items:center;gap:10px}.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--primary-2);font-weight:850}.status-dot{width:9px;height:9px;border-radius:50%;background:var(--success);box-shadow:0 0 14px rgba(73,216,138,.65);display:inline-block}.profile-pill{display:flex;align-items:center;gap:9px;padding:8px 11px;border:1px solid var(--border);background:rgba(18,11,36,.7);border-radius:999px}.avatar{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#8f4cff,#5fcbff);font-weight:900;font-size:12px}
+
+/* dashboard */
+.page{max-width:1220px;margin:auto}.hero{position:relative;overflow:hidden;border:1px solid var(--border);background:linear-gradient(135deg,rgba(55,28,89,.7),rgba(16,10,31,.82));border-radius:30px;padding:34px;margin:8px 0 20px;box-shadow:var(--shadow)}.hero:after{content:"";position:absolute;width:300px;height:300px;border-radius:50%;right:-110px;top:-130px;border:1px solid rgba(139,94,255,.22);box-shadow:0 0 100px rgba(139,94,255,.12)}.hero h1{font-size:clamp(32px,5vw,58px);line-height:1;margin:9px 0 14px;letter-spacing:-.04em}.hero p{max-width:680px;color:var(--muted);line-height:1.65;margin:0}.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}.soft-btn{border:1px solid var(--border);background:rgba(255,255,255,.035);color:var(--text);border-radius:15px;padding:11px 15px;font-weight:750;transition:all var(--normal)}.soft-btn:hover{border-color:var(--border-strong);background:rgba(143,76,255,.09);transform:translateY(-1px)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}.stat-card,.section-card,.tool-workspace{border:1px solid var(--border);background:rgba(18,11,36,.68);border-radius:22px;box-shadow:0 14px 50px rgba(0,0,0,.18)}.stat-card{padding:17px}.stat-card strong{display:block;font-size:22px}.stat-card span{font-size:12px;color:var(--muted)}
+.toolbar{display:flex;gap:12px;align-items:center;justify-content:space-between;margin:24px 0 15px;flex-wrap:wrap}.search{position:relative;flex:1;min-width:220px}.search input{width:100%;border:1px solid var(--border);background:rgba(14,8,27,.9);color:var(--text);border-radius:16px;padding:13px 15px 13px 42px}.search span{position:absolute;left:15px;top:12px;color:var(--muted)}.tabs{display:flex;gap:8px;overflow:auto;padding-bottom:3px}.tab{border:1px solid var(--border);background:rgba(18,11,36,.55);color:var(--muted);border-radius:999px;padding:10px 14px;white-space:nowrap;font-weight:750}.tab.active{background:linear-gradient(135deg,rgba(143,76,255,.92),rgba(92,72,220,.92));color:#fff;border-color:transparent;box-shadow:0 8px 25px rgba(143,76,255,.18)}
+.tool-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}.tool-card{position:relative;min-height:170px;padding:19px;border:1px solid var(--border);background:linear-gradient(180deg,rgba(24,14,45,.86),rgba(13,8,25,.9));border-radius:21px;cursor:pointer;transition:transform var(--normal),border-color var(--normal),box-shadow var(--normal)}.tool-card:hover{transform:translateY(-3px);border-color:var(--border-strong);box-shadow:0 18px 45px rgba(0,0,0,.25),0 0 25px rgba(143,76,255,.08)}.tool-icon{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:rgba(143,76,255,.12);color:#c99bff;font-size:20px;margin-bottom:17px}.tool-card h3{font-size:15px;margin:0 0 7px}.tool-card p{font-size:12px;color:var(--muted);line-height:1.45;margin:0}.tool-arrow{position:absolute;right:16px;bottom:15px;color:#766687}.empty-state{padding:50px 20px;text-align:center;color:var(--muted);border:1px dashed var(--border);border-radius:22px}
+
+/* workspace */
+.tool-workspace{margin-top:8px;padding:18px}.workspace-nav{display:flex;align-items:center;gap:12px;justify-content:space-between;margin-bottom:14px}.back-btn{border:1px solid var(--border);background:rgba(18,11,36,.8);color:var(--text);border-radius:999px;padding:11px 15px;font-weight:800}.workspace-title{display:flex;align-items:center;gap:9px;font-weight:850}.workspace-title .tool-icon{width:38px;height:38px;margin:0}.workspace-status-pill{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:999px;border:1px solid var(--border);color:var(--muted);font-size:12px}.workspace-hero{padding:28px;border:1px solid var(--border);background:linear-gradient(135deg,rgba(37,20,66,.78),rgba(13,8,26,.88));border-radius:26px;margin-bottom:14px}.workspace-hero h2{font-size:clamp(28px,5vw,45px);margin:8px 0 10px;letter-spacing:-.03em}.workspace-hero p{color:var(--muted);line-height:1.65;margin:0;max-width:720px}.workspace-body{padding:18px;border:1px solid var(--border);border-radius:24px;background:rgba(9,5,18,.42)}#tool-area h2{font-size:0;margin:0}#tool-area>p{display:none}#tool-area form{display:grid;gap:12px;max-width:760px}#tool-area .row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}#tool-area input,#tool-area textarea,#tool-area select{width:100%;min-height:52px;border:1px solid var(--border);background:#0e081b;color:var(--text);border-radius:16px;padding:13px 15px}#tool-area textarea{min-height:120px;resize:vertical}#tool-area button{min-height:52px;border:1px solid transparent;background:linear-gradient(135deg,#7b38f2,#b35cff);color:#fff;border-radius:16px;padding:0 22px;font-weight:850;transition:transform var(--fast),filter var(--normal)}#tool-area button:hover{filter:brightness(1.07);transform:translateY(-1px)}#tool-area button:active{transform:scale(.985)}#tool-area input[type=file]{padding:10px}#tool-area input[type=checkbox]{width:auto;min-height:0}.state-box{padding:20px;border:1px solid var(--border);border-radius:18px;background:rgba(18,11,36,.65);margin-top:14px}.state-box strong{font-size:15px}.state-box span{color:var(--muted)}#result-container{margin-top:14px;max-width:none}.preview-media-box{max-width:760px;margin:10px 0;border:1px solid var(--border);border-radius:20px;overflow:hidden;background:#08050e}.preview-media-box video,.preview-media-box img{max-width:100%;max-height:520px;display:block;margin:auto}.preview-img{display:block;max-width:100%;max-height:620px;margin:10px 0;border-radius:16px}.dl-profile-row{display:flex;align-items:center;gap:12px;margin:15px 0}.dl-avatar{width:48px;height:48px;border-radius:50%;object-fit:cover;border:1px solid var(--border)}.dl-stats-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:14px 0;max-width:760px}.dl-stat-box{border:1px solid var(--border);background:rgba(18,11,36,.55);padding:12px;border-radius:15px;text-align:center;color:var(--muted)}.dl-format-row{width:100%;max-width:760px;margin:7px 0;display:flex;align-items:center;justify-content:space-between;border:1px solid var(--border)!important;background:rgba(18,11,36,.6)!important;color:var(--text)!important;border-radius:15px!important;padding:0 15px!important}.dl-format-label{max-width:760px;margin-top:18px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between}.dl-caption-box{margin:14px 0;color:var(--muted);line-height:1.55}.action-btn,.btn-submit{margin-top:8px}.dl-history-head{display:flex;gap:10px;align-items:center;margin:15px 0 8px}.dl-history-item{display:flex;align-items:center;gap:10px;margin:8px 0;text-decoration:none;color:var(--text);padding:8px;border:1px solid var(--border);border-radius:14px}.dl-history-item img{width:52px;height:52px;object-fit:cover;border-radius:10px}.dl-chip{border:1px solid var(--border);padding:6px 9px;border-radius:999px;color:var(--muted)}.toast{position:fixed;right:18px;bottom:18px;z-index:100;max-width:min(90vw,380px);padding:13px 16px;border:1px solid var(--border);background:#171027;color:var(--text);border-radius:15px;box-shadow:var(--shadow);transform:translateY(15px);opacity:0;pointer-events:none;transition:all var(--normal)}.toast.show{transform:translateY(0);opacity:1}
+
+/* drawer */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.52);backdrop-filter:blur(3px);z-index:45;opacity:0;pointer-events:none;transition:opacity var(--normal)}.overlay.open{opacity:1;pointer-events:auto}.drawer{position:fixed;left:0;top:0;bottom:0;width:min(84vw,310px);background:#100a1f;border-right:1px solid var(--border);z-index:50;padding:20px 16px;transform:translateX(-100%);transition:transform var(--normal);box-shadow:30px 0 80px rgba(0,0,0,.4)}.drawer.open{transform:translateX(0)}.drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:25px}.close-btn{border:1px solid var(--border);background:transparent;color:var(--text);border-radius:12px;width:40px;height:40px}
+
+/* skeleton */
+.skeleton{background:linear-gradient(90deg,rgba(255,255,255,.04),rgba(255,255,255,.09),rgba(255,255,255,.04));background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:12px}.skeleton-card{height:170px;border:1px solid var(--border);padding:18px}.skeleton-line{height:12px;margin:10px 0}.skeleton-line.short{width:55%}
+
+@keyframes shimmer{to{background-position:-200% 0}}@keyframes float{50%{transform:translateY(-5px)}}@keyframes drift{50%{transform:translate(30px,-20px) scale(1.08)}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+@media(max-width:1100px){.tool-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:850px){.sidebar{display:none}.main{width:100%;margin-left:0;padding:8px 14px 42px}.mobile-menu{display:grid;place-items:center;width:42px;height:42px;border:1px solid var(--border);background:rgba(18,11,36,.75);color:var(--text);border-radius:13px}.topbar{height:58px}.top-left .eyebrow{display:none}.tool-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stats{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){.auth-card{padding:23px}.hero{padding:25px 20px;border-radius:24px}.hero h1{font-size:38px}.stats{grid-template-columns:1fr 1fr}.stats .stat-card:last-child{grid-column:1/-1}.toolbar{align-items:stretch}.search{min-width:100%}.tool-grid{grid-template-columns:1fr}.tool-card{min-height:145px}.workspace-nav{align-items:flex-start}.workspace-title{max-width:42%;font-size:12px}.workspace-title .tool-icon{display:none}.workspace-status-pill{font-size:10px}.workspace-hero{padding:22px}.workspace-body{padding:13px}.dl-stats-grid{grid-template-columns:repeat(2,1fr)}#tool-area .row{grid-template-columns:1fr}.tabs{width:100%}.profile-pill{padding:7px 9px}.profile-pill span:not(.avatar){display:none}}
+@media(max-width:360px){.main{padding-left:9px;padding-right:9px}.hero h1{font-size:33px}.tool-card{padding:16px}.auth-screen{padding:12px}}
+
+/* visual refinement + tool theming */
+.tool-themed{--tool-primary:var(--primary);--tool-secondary:var(--cyan);--tool-glow:rgba(143,76,255,.18);--tool-border:var(--border);--tool-surface:rgba(18,11,36,.68)}
+.tool-themed .workspace-nav,.tool-themed .workspace-hero,.tool-themed .workspace-body{transition:border-color var(--normal),box-shadow var(--normal),background var(--slow)}
+.tool-themed .workspace-nav{padding:10px 0}
+.tool-themed .workspace-hero{border-color:var(--tool-border);background:linear-gradient(135deg,var(--tool-surface),rgba(10,7,20,.9));box-shadow:0 20px 65px var(--tool-glow)}
+.tool-themed .workspace-hero .eyebrow,.tool-themed #workspace-name,.tool-themed #workspace-name-visual{color:var(--tool-primary)}
+.tool-themed .workspace-title .tool-icon{color:var(--tool-primary)!important;background:var(--tool-glow)!important;border-color:var(--tool-border)!important;box-shadow:0 0 26px var(--tool-glow)}
+.tool-themed .workspace-body{border-color:var(--tool-border);background:linear-gradient(180deg,var(--tool-surface),rgba(9,5,18,.44))}
+.tool-themed #tool-area input:focus,.tool-themed #tool-area textarea:focus,.tool-themed #tool-area select:focus{border-color:var(--tool-primary);box-shadow:0 0 0 4px var(--tool-glow),0 0 26px var(--tool-glow)}
+.tool-themed #tool-area button:not(.dl-format-row){background:linear-gradient(135deg,var(--tool-primary),var(--tool-secondary));color:#08101a;box-shadow:0 12px 32px var(--tool-glow)}
+.tool-themed .dl-format-row:hover{border-color:var(--tool-primary)!important;box-shadow:0 0 22px var(--tool-glow)}
+.tool-themed .state-box{border-color:var(--tool-border)}
+.tool-themed .state-box strong{color:var(--tool-primary)}
+.tool-category{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--card-accent);opacity:.78;font-weight:800}
+.tool-card-top{display:flex;justify-content:space-between;align-items:center;min-height:18px;margin-bottom:8px}
+.tool-card{box-shadow:0 14px 42px rgba(0,0,0,.16),0 0 0 0 var(--card-glow)}
+.tool-card:hover{border-color:var(--card-accent);box-shadow:0 18px 48px rgba(0,0,0,.25),0 0 28px var(--card-glow)}
+.tool-card:focus-visible{outline:2px solid var(--card-accent);outline-offset:3px}
+.empty-state{min-height:150px;display:grid;place-items:center;text-align:center;padding:28px;border:1px dashed var(--border);border-radius:22px;color:var(--muted);background:rgba(18,11,36,.45)}
+.empty-state strong{color:var(--text);font-size:16px}
+.empty-state span{font-size:13px}
+.auth-tabs button{transition:background var(--normal),color var(--normal),transform var(--fast)}
+.auth-tabs button:active{transform:scale(.98)}
+.field input,.field textarea,.field select{appearance:none;-webkit-appearance:none}
+#tool-area input,#tool-area textarea,#tool-area select{appearance:none;-webkit-appearance:none}
+#tool-area input[type=file]{cursor:pointer}
+#tool-area input[type=file]::file-selector-button{border:1px solid var(--tool-border);background:var(--tool-glow);color:var(--text);border-radius:10px;padding:8px 11px;margin-right:10px;cursor:pointer}
+.status-live{color:var(--tool-primary)!important}
+@media(max-width:850px){.main{padding-top:4px}.topbar{position:sticky;top:0;z-index:30;background:linear-gradient(180deg,rgba(9,6,21,.94),rgba(9,6,21,.72),transparent);backdrop-filter:blur(12px)}.mobile-menu{box-shadow:0 8px 25px rgba(0,0,0,.18)}}
+@media(max-width:560px){.auth-screen{padding:14px}.auth-card{width:min(100%,440px);padding:22px}.auth-card h1{font-size:28px}.workspace-nav{gap:8px}.back-btn{padding:10px 12px;font-size:12px}.workspace-status-pill{padding:8px 9px}.workspace-title{font-size:12px}.tool-themed .workspace-hero h2{font-size:34px}.hero-actions .primary-btn{width:100%!important}.stats{gap:9px}.stat-card{padding:14px}.stat-card strong{font-size:19px}}
+
+.compare-wrap{position:relative;max-width:760px;aspect-ratio:16/10;border:1px solid var(--tool-border);border-radius:20px;overflow:hidden;background:#08050e;margin:12px 0}
+.compare-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.compare-after{clip-path:inset(0 0 0 50%)}
+.compare-divider{position:absolute;top:0;bottom:0;left:50%;width:2px;background:var(--tool-primary);box-shadow:0 0 18px var(--tool-glow);pointer-events:none}
+.compare-range{position:absolute;left:12px;right:12px;bottom:12px;width:calc(100% - 24px);accent-color:var(--tool-primary);z-index:3}
+.compare-labels{position:absolute;inset:12px 12px auto;display:flex;justify-content:space-between;pointer-events:none;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.compare-labels span{padding:6px 9px;border:1px solid var(--tool-border);background:rgba(9,5,18,.7);border-radius:999px;color:var(--text);backdrop-filter:blur(8px)}
+</style></head><body>
+<div id="boot" class="boot"><div class="boot-inner"><div class="brand-mark">NK</div><div class="boot-title">NexaKit Pro</div><div class="boot-sub">Initializing your toolkit...</div><div class="boot-track"><div id="boot-bar" class="boot-bar"></div></div><div id="boot-step" class="boot-step">Initializing NexaKit</div></div></div>
+<section id="auth-screen" class="auth-screen" hidden>
+ <div class="auth-orb"></div><div class="auth-card">
+  <div class="auth-brand"><div class="mini-logo">NK</div><div><div class="eyebrow">NexaKit Pro</div><strong>All-in-one toolkit</strong></div></div>
+  <div class="auth-tabs"><button type="button" data-mode="login" class="active">Masuk</button><button type="button" data-mode="register">Daftar</button></div>
+  <h1 id="auth-mode">Masuk</h1><p id="auth-subtitle">Masuk untuk membuka semua tools NexaKit Pro.</p>
+  <form id="auth-form" novalidate>
+   <div class="field"><label for="auth-username">Username</label><input id="auth-username" autocomplete="username" placeholder="Masukkan username"></div>
+   <div class="field"><label for="auth-password">Password</label><div class="field-row"><input id="auth-password" type="password" autocomplete="current-password" placeholder="Masukkan password"><button class="password-toggle" type="button" id="toggle-pass" aria-label="Tampilkan password">Lihat</button></div></div>
+   <div class="field confirm-wrap" hidden><label for="auth-confirm">Konfirmasi Password</label><div class="field-row"><input id="auth-confirm" type="password" autocomplete="new-password" placeholder="Ulangi password"><button class="password-toggle" type="button" id="toggle-confirm" aria-label="Tampilkan konfirmasi password">Lihat</button></div></div>
+   <div id="auth-error" class="form-error" role="alert"></div><button class="primary-btn submit-auth" type="submit">Masuk</button>
+  </form><div class="auth-note">Login aman menggunakan Supabase Auth. Password tidak disimpan di NexaKit Pro.</div>
+ </div>
+</section>
+<div id="app-shell" class="app-shell" hidden>
+ <aside class="sidebar"><div class="side-brand"><div class="side-logo">NK</div><span>NexaKit Pro</span></div><nav class="side-nav" aria-label="Main navigation"><button class="nav-btn active" data-view="dashboard">⌂ <span>Dashboard</span></button><button class="nav-btn" data-view="tools">▦ <span>All Tools</span></button><button class="nav-btn" data-view="tools">↓ <span>Downloader</span></button><button class="nav-btn" data-view="tools">✦ <span>Maker</span></button><button class="nav-btn" data-view="tools">▧ <span>Image</span></button></nav><div class="side-bottom"><button class="nav-btn" id="logout">↪ <span>Logout</span></button></div></aside>
+ <main class="main">
+  <header class="topbar"><div class="top-left"><button id="mobile-menu" class="mobile-menu" aria-label="Buka menu">☰</button><div><div class="eyebrow">NexaKit Pro</div><strong>Utility workspace</strong></div></div><div class="profile-pill"><span class="status-dot"></span><span class="avatar" id="user-avatar">N</span><span id="user-name">Member</span></div></header>
+  <section id="dashboard-view" class="page">
+   <div class="hero"><div class="eyebrow">Creative • Downloader • Utility</div><h1>NexaKit Pro</h1><p>Your all-in-one creative & utility toolkit. Satu workspace untuk downloader, maker, image tools, dan utilitas lainnya.</p><div class="hero-actions"><button id="hero-browse" class="primary-btn" style="width:auto;padding:0 20px">Jelajahi Tools</button></div></div>
+   <div class="stats"><div class="stat-card"><strong>20+</strong><span>Tools tersedia</span></div><div class="stat-card"><strong>Native</strong><span>HTML • CSS • JS</span></div><div class="stat-card"><strong><span class="status-dot"></span> Online</strong><span>Workspace ready</span></div></div>
+   <div class="toolbar"><div class="search"><span>⌕</span><input id="tool-search" type="search" placeholder="Cari tools..." aria-label="Cari tools"></div><div id="category-tabs" class="tabs" role="tablist"></div></div>
+   <section id="tool-grid" class="tool-grid" aria-label="Daftar tools"></section>
+  </section>
+  <section id="workspace-view" class="page tool-themed" data-tool="tiktok" hidden>
+   <div class="workspace-nav"><button id="back-tools" class="back-btn" type="button">‹ All Tools</button><div class="workspace-title"><div id="workspace-icon" class="tool-icon">✦</div><span id="workspace-name">Tool</span></div><div class="workspace-status-pill"><span class="status-dot" style="background:var(--warning);box-shadow:none"></span> Not checked</div></div>
+   <div class="workspace-hero"><div class="eyebrow">Tool Workspace</div><h2 id="workspace-name-visual">Ready</h2><p id="workspace-desc">Pilih tool untuk mulai.</p></div>
+   <div class="workspace-body"><div class="state-box" style="margin:0 0 14px"><strong>Service status · Not checked</strong><span>Endpoint akan diverifikasi saat tool dijalankan. Tidak menampilkan status palsu.</span></div>
+    <select id="tool-select" aria-label="Tool" hidden></select>
+    <div id="tool-area"></div><div id="workspace-status" aria-live="polite">Siap digunakan</div>
+    <section id="result-container" hidden><div id="result-content"></div></section><section id="dl-history-container"></section>
+   </div>
+  </section>
+ </main>
+</div>
+<div id="drawer-overlay" class="overlay"></div><aside id="drawer" class="drawer" aria-label="Mobile navigation"><div class="drawer-head"><strong>NexaKit Pro</strong><button id="drawer-close" class="close-btn" type="button">×</button></div><nav class="side-nav"><button class="nav-btn" data-view="dashboard">⌂ <span>Dashboard</span></button><button class="nav-btn" data-view="tools">▦ <span>All Tools</span></button><button class="nav-btn" data-view="tools">↓ <span>Downloader</span></button><button class="nav-btn" data-view="tools">✦ <span>Maker</span></button><button class="nav-btn" data-view="tools">▧ <span>Image</span></button></nav><div class="side-bottom"><button id="mobile-logout" class="nav-btn" type="button">↪ <span>Logout</span></button></div></aside>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script>
+(()=>{const b=document.getElementById('boot-bar'),s=document.getElementById('boot-step');let i=0;const steps=['Initializing NexaKit','Loading tools','Checking session','Ready'];const t=setInterval(()=>{i++;b.style.width=Math.min(100,i*25)+'%';s.textContent=steps[Math.min(i,3)];if(i>=4)clearInterval(t)},180)})();
+</script><script>
+/* FULL NATIVE: no framework, no UI library, no external JS/CSS. */
+const TOOLS=[
+{id:'tt',slug:'tiktok',name:'TikTok',title:'TikTok Downloader',description:'Download video TikTok tanpa watermark',type:'tiktok'},
+{id:'ig',slug:'instagram',name:'Instagram',title:'Instagram Downloader',description:'Unduh video & foto Instagram HD',type:'generic-downloader',provider:'ig',paramKey:'url'},
+{id:'spotify',slug:'spotify',name:'Spotify',title:'Spotify Downloader',description:'Unduh musik Spotify ke MP3',type:'generic-downloader',provider:'spotify',paramKey:'url'},
+{id:'terabox',slug:'terabox',name:'Terabox',title:'Terabox Downloader',description:'Ambil file dari share Terabox',type:'generic-downloader',provider:'terabox',paramKey:'url'},
+{id:'yt_engine',slug:'youtube',name:'YouTube',title:'YouTube Downloader',description:'Unduh MP4 360p-1080p atau MP3 dari YouTube',type:'youtube'},
+{id:'fb',slug:'facebook',name:'Facebook',title:'Facebook Downloader',description:'Unduh video Facebook tanpa watermark',type:'generic-downloader',provider:'fb',paramKey:'url'},
+{id:'tw',slug:'twitter',name:'Twitter / X',title:'Twitter/X Downloader',description:'Unduh video & foto dari Twitter/X',type:'generic-downloader',provider:'tw',paramKey:'url'},
+{id:'capcut',slug:'capcut',name:'CapCut',title:'CapCut Downloader',description:'Unduh video template/hasil CapCut',type:'generic-downloader',provider:'capcut',paramKey:'url'},
+{id:'savefrom',slug:'savefrom',name:'SaveFrom',title:'SaveFrom Downloader',description:'Unduh media dari banyak platform',type:'generic-downloader',provider:'savefrom',paramKey:'url'},
+{id:'lahelu',slug:'lahelu',name:'Lahelu',title:'Lahelu Downloader',description:'Unduh video/gambar dari Lahelu',type:'generic-downloader',provider:'lahelu',paramKey:'url'},
+{id:'brat_gen',slug:'brat',name:'Brat Generator',title:'Brat Generator',description:'Buat stiker BRAT static & animated',type:'brat',provider:'brat'},
+{id:'iqc',slug:'iqc',name:'iPhone Quote Create',title:'iPhone Quote Create',description:'Buat kartu quote ala iPhone Notes',type:'iqc'},
+{id:'sertifikat_tolol',slug:'sertifikat-tolol',name:'Sertifikat Tolol',title:'Sertifikat Tolol',description:'Buat sertifikat meme kocak',type:'image-generator',provider:'sertifikat',paramKey:'text'},
+{id:'lobby_ml',slug:'lobby-ml',name:'Fake Lobby ML',title:'Fake Lobby ML',description:'Buat SS Lobby Mobile Legends',type:'lobby-ml',provider:'lobbyml'},
+{id:'lobby_ff',slug:'lobby-ff',name:'Fake Lobby FF',title:'Fake Lobby FF',description:'Buat SS Lobby Free Fire',type:'image-generator',provider:'lobbyff',paramKey:'nickname'},
+{id:'fakedana',slug:'fakedana',name:'Fake Saldo DANA',title:'Fake Saldo DANA',description:'Buat gambar saldo DANA palsu',type:'image-generator',provider:'fakedana',paramKey:'nominal'},
+{id:'fakedev',slug:'fakedev',name:'FakeDev Profile',title:'FakeDev Profile',description:'Generator kartu profil developer',type:'fakedev',provider:'fakedev'},
+{id:'img2link',slug:'img2link',name:'Foto To Link',title:'Foto To Link',description:'Upload gambar menjadi URL ImgBB',type:'img2link'},
+{id:'rmbg',slug:'remove-background',name:'Remove Background',title:'Remove Background',description:'Hapus background foto',type:'remove-bg'},
+{id:'enh',slug:'image-enhancer',name:'Image Enhancer',title:'Image Enhancer',description:'Tingkatkan kualitas foto HD',type:'image-enhancer'}
+];
+const $=id=>document.getElementById(id);
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function setBusy(b,label='Memproses…'){const e=$('workspace-status');e.textContent=b?label:(navigator.onLine?'Siap digunakan':'Offline');e.classList.toggle('busy',b)}
+function showToast(msg){const e=$('toast');e.textContent=msg;e.className='show';clearTimeout(showToast.t);showToast.t=setTimeout(()=>e.className='',3000)}
+async function safeJson(url,opt){if(!navigator.onLine)throw Error('Tidak ada koneksi internet.');let r;try{r=await fetch(url,opt)}catch{throw Error('Gagal terhubung ke server.')}const text=await r.text();if(!r.ok||!text)throw Error('Server sedang bermasalah.');try{return JSON.parse(text)}catch{throw Error('Respons server tidak valid.')}}
+async function downloadFile(url,name='nexakit-download'){setBusy(true,'Menyiapkan download…');try{const r=await fetch(url,{mode:'cors',credentials:'omit'});if(!r.ok)throw 0;const b=await r.blob();const o=URL.createObjectURL(b),a=document.createElement('a');a.href=o;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(o),60000);showToast('Download siap')}catch{const a=document.createElement('a');a.href=url;a.download=name;a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();a.remove();showToast('Download dibuka oleh browser.')}finally{setBusy(false)}}
+function previewSrc(url){return url||''}
+function resultLoading(t){return `<div class="state-box"><strong>${esc(t)}</strong><span>Jangan tutup halaman.</span></div>`}
+function resultError(e){return `<div class="state-box"><strong>${esc(e?.message||'Terjadi kesalahan.')}</strong><span>Coba periksa input atau ulangi beberapa saat lagi.</span></div>`}
+function uploadPreview(file,id){if(!file)return;const img=$(id);if(!img)return;const r=new FileReader();r.onload=e=>{img.src=e.target.result;img.hidden=false};r.readAsDataURL(file)}
+async function uploadToImgBB(file){const f=new FormData();f.append('image',file);const j=await safeJson('/api/imgbb-upload',{method:'POST',body:f});if(j.success)return j.data.url;throw Error('Gagal unggah foto ke ImgBB.')}
+
+let tiktokData=null,tiktokFormat='hd',ytInfo=null;
+function initTiktok(){const input=$('tiktok-url'),btn=$('preview-tiktok'),box=$('result-container'),content=$('result-content'),history=$('dl-history-container');
+ function renderHistory(){const items=JSON.parse(localStorage.getItem('nexakit-history-tiktok')||'[]');history.innerHTML=`<div class="dl-history-head"><div>↻ HISTORY DOWNLOAD</div><button id="clear-history" type="button">🗑 Bersihkan</button></div>`+(items.length?items.map(h=>`<a class="dl-history-item" href="${esc(h.url)}" target="_blank" rel="noopener"><img src="${esc(h.cover||'')}" alt=""><span>${esc(h.title)}</span></a>`).join(''):'<div>Belum ada history TikTok. Download pertama akan muncul di sini.</div>');$('clear-history')?.addEventListener('click',()=>{localStorage.removeItem('nexakit-history-tiktok');renderHistory()})}
+ function addHistory(x){const a=JSON.parse(localStorage.getItem('nexakit-history-tiktok')||'[]');a.unshift(x);localStorage.setItem('nexakit-history-tiktok',JSON.stringify(a.slice(0,8)));renderHistory()}
+ function render(){const d=tiktokData;const formats=[{id:'hd',name:'MP4 HD',url:d.hdplay||d.play},{id:'sd',name:'MP4 Standar',url:d.play},{id:'wm',name:'MP4 Watermark',url:d.wmplay},{id:'mp3',name:'MP3 Audio',url:d.music}].filter(x=>x.url);if(!formats.some(x=>x.id===tiktokFormat))tiktokFormat=formats[0]?.id;const s=formats.find(x=>x.id===tiktokFormat);content.innerHTML=`<div class="preview-media-box"><video src="${esc(d.play||d.hdplay)}" poster="${esc(d.cover||'')}" controls playsinline></video></div><div class="dl-profile-row"><img class="dl-avatar" src="${esc(d.author?.avatar||d.cover||'')}" alt=""><div><div>@${esc(d.author?.unique_id||d.author?.nickname||'tiktok')}</div><div>${esc(d.title||'(Tanpa judul)')}</div></div></div><div class="dl-stats-grid"><div class="dl-stat-box">${Number(d.play_count)||0}<br>Plays</div><div class="dl-stat-box">${Number(d.digg_count)||0}<br>Likes</div><div class="dl-stat-box">${Number(d.comment_count)||0}<br>Komen</div><div class="dl-stat-box">${Number(d.share_count)||0}<br>Share</div></div><div class="dl-caption-box"><b>CAPTION</b><div>${esc(d.title||'')}</div></div><div class="dl-format-label"><span>PILIH FORMAT</span><span>${esc(s?.name||'')}</span></div>${formats.map(f=>`<button type="button" class="dl-format-row" data-format="${f.id}"><span>${f.name}</span><span>${f.id===tiktokFormat?'✓':''}</span></button>`).join('')}<button id="download-tiktok" type="button">Download ${esc(s?.name||'')}</button>`;content.querySelectorAll('[data-format]').forEach(b=>b.onclick=()=>{tiktokFormat=b.dataset.format;render()});$('download-tiktok')?.addEventListener('click',async()=>{const url=formats.find(x=>x.id===tiktokFormat)?.url;if(url){await downloadFile(url,`nexakit-tiktok-${Date.now()}.${tiktokFormat==='mp3'?'mp3':'mp4'}`);addHistory({title:d.title||'TikTok Video',cover:d.cover,url})}})}
+ async function run(){box.hidden=false;content.innerHTML=resultLoading('Mengambil preview…');setBusy(true,'Mengambil preview…');try{const v=input.value.trim();if(!v)throw Error('Link TikTok tidak boleh kosong.');if(!isHttpUrl(v))throw Error('Link TikTok tidak valid.');const j=await safeJson('/api/proxy?provider=tiktok&url='+encodeURIComponent(v));if(j.code!==0||!j.data)throw Error('Video TikTok tidak ditemukan atau link invalid.');tiktokData=j.data;tiktokFormat=tiktokData.hdplay?'hd':'sd';render();renderHistory()}catch(e){content.innerHTML=resultError(e)}finally{setBusy(false)}}btn.onclick=run;input.onkeydown=e=>{if(e.key==='Enter')run()};renderHistory()}
+function initYoutube(){const input=$('youtube-url'),btn=$('preview-youtube'),box=$('result-container'),content=$('result-content');async function run(){const v=input.value.trim();box.hidden=false;content.innerHTML=resultLoading('Mengambil info video…');setBusy(true,'Mengambil info video…');try{if(!v)throw Error('Link YouTube tidak boleh kosong.');if(!isHttpUrl(v))throw Error('Link YouTube tidak valid.');const id=(v.match(/[?&]v=([^&]+)/)||v.match(/youtu\.be\/([^?]+)/)||v.match(/shorts\/([^?]+)/))?.[1];if(!id)throw Error('Link YouTube tidak valid.');const o=await safeJson('https://www.youtube.com/oembed?url='+encodeURIComponent(v)+'&format=json');ytInfo={url:v,id,title:o.title,author:o.author_name,thumb:`https://i.ytimg.com/vi/${encodeURIComponent(id)}/hqdefault.jpg`};render()}catch(e){content.innerHTML=resultError(e)}finally{setBusy(false)}}function render(){content.innerHTML=`<div class="preview-media-box"><img src="${esc(ytInfo.thumb)}" alt="Thumbnail"></div><div>${esc(ytInfo.author)}</div><div>${esc(ytInfo.title)}</div><div class="dl-format-label"><span>VIDEO</span><span>MP4</span></div>${['360','480','720','1080'].map(q=>`<button class="dl-format-row" data-q="${q}" type="button"><span>MP4 ${q}p</span><span>Download</span></button>`).join('')}<div class="dl-format-label"><span>AUDIO</span><span>MP3</span></div><button class="dl-format-row" id="yt-mp3" type="button"><span>MP3 Audio</span><span>Download</span></button>`;content.querySelectorAll('[data-q]').forEach(b=>b.onclick=()=>downloadYoutube('mp4',b.dataset.q,b));$('yt-mp3').onclick=()=>downloadYoutube('mp3','',$('yt-mp3'))}async function downloadYoutube(type,q,b){const old=b.innerHTML;b.disabled=true;b.textContent='Menyiapkan…';try{const ep=type==='mp4'?`/api/proxy?provider=ytmp4&resolusi=${encodeURIComponent(q)}&url=${encodeURIComponent(ytInfo.url)}`:`/api/proxy?provider=ytmp3&url=${encodeURIComponent(ytInfo.url)}`;const j=await safeJson(ep);const u=j.url||j.result||j.data?.url||j.data?.downloadUrl;if(!u)throw Error('URL download tidak tersedia dari server.');await downloadFile(u,`nexakit-youtube-${q||'mp3'}-${Date.now()}.${type==='mp4'?'mp4':'mp3'}`)}catch(e){showToast(e.message)}finally{b.disabled=false;b.innerHTML=old}}btn.onclick=run;input.onkeydown=e=>{if(e.key==='Enter')run()}}
+function initGeneric(tool){const form=$('tool-form'),input=$('tool-input'),box=$('result-container'),content=$('result-content');form.onsubmit=async e=>{e.preventDefault();const v=input.value.trim();box.hidden=false;content.innerHTML=resultLoading('Mengambil media…');setBusy(true,'Mengambil media…');try{if(!v)throw Error('Link tidak boleh kosong.');if(!isHttpUrl(v))throw Error('URL tidak valid. Gunakan link http:// atau https://.');const j=await safeJson(`/api/proxy?provider=${encodeURIComponent(tool.provider)}&${tool.paramKey}=${encodeURIComponent(v)}`);let u,title;if(Array.isArray(j.result)&&j.result.length){u=j.result[0].url||j.result[0].link;title=j.result[0].title||j.result[0].caption}else if(Array.isArray(j.data)&&j.data.length){u=j.data[0]?.url||j.data[0]?.link||j.data[0];title=j.data[0]?.title||j.data[0]?.caption}else{u=j.result||j.url||j.link||j.data?.url||j.data?.downloadUrl;title=j.title||j.caption||j.data?.title}if(!u||typeof u!=='string')throw Error(j.error||j.message||'Gagal mendapatkan media.');const video=/\.(mp4|mov|webm)(\?|$)/i.test(u)||tool.id==='ig';const audio=!video&&(/\.(mp3|wav|m4a)(\?|$)/i.test(u)||tool.id==='spotify');let media=video?`<div class="preview-media-box"><video src="${esc(u)}" controls playsinline></video></div>`:audio?`<audio src="${esc(u)}" controls style="width:100%"></audio>`:`<div class="preview-media-box"><img src="${esc(u)}" alt="Preview"></div>`;content.innerHTML=media+(title?`<div><b>INFO</b><div>${esc(title)}</div></div>`:'')+`<button id="download-result" type="button">Download</button>`;$('download-result').onclick=()=>downloadFile(u,`nexakit-${tool.slug}-${Date.now()}`)}catch(e){content.innerHTML=resultError(e)}finally{setBusy(false)}}}
+function initImageTool(type){const input=$('image-file'),btn=$('tool-submit'),box=$('result-container'),content=$('result-content');input.onchange=()=>uploadPreview(input.files[0],'file-preview');btn.onclick=async e=>{e.preventDefault();box.hidden=false;content.innerHTML=resultLoading('Memproses gambar…');setBusy(true,'Memproses gambar…');try{const file=input.files[0];if(!file)throw Error('Pilih gambar terlebih dahulu.');if(type==='remove-bg'){const f=new FormData();f.append('image_file',file);f.append('size','auto');const r=await fetch('/api/remove-bg',{method:'POST',body:f});if(!r.ok)throw Error('Gagal menghapus background.');const blob=await r.blob(),u=URL.createObjectURL(blob);content.innerHTML=`<img class="preview-img" src="${u}" alt="Hasil Remove Background"><a class="action-btn" href="${u}" download="removebg-result.png">Unduh PNG</a>`}else if(type==='img2link'){const u=await uploadToImgBB(file);content.innerHTML=`<img class="preview-img" src="${esc(u)}" alt="Uploaded image"><input value="${esc(u)}" readonly><button id="copy-url" type="button">Salin Link</button>`;$('copy-url').onclick=()=>navigator.clipboard.writeText(u).then(()=>showToast('Link tersalin'))}else{const up=await uploadToImgBB(file);const u=`/api/proxy?provider=enhancer&url=${encodeURIComponent(up)}`;content.innerHTML=`<div class="compare-wrap" data-compare><img src="${esc(up)}" alt="Sebelum"><img class="compare-after" data-after src="${esc(u)}" alt="Sesudah"><div class="compare-divider" data-divider></div><div class="compare-labels"><span>Sebelum</span><span>Sesudah</span></div><input class="compare-range" data-range type="range" min="0" max="100" value="50" aria-label="Geser perbandingan sebelum dan sesudah"></div><button id="download-image-result" type="button">Unduh Hasil</button>`;const range=content.querySelector('[data-range]'),after=content.querySelector('[data-after]'),divider=content.querySelector('[data-divider]');range.oninput=()=>{const v=Number(range.value);after.style.clipPath=`inset(0 0 0 ${v}%)`;divider.style.left=v+'%'};$('download-image-result').onclick=()=>downloadFile(u,`nexakit-enhanced-${Date.now()}.png`)}}catch(e){content.innerHTML=resultError(e)}finally{setBusy(false)}}}
+function initMaker(tool){const form=$('maker-form'),box=$('result-container'),content=$('result-content');form.onsubmit=async e=>{e.preventDefault();box.hidden=false;content.innerHTML=resultLoading('Membuat gambar…');setBusy(true,'Membuat gambar…');try{let u,name='nexakit-result.png',original=false;if(tool.type==='brat'){const text=$('maker-text').value.trim();if(!text)throw Error('Masukkan teks untuk Brat.');const animated=$('brat-animated').value==='true',delay=$('brat-delay').value||500;u=`/api/proxy?provider=brat&text=${encodeURIComponent(text)}${animated?'&isAnimated=true&delay='+encodeURIComponent(delay):''}`;name=`nexakit-brat-${Date.now()}.${animated?'gif':'png'}`;original=animated}else if(tool.type==='iqc'){const text=$('maker-text').value.trim(),time=$('maker-time').value.trim();if(!text)throw Error('Masukkan quote.');u=`/api/iqc-text?text=${encodeURIComponent(text)}&time=${encodeURIComponent(time||Date.now())}`;name=`nexakit-iqc-${Date.now()}.png`}else if(tool.type==='lobby-ml'){const nick=$('maker-text').value.trim(),file=$('maker-file').files[0];if(!nick||!file)throw Error('Nickname dan avatar wajib diisi.');const av=await uploadToImgBB(file);u=`/api/proxy?provider=lobbyml&nickname=${encodeURIComponent(nick)}&avatar=${encodeURIComponent(av)}`;name=`nexakit-lobby-ml-${Date.now()}.png`}else if(tool.type==='fakedev'){const n=$('maker-name').value.trim(),bio=$('maker-bio').value.trim(),file=$('maker-file').files[0];if(!n||!bio||!file)throw Error('Nama, bio, dan avatar wajib diisi.');const av=await uploadToImgBB(file);u=`/api/proxy?provider=fakedev&nama=${encodeURIComponent(n)}&bio=${encodeURIComponent(bio)}&image=${encodeURIComponent(av)}`;name=`nexakit-fakedev-${Date.now()}.png`}else{let v=$('maker-text').value.trim();if(!v)throw Error('Input wajib diisi.');if(tool.provider==='fakedana')v=v.replace(/\D/g,'');u=`/api/proxy?provider=${encodeURIComponent(tool.provider)}&${encodeURIComponent(tool.paramKey)}=${encodeURIComponent(v)}`;name=`nexakit-${tool.slug}-${Date.now()}.png`}content.innerHTML=`<img class="preview-img" src="${esc(u)}" alt="Hasil"><button id="maker-download" type="button">Simpan Gambar</button>`;$('maker-download').onclick=()=>downloadFile(u,name)}catch(e){content.innerHTML=resultError(e)}finally{setBusy(false)}};if(tool.type==='brat')$('brat-animated').onchange=e=>$('brat-delay-wrap').hidden=e.target.value!=='true'}
+
+const select=$('tool-select'),area=$('tool-area');
+TOOLS.forEach(t=>{const o=document.createElement('option');o.value=t.slug;o.textContent=t.name;select.appendChild(o)});
+function clearView(){area.innerHTML='';$('result-container').hidden=true;$('result-content').innerHTML='';$('dl-history-container').innerHTML=''}
+function base(title,desc,form){area.innerHTML=`<h2>${esc(title)}</h2>${desc?`<p>${esc(desc)}</p>`:''}${form}`}
+function render(tool){clearView();
+ if(tool.type==='tiktok'){base('LINK TIKTOK','',`<div class="row"><input id="tiktok-url" type="url" placeholder="Tempel link TikTok..."><button id="preview-tiktok" type="button">PREVIEW</button></div>`);initTiktok();return}
+ if(tool.type==='youtube'){base('LINK YOUTUBE','',`<div class="row"><input id="youtube-url" type="url" placeholder="Tempel link YouTube..."><button id="preview-youtube" type="button">PREVIEW</button></div>`);initYoutube();return}
+ if(tool.type==='generic-downloader'){base('LINK '+tool.name.toUpperCase(),'',`<form id="tool-form"><div class="row"><input id="tool-input" type="url" placeholder="Tempel link ${esc(tool.name)}..."><button type="submit">PREVIEW</button></div></form>`);initGeneric(tool);return}
+ if(['remove-bg','img2link','image-enhancer'].includes(tool.type)){const action=tool.type==='remove-bg'?'REMOVE BACKGROUND':tool.type==='img2link'?'UPLOAD':'ENHANCE';base(tool.title,'',`<form><input id="image-file" type="file" accept="image/*"><img id="file-preview" class="preview-img" hidden alt="Preview"><button id="tool-submit" type="submit">${action}</button></form>`);initImageTool(tool.type);return}
+ let form='';
+ if(tool.type==='brat')form=`<form id="maker-form"><input id="maker-text" placeholder="Tulis teks..."><select id="brat-animated"><option value="false">Static</option><option value="true">Animated</option></select><span id="brat-delay-wrap" hidden><input id="brat-delay" type="number" value="500" placeholder="Delay"></span><button type="submit">BUAT</button></form>`;
+ else if(tool.type==='iqc')form=`<form id="maker-form"><textarea id="maker-text" placeholder="Tulis quote..."></textarea><input id="maker-time" placeholder="Time (optional)"><button type="submit">BUAT</button></form>`;
+ else if(tool.type==='lobby-ml')form=`<form id="maker-form"><input id="maker-text" placeholder="Nickname"><input id="maker-file" type="file" accept="image/*"><button type="submit">BUAT</button></form>`;
+ else if(tool.type==='fakedev')form=`<form id="maker-form"><input id="maker-name" placeholder="Nama"><textarea id="maker-bio" placeholder="Bio"></textarea><input id="maker-file" type="file" accept="image/*"><button type="submit">BUAT</button></form>`;
+ else form=`<form id="maker-form"><input id="maker-text" placeholder="${esc(tool.paramKey==='nominal'?'Nominal':tool.title+' input')}"><button type="submit">BUAT</button></form>`;
+ base(tool.title,tool.description,form);initMaker(tool)
+}
+select.onchange=()=>render(TOOLS.find(t=>t.slug===select.value));
+select.value='tiktok';render(TOOLS[0]);
+window.addEventListener('online',()=>setBusy(false));window.addEventListener('offline',()=>setBusy(false));
+</script>
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+const CONFIG_ENDPOINT = '/api/supabase-config';
+const tools = TOOLS;
+const $q = id => document.getElementById(id);
+const app = $q('app-shell'), auth = $q('auth-screen'), boot = $q('boot');
+const dashboard = $q('dashboard-view'), workspace = $q('workspace-view');
+const grid = $q('tool-grid'), search = $q('tool-search'), tabs = $q('category-tabs');
+const userName = $q('user-name'), userAvatar = $q('user-avatar');
+const authForm = $q('auth-form'), authMode = $q('auth-mode'), authError = $q('auth-error');
+const authSubmitButton = authForm.querySelector('.submit-auth');
+const confirmWrap = authForm.querySelector('.confirm-wrap');
+const loginTab = document.querySelector('.auth-tabs button[data-mode="login"]');
+const registerTab = document.querySelector('.auth-tabs button[data-mode="register"]');
+const toolThemes = {
+  tiktok:{primary:'#4fd8ff',secondary:'#ff4fd8',glow:'rgba(79,216,255,.22)',border:'rgba(79,216,255,.24)',surface:'rgba(12,22,39,.76)'},
+  instagram:{primary:'#d45cff',secondary:'#ff6b9f',glow:'rgba(212,92,255,.2)',border:'rgba(212,92,255,.24)',surface:'rgba(29,12,36,.76)'},
+  spotify:{primary:'#50df8a',secondary:'#9bf6bf',glow:'rgba(80,223,138,.18)',border:'rgba(80,223,138,.24)',surface:'rgba(10,29,21,.76)'},
+  terabox:{primary:'#53a8ff',secondary:'#52e1ff',glow:'rgba(83,168,255,.2)',border:'rgba(83,168,255,.24)',surface:'rgba(9,21,38,.76)'},
+  youtube:{primary:'#ff5a64',secondary:'#ff8a8f',glow:'rgba(255,90,100,.18)',border:'rgba(255,90,100,.24)',surface:'rgba(35,11,17,.76)'},
+  facebook:{primary:'#5d9cff',secondary:'#75c8ff',glow:'rgba(93,156,255,.18)',border:'rgba(93,156,255,.24)',surface:'rgba(10,20,38,.76)'},
+  twitter:{primary:'#8bb8ff',secondary:'#d8e6ff',glow:'rgba(139,184,255,.16)',border:'rgba(139,184,255,.22)',surface:'rgba(13,17,28,.76)'},
+  capcut:{primary:'#d9e6ff',secondary:'#7adfff',glow:'rgba(122,223,255,.14)',border:'rgba(217,230,255,.2)',surface:'rgba(12,16,24,.76)'},
+  savefrom:{primary:'#61d6ff',secondary:'#78a6ff',glow:'rgba(97,214,255,.18)',border:'rgba(97,214,255,.22)',surface:'rgba(9,20,34,.76)'},
+  lahelu:{primary:'#c98cff',secondary:'#ff8de8',glow:'rgba(201,140,255,.18)',border:'rgba(201,140,255,.22)',surface:'rgba(25,11,35,.76)'},
+  brat:{primary:'#ffd83d',secondary:'#ff9d22',glow:'rgba(255,216,61,.2)',border:'rgba(255,216,61,.24)',surface:'rgba(31,25,9,.76)'},
+  iqc:{primary:'#4fe0ff',secondary:'#4d9dff',glow:'rgba(79,224,255,.2)',border:'rgba(79,224,255,.24)',surface:'rgba(8,22,35,.76)'},
+  'sertifikat-tolol':{primary:'#ffb45e',secondary:'#ff6f91',glow:'rgba(255,180,94,.18)',border:'rgba(255,180,94,.22)',surface:'rgba(31,16,17,.76)'},
+  'lobby-ml':{primary:'#73c8ff',secondary:'#a68cff',glow:'rgba(115,200,255,.18)',border:'rgba(115,200,255,.22)',surface:'rgba(10,18,34,.76)'},
+  'lobby-ff':{primary:'#ffb75e',secondary:'#ff6a6a',glow:'rgba(255,183,94,.18)',border:'rgba(255,183,94,.22)',surface:'rgba(32,16,11,.76)'},
+  fakedana:{primary:'#4fc7ff',secondary:'#58a5ff',glow:'rgba(79,199,255,.2)',border:'rgba(79,199,255,.24)',surface:'rgba(8,20,35,.76)'},
+  fakedev:{primary:'#9b7dff',secondary:'#55d9ff',glow:'rgba(155,125,255,.18)',border:'rgba(155,125,255,.22)',surface:'rgba(16,12,35,.76)'},
+  img2link:{primary:'#6fe4ff',secondary:'#b06cff',glow:'rgba(111,228,255,.18)',border:'rgba(111,228,255,.22)',surface:'rgba(10,20,35,.76)'},
+  'remove-background':{primary:'#7ae6ff',secondary:'#8d7dff',glow:'rgba(122,230,255,.18)',border:'rgba(122,230,255,.22)',surface:'rgba(10,18,35,.76)'},
+  'image-enhancer':{primary:'#a37cff',secondary:'#59d8ff',glow:'rgba(163,124,255,.18)',border:'rgba(163,124,255,.22)',surface:'rgba(15,11,35,.76)'}
+};
+const categories=[['all','All'],['downloader','Downloader'],['maker','Maker'],['image','Image'],['utility','Utility']];
+const icons={tiktok:'♪',instagram:'◎',spotify:'◉',terabox:'▣',youtube:'▶',facebook:'f',twitter:'𝕏',capcut:'✦',savefrom:'⇩',lahelu:'◈',brat:'✦',iqc:'▤','sertifikat-tolol':'✎','lobby-ml':'◫','lobby-ff':'◫',fakedana:'◈',fakedev:'◇','img2link':'↗','remove-background':'◌','image-enhancer':'✧'};
+function cat(t){if(['tiktok','instagram','spotify','terabox','youtube','facebook','twitter','capcut','savefrom','lahelu'].includes(t.slug))return 'downloader';if(['brat','iqc','sertifikat-tolol','lobby-ml','lobby-ff','fakedana','fakedev'].includes(t.slug))return 'maker';if(['img2link','remove-background','image-enhancer'].includes(t.slug))return 'image';return 'utility'}
+function usernameEmail(username){return `${username.toLowerCase()}@users.nexakitpro.local`}
+function validUsername(u){return /^[a-zA-Z0-9._-]{3,24}$/.test(u)}
+function isHttpUrl(value){try{const u=new URL(value);return u.protocol==='https:' || u.protocol==='http:'}catch{return false}}
+function setMode(mode){
+  authForm.dataset.mode=mode;
+  authMode.textContent=mode==='login'?'Masuk':'Daftar';
+  $q('auth-subtitle').textContent=mode==='login'?'Masuk untuk membuka semua tools NexaKit Pro.':'Buat akun NexaKit Pro dengan username dan password.';
+  confirmWrap.hidden=mode!=='register';
+  $q('auth-password').autocomplete=mode==='login'?'current-password':'new-password';
+  authSubmitButton.textContent=mode==='login'?'Masuk':'Daftar';
+  [loginTab,registerTab].forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));
+  authError.textContent='';
+}
+function showAuth(){auth.hidden=false;app.hidden=true}
+function showApp(u){auth.hidden=true;app.hidden=false;userName.textContent=u;userAvatar.textContent=u.slice(0,1).toUpperCase();renderCards();openDashboard();boot.classList.add('hide')}
+function renderCards(){
+  const q=(search.value||'').trim().toLowerCase();
+  const active=document.querySelector('.tab.active')?.dataset.cat||'all';
+  const list=tools.filter(t=>(active==='all'||cat(t)===active)&&(!q||`${t.name} ${t.title} ${t.description}`.toLowerCase().includes(q)));
+  grid.innerHTML=list.length?list.map(t=>{const th=toolThemes[t.slug]||toolThemes.tiktok;return `<article class="tool-card" tabindex="0" data-slug="${esc(t.slug)}" style="--card-accent:${th.primary};--card-glow:${th.glow}"><div class="tool-icon" style="color:${th.primary};background:${th.glow};border-color:${th.border}" aria-hidden="true">${icons[t.slug]||'✦'}</div><div class="tool-card-top"><span class="tool-category">${esc(cat(t))}</span><span class="tool-arrow">→</span></div><h3>${esc(t.title)}</h3><p>${esc(t.description)}</p></article>`}).join(''):`<div class="empty-state" style="grid-column:1/-1"><strong>Tool tidak ditemukan.</strong><br><span>Coba kata kunci lain atau pilih kategori All.</span></div>`;
+  grid.querySelectorAll('.tool-card').forEach(c=>{const go=()=>openTool(c.dataset.slug);c.addEventListener('click',go);c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}})});
+}
+function applyToolTheme(t){
+  const th=toolThemes[t.slug]||toolThemes.tiktok;
+  workspace.dataset.tool=t.slug;
+  workspace.style.setProperty('--tool-primary',th.primary);
+  workspace.style.setProperty('--tool-secondary',th.secondary);
+  workspace.style.setProperty('--tool-glow',th.glow);
+  workspace.style.setProperty('--tool-border',th.border);
+  workspace.style.setProperty('--tool-surface',th.surface);
+  document.documentElement.style.setProperty('--tool-primary',th.primary);
+  document.documentElement.style.setProperty('--tool-secondary',th.secondary);
+}
+function openDashboard(){dashboard.hidden=false;workspace.hidden=true;window.scrollTo({top:0,behavior:'smooth'});document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.view==='dashboard'))}
+function openTool(slug){
+  const t=tools.find(x=>x.slug===slug);if(!t)return;
+  applyToolTheme(t);
+  $q('tool-select').value=t.slug;
+  $q('tool-select').dispatchEvent(new Event('change'));
+  $q('workspace-name').textContent=t.title;
+  $q('workspace-name-visual').textContent=t.title;
+  $q('workspace-desc').textContent=t.description;
+  $q('workspace-icon').textContent=icons[t.slug]||'✦';
+  dashboard.hidden=true;workspace.hidden=false;
+  window.scrollTo({top:0,behavior:'smooth'});
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',false));
+}
+function setAuthBusy(b){
+  authSubmitButton.disabled=b;
+  authSubmitButton.textContent=b?'Memproses…':(authForm.dataset.mode==='login'?'Masuk':'Daftar');
+  authForm.setAttribute('aria-busy',String(b));
+}
+function friendlyAuthError(error,mode){
+  const m=String(error?.message||'').toLowerCase();
+  if(m.includes('invalid login credentials'))return 'Username atau password salah.';
+  if(m.includes('user already registered')||m.includes('already been registered')||m.includes('duplicate'))return 'Username sudah terdaftar. Silakan pilih username lain.';
+  if(m.includes('email rate limit'))return 'Terlalu banyak percobaan. Tunggu sebentar lalu coba lagi.';
+  if(m.includes('password'))return 'Password tidak memenuhi aturan Supabase.';
+  if(m.includes('network')||m.includes('fetch'))return 'Tidak dapat terhubung ke server. Periksa koneksi internet.';
+  return mode==='register'?'Pendaftaran gagal. Periksa data lalu coba lagi.':'Login gagal. Periksa username dan password lalu coba lagi.';
+}
+async function authSubmit(e){
+  e.preventDefault();
+  const mode=authForm.dataset.mode||'login';
+  const u=$q('auth-username').value.trim();
+  const p=$q('auth-password').value;
+  const c=$q('auth-confirm').value;
+  authError.textContent='';
+  if(!validUsername(u)){authError.textContent='Username harus 3–24 karakter dan hanya boleh huruf, angka, titik, garis bawah, atau strip.';return}
+  if(p.length<6){authError.textContent='Password minimal 6 karakter.';return}
+  if(mode==='register'&&p!==c){authError.textContent='Konfirmasi password tidak cocok.';return}
+  setAuthBusy(true);
+  try{
+    const email=usernameEmail(u);
+    if(mode==='register'){
+      const {data,error}=await supabase.auth.signUp({email,password:p,options:{data:{username:u}}});
+      if(error)throw error;
+      if(!data.session){
+        authError.textContent='Akun berhasil dibuat, tetapi konfirmasi email aktif di Supabase. Untuk mode username-only, nonaktifkan Confirm email di Authentication → Providers → Email.';
+        return;
+      }
+      await notifyAuth('register',u);
+      showApp(u);
+      showToast('Akun berhasil dibuat.');
+    }else{
+      const {data,error}=await supabase.auth.signInWithPassword({email,password:p});
+      if(error)throw error;
+      const resolved=data.user?.user_metadata?.username||u;
+      await notifyAuth('login',resolved);
+      showApp(resolved);
+      showToast('Login berhasil.');
+    }
+  }catch(error){console.error(error);authError.textContent=friendlyAuthError(error,mode)}
+  finally{setAuthBusy(false)}
+}
+async function notifyAuth(event,username){
+  try{await fetch('/api/telegram-notify',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({event,username})})}catch{}
+}
+async function logout(){
+  try{await supabase.auth.signOut()}catch(error){console.error(error)}
+  showAuth();setMode('login');authForm.reset();authError.textContent='';setPasswordVisibility('auth-password',false,'toggle-pass');setPasswordVisibility('auth-confirm',false,'toggle-confirm');openDrawer(false);showToast('Anda sudah logout.');
+}
+function setPasswordVisibility(inputId,visible,buttonId){const input=$q(inputId),button=$q(buttonId);if(!input||!button)return;input.type=visible?'text':'password';button.textContent=visible?'Sembunyikan':'Lihat';button.setAttribute('aria-label',visible?'Sembunyikan password':'Tampilkan password')}
+function togglePassword(inputId,buttonId){const input=$q(inputId);if(input)setPasswordVisibility(inputId,input.type==='password',buttonId)}
+function openDrawer(v){$q('drawer').classList.toggle('open',v);$q('drawer-overlay').classList.toggle('open',v);document.body.classList.toggle('drawer-open',v)}
+async function loadSupabase(){
+  const r=await fetch(CONFIG_ENDPOINT,{cache:'no-store'});
+  if(!r.ok)throw new Error('Supabase configuration unavailable');
+  const cfg=await r.json();
+  if(!cfg.url||!cfg.publishableKey)throw new Error('Supabase environment variables are missing');
+  return createClient(cfg.url,cfg.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+}
+let supabase;
+async function init(){
+  tabs.innerHTML=categories.map(([id,label])=>`<button class="tab ${id==='all'?'active':''}" data-cat="${id}" type="button" role="tab" aria-selected="${id==='all'}">${label}</button>`).join('');
+  tabs.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{tabs.querySelectorAll('.tab').forEach(x=>{x.classList.remove('active');x.setAttribute('aria-selected','false')});b.classList.add('active');b.setAttribute('aria-selected','true');renderCards()});
+  search.addEventListener('input',renderCards);
+  loginTab.onclick=()=>setMode('login');registerTab.onclick=()=>setMode('register');
+  authForm.addEventListener('submit',authSubmit);
+  $q('toggle-pass').onclick=()=>togglePassword('auth-password','toggle-pass');
+  $q('toggle-confirm').onclick=()=>togglePassword('auth-confirm','toggle-confirm');
+  $q('logout').onclick=logout;$q('mobile-logout').onclick=logout;$q('back-tools').onclick=openDashboard;
+  $q('hero-browse').onclick=()=>window.scrollTo({top:$q('tool-grid').offsetTop-80,behavior:'smooth'});
+  document.querySelectorAll('.nav-btn[data-view]').forEach(b=>b.onclick=()=>{if(b.dataset.view==='dashboard')openDashboard();else{openDashboard();setTimeout(()=>window.scrollTo({top:$q('tool-grid').offsetTop-80,behavior:'smooth'}),50)}});
+  $q('mobile-menu').onclick=()=>openDrawer(true);$q('drawer-close').onclick=()=>openDrawer(false);$q('drawer-overlay').onclick=()=>openDrawer(false);
+  $q('drawer').querySelectorAll('.nav-btn[data-view]').forEach(b=>b.onclick=()=>{openDrawer(false);if(b.dataset.view==='dashboard')openDashboard();else{openDashboard();setTimeout(()=>window.scrollTo({top:$q('tool-grid').offsetTop-80,behavior:'smooth'}),50)}});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')openDrawer(false)});
+  localStorage.removeItem('nexakit-auth-v1');localStorage.removeItem('nexakit-session-v1');
+  setMode('login');
+  try{
+    supabase=await loadSupabase();
+    const {data:{session}}=await supabase.auth.getSession();
+    if(session?.user){const u=session.user.user_metadata?.username||session.user.email?.split('@')[0]||'Member';showApp(u)}else showAuth();
+    supabase.auth.onAuthStateChange((_event,session)=>{if(session?.user){const u=session.user.user_metadata?.username||session.user.email?.split('@')[0]||'Member';showApp(u)}else if(!auth.hidden){showAuth()}});
+  }catch(error){console.error(error);showAuth();authError.textContent='Authentication belum terhubung. Pastikan environment Supabase sudah dikonfigurasi.'}
+  setTimeout(()=>{boot.classList.add('hide')},650);
+}
+init();
+if ('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(error=>console.warn('Service worker registration failed:',error)));
+</script>
+</body></html>
