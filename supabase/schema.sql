@@ -67,3 +67,30 @@ drop trigger if exists profiles_set_updated_at on public.profiles;
 create trigger profiles_set_updated_at
 before update on public.profiles
 for each row execute procedure public.set_updated_at();
+
+-- VIP flag. Client can UPDATE their own profile row (policy above), but this
+-- trigger silently reverts any change to is_vip unless the request runs as
+-- service_role — so a user calling supabase.from('profiles').update({is_vip:true})
+-- from the browser console has zero effect. Only flip this from the Supabase
+-- Table Editor / SQL Editor (which runs with elevated rights), after you've
+-- manually confirmed payment.
+alter table public.profiles add column if not exists is_vip boolean not null default false;
+alter table public.profiles add column if not exists display_name text;
+alter table public.profiles add column if not exists avatar_url text;
+
+create or replace function public.protect_is_vip()
+returns trigger
+language plpgsql
+as $$
+begin
+  if new.is_vip is distinct from old.is_vip and auth.role() <> 'service_role' then
+    new.is_vip := old.is_vip;
+  end if;
+  return new;
+end;
+$$;
+
+drop trigger if exists profiles_protect_is_vip on public.profiles;
+create trigger profiles_protect_is_vip
+before update on public.profiles
+for each row execute procedure public.protect_is_vip();
