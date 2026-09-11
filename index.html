@@ -56,7 +56,7 @@
             box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
         }
 
-        /* Top Header Bar */
+        /* Top Header Navigation Bar */
         .top-navbar {
             position: sticky;
             top: 0;
@@ -153,12 +153,14 @@
             cursor: pointer;
         }
 
-        /* Hero Banner */
+        /* Hero Banner - Banner bawaan proyek dipertahankan */
         .hero-banner {
             position: relative;
             width: 100%;
             height: 220px;
-            background: url('https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=1000&auto=format&fit=crop') center/cover no-repeat;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
             display: flex;
             align-items: flex-end;
             padding: 20px 16px;
@@ -197,7 +199,7 @@
             font-family: var(--font-head);
         }
 
-        /* User Status Card */
+        /* User Dynamic Status Card */
         .user-status-card {
             margin: -10px 16px 20px 16px;
             background: rgba(20, 10, 35, 0.8);
@@ -227,6 +229,13 @@
             font-size: 22px;
             box-shadow: 0 0 15px var(--glow-color);
             flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .avatar-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .user-details {
@@ -302,7 +311,6 @@
 
         .battery-fill {
             height: 100%;
-            width: 52%;
             background: #22c55e;
         }
 
@@ -335,7 +343,7 @@
             cursor: pointer;
         }
 
-        /* Category Filter Tabs */
+        /* Category Filter Scroll Tabs */
         .category-scroll {
             display: flex;
             gap: 8px;
@@ -386,7 +394,7 @@
             color: var(--accent-light);
         }
 
-        /* Tools Grid */
+        /* Real Dynamic Tools Grid Container */
         .tools-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -394,75 +402,52 @@
             padding: 0 16px;
         }
 
-        .tool-card {
-            background: var(--bg-card);
-            border: 1px solid var(--bg-card-border);
-            border-radius: 14px;
-            padding: 14px 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
+        /* Modernized Styles for Existing Dynamic Cards */
+        .tool-card, .card, .item-card {
+            background: var(--bg-card) !important;
+            border: 1px solid var(--bg-card-border) !important;
+            border-radius: 14px !important;
+            padding: 14px 10px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            text-align: center !important;
             position: relative;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        .tool-card:hover {
+        .tool-card:hover, .card:hover {
             transform: translateY(-2px);
-            border-color: var(--accent-pink);
-            box-shadow: 0 4px 15px rgba(217, 70, 239, 0.2);
+            border-color: var(--accent-pink) !important;
+            box-shadow: 0 4px 15px rgba(217, 70, 239, 0.2) !important;
         }
 
-        .tool-icon {
-            font-size: 24px;
-            margin-bottom: 10px;
-            color: var(--accent-light);
+        .tool-icon, .card-icon {
+            font-size: 24px !important;
+            margin-bottom: 10px !important;
+            color: var(--accent-light) !important;
         }
 
-        .tool-name {
-            font-size: 11px;
-            font-weight: 700;
-            margin-bottom: 4px;
-            color: var(--text-white);
-            line-height: 1.2;
+        .tool-title, .card-title {
+            font-size: 11px !important;
+            font-weight: 700 !important;
+            margin-bottom: 4px !important;
+            color: var(--text-white) !important;
+            line-height: 1.2 !important;
         }
 
-        .tool-desc {
-            font-size: 8px;
-            color: var(--text-sub);
-            margin-bottom: 8px;
+        .tool-desc, .card-desc {
+            font-size: 8px !important;
+            color: var(--text-sub) !important;
+            margin-bottom: 8px !important;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
 
-        .tool-tags {
-            display: flex;
-            gap: 3px;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .tag-pill {
-            background: rgba(147, 51, 234, 0.2);
-            color: var(--accent-light);
-            font-size: 7px;
-            font-weight: 700;
-            padding: 2px 5px;
-            border-radius: 4px;
-            letter-spacing: 0.3px;
-        }
-
-        .tool-arrow {
-            font-size: 9px;
-            color: var(--text-sub);
-            margin-top: auto;
-        }
-
-        /* Subpage View */
+        /* Subpage Styling Container */
         .subpage-container {
             display: none;
             padding: 16px;
@@ -473,199 +458,16 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        .subpage-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
-        }
-
-        .back-pill {
-            background: rgba(30, 15, 48, 0.8);
-            border: 1px solid var(--bg-card-border);
-            border-radius: 20px;
-            padding: 8px 16px;
-            font-size: 12px;
-            font-weight: 700;
-            font-family: var(--font-head);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-        }
-
-        .page-badge {
-            background: rgba(30, 15, 48, 0.8);
-            border: 1px solid var(--bg-card-border);
-            border-radius: 20px;
-            padding: 8px 14px;
-            font-size: 10px;
-            font-weight: 700;
-            font-family: var(--font-head);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .studio-card {
-            background: var(--bg-card);
-            border: 1px solid var(--bg-card-border);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 16px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .studio-tag {
-            font-size: 9px;
-            font-weight: 800;
-            color: var(--accent-light);
-            letter-spacing: 1.5px;
-            font-family: var(--font-head);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 6px;
-        }
-
-        .studio-title {
-            font-family: var(--font-head);
-            font-size: 22px;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 10px;
-            color: #fff;
-        }
-
-        .studio-desc {
-            font-size: 11px;
-            color: var(--text-muted);
-            line-height: 1.4;
-        }
-
-        .studio-icon-bg {
-            position: absolute;
-            right: 15px;
-            top: 20px;
-            width: 50px;
-            height: 50px;
-            background: rgba(147, 51, 234, 0.2);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: var(--accent-light);
-        }
-
-        .api-status-box {
-            background: rgba(20, 10, 35, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
-        }
-
-        .api-info-text {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .api-name {
-            font-size: 11px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .dot-warning {
-            width: 8px;
-            height: 8px;
-            background: #eab308;
-            border-radius: 50%;
-        }
-
-        .api-subtext {
-            font-size: 9px;
-            color: var(--text-sub);
-        }
-
-        .refresh-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-muted);
-            width: 30px;
-            height: 30px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
-        .input-group {
-            margin-top: 16px;
-        }
-
-        .input-info-text {
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-bottom: 12px;
-        }
-
-        .custom-input {
-            width: 100%;
-            background: rgba(15, 7, 26, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 14px 16px;
-            color: #fff;
-            font-size: 12px;
-            outline: none;
-            margin-bottom: 16px;
-            transition: 0.3s;
-        }
-
-        .custom-input:focus {
-            border-color: var(--accent-purple);
-            box-shadow: 0 0 10px var(--glow-color);
-        }
-
-        .submit-btn {
-            width: 100%;
-            background: linear-gradient(135deg, #a855f7, #d946ef);
-            border: none;
-            border-radius: 25px;
-            padding: 14px;
-            color: #fff;
-            font-size: 13px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            cursor: pointer;
-            box-shadow: 0 4px 20px rgba(217, 70, 239, 0.4);
-        }
     </style>
 </head>
 <body>
 
     <div class="app-container">
 
-        <!-- Top Bar Navigation -->
+        <!-- Header TopBar -->
         <header class="top-navbar">
             <div class="nav-left">
-                <button class="icon-btn"><i class="fa-solid fa-compass"></i></button>
+                <button class="icon-btn" id="btn-info"><i class="fa-solid fa-compass"></i></button>
                 <div class="menu-info">
                     <span class="title">Menu Informasi</span>
                     <span class="subtitle">About Dev • Report Bug • Saluran WhatsApp</span>
@@ -676,203 +478,149 @@
                     <div class="equalizer">
                         <span></span><span></span><span></span>
                     </div>
-                    <button class="audio-btn"><i class="fa-solid fa-volume-high"></i></button>
-                    <button class="audio-btn"><i class="fa-solid fa-play"></i></button>
-                    <button class="audio-btn"><i class="fa-solid fa-forward-step"></i></button>
+                    <button class="audio-btn" id="btn-audio-mute"><i class="fa-solid fa-volume-high"></i></button>
+                    <button class="audio-btn" id="btn-audio-toggle"><i class="fa-solid fa-play"></i></button>
+                    <button class="audio-btn" id="btn-audio-next"><i class="fa-solid fa-forward-step"></i></button>
                 </div>
-                <button class="icon-btn"><i class="fa-solid fa-bars"></i></button>
+                <button class="icon-btn" id="btn-menu"><i class="fa-solid fa-bars"></i></button>
             </div>
         </header>
 
-        <!-- Main Home View -->
-        <main id="home-view">
-            <!-- Hero Banner -->
-            <div class="hero-banner">
+        <!-- Main Dashboard View -->
+        <main id="main-content">
+            <!-- Hero Banner asli web NexaKit Pro -->
+            <div class="hero-banner" id="hero-banner" style="background-image: url('https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=1000&auto=format&fit=crop');">
                 <div class="hero-content">
-                    <div class="hero-title">
-                        <i class="fa-solid fa-bolt" style="color: var(--accent-pink);"></i> NexaKit Pro
+                    <div class="hero-title" id="app-title">
+                        <i class="fa-solid fa-bolt" style="color: var(--accent-pink);"></i> NEXAKIT PRO
                     </div>
-                    <div class="hero-subtitle">by shakz</div>
+                    <div class="hero-subtitle" id="app-author">by shakz</div>
                 </div>
             </div>
 
-            <!-- User Status Card -->
+            <!-- Dynamic Real Device & User Info Status Card -->
             <div class="user-status-card">
                 <div class="user-info-grid">
-                    <div class="avatar-box">
+                    <div class="avatar-box" id="user-avatar-container">
                         <i class="fa-solid fa-user"></i>
                     </div>
                     <div class="user-details">
                         <div class="detail-item">
                             <i class="fa-solid fa-globe"></i> NEGARA
-                            <span class="detail-value">🇮🇩 Indonesia</span>
+                            <span class="detail-value" id="user-country">Detecting...</span>
                         </div>
                         <div class="detail-item">
                             <i class="fa-solid fa-mobile-screen"></i> DEVICE
-                            <span class="detail-value">Android</span>
+                            <span class="detail-value" id="user-device">Detecting...</span>
                         </div>
                         <div class="detail-item">
                             <i class="fa-solid fa-window-maximize"></i> BROWSER
-                            <span class="detail-value">Chrome</span>
+                            <span class="detail-value" id="user-browser">Detecting...</span>
                         </div>
                         <div class="detail-item">
                             <i class="fa-solid fa-chart-simple"></i> STATUS
-                            <span class="status-online">Online</span>
+                            <span class="status-online" id="user-status">Online</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="user-badges">
                     <div class="battery-pill">
-                        <i class="fa-solid fa-battery-half" style="color: #22c55e;"></i>
+                        <i class="fa-solid fa-battery-half" id="battery-icon" style="color: #22c55e;"></i>
                         <div class="battery-bar">
-                            <div class="battery-fill"></div>
+                            <div class="battery-fill" id="battery-level" style="width: 50%;"></div>
                         </div>
-                        <span>52%</span>
+                        <span id="battery-text">50%</span>
                     </div>
 
                     <div class="role-pill">
-                        <i class="fa-solid fa-user-shield"></i> Role : member
+                        <i class="fa-solid fa-user-shield"></i> Role : <span id="user-role">member</span>
                     </div>
 
-                    <button class="vvip-btn">
+                    <button class="vvip-btn" id="btn-vvip">
                         <i class="fa-solid fa-crown"></i> VVIP <i class="fa-solid fa-arrow-up"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- Filter Tabs -->
-            <div class="category-scroll">
-                <button class="cat-tab active"><i class="fa-solid fa-border-all"></i> All</button>
-                <button class="cat-tab"><i class="fa-solid fa-download"></i> Downloader</button>
-                <button class="cat-tab"><i class="fa-solid fa-wand-magic-sparkles"></i> Maker</button>
-                <button class="cat-tab"><i class="fa-solid fa-gears"></i> Tools</button>
-                <button class="cat-tab"><i class="fa-solid fa-trash-can"></i> Utility</button>
+            <!-- Category Filter Scroll Tabs -->
+            <div class="category-scroll" id="category-tabs">
+                <button class="cat-tab active" data-category="all"><i class="fa-solid fa-border-all"></i> All</button>
+                <button class="cat-tab" data-category="downloader"><i class="fa-solid fa-download"></i> Downloader</button>
+                <button class="cat-tab" data-category="maker"><i class="fa-solid fa-wand-magic-sparkles"></i> Maker</button>
+                <button class="cat-tab" data-category="tools"><i class="fa-solid fa-gears"></i> Tools</button>
+                <button class="cat-tab" data-category="utility"><i class="fa-solid fa-trash-can"></i> Utility</button>
             </div>
 
             <div class="section-header">
                 <i class="fa-solid fa-border-all"></i> Semua Tools
             </div>
 
-            <!-- Tools Grid (Di-load secara konseptual) -->
+            <!-- Container Tempat JS Asli Proyek Render Daftar Tools -->
             <div class="tools-grid" id="tools-container">
-                <!-- Terabox Card -->
-                <div class="tool-card">
-                    <i class="fa-solid fa-box-archive tool-icon"></i>
-                    <div class="tool-name">Terabox Downloader</div>
-                    <div class="tool-desc">Ambil file dari link share Terabox</div>
-                    <div class="tool-tags"><span class="tag-pill">FILE</span></div>
-                    <i class="fa-solid fa-arrow-right tool-arrow"></i>
-                </div>
-
-                <!-- Instagram Card -->
-                <div class="tool-card" onclick="openSubpage('Instagram Downloader', 'Ambil video, Reels, foto, carousel, metadata, dan caption dalam ruang download khusus.')">
-                    <i class="fa-brands fa-instagram tool-icon"></i>
-                    <div class="tool-name">Instagram</div>
-                    <div class="tool-desc">Download video & foto</div>
-                    <div class="tool-tags"><span class="tag-pill">HD</span></div>
-                    <i class="fa-solid fa-arrow-right tool-arrow"></i>
-                </div>
-
-                <!-- TikTok Card -->
-                <div class="tool-card">
-                    <i class="fa-brands fa-tiktok tool-icon"></i>
-                    <div class="tool-name">TikTok</div>
-                    <div class="tool-desc">Video, foto & audio</div>
-                    <div class="tool-tags">
-                        <span class="tag-pill">MP4/MP3/JPG</span>
-                    </div>
-                    <i class="fa-solid fa-arrow-right tool-arrow"></i>
-                </div>
-
-                <!-- YouTube Card -->
-                <div class="tool-card">
-                    <i class="fa-brands fa-youtube tool-icon"></i>
-                    <div class="tool-name">YouTube</div>
-                    <div class="tool-desc">Video & audio</div>
-                    <i class="fa-solid fa-arrow-right tool-arrow"></i>
-                </div>
-
-                <!-- Spotify Card -->
-                <div class="tool-card">
-                    <i class="fa-brands fa-spotify tool-icon"></i>
-                    <div class="tool-name">Spotify Downloader</div>
-                    <div class="tool-desc">Download lagu favorit</div>
-                    <i class="fa-solid fa-arrow-right tool-arrow"></i>
-                </div>
-
-                <!-- BRAT Generator Card -->
-                <div class="tool-card">
-                    <i class="fa-solid fa-wand-magic-sparkles tool-icon"></i>
-                    <div class="tool-name">BRAT Generator</div>
-                    <div class="tool-desc">Static + animated</div>
-                    <i class="fa-solid fa-arrow-right tool-arrow"></i>
-                </div>
+                <!-- Diisi secara otomatis oleh JavaScript bawaan NexaKit Pro -->
             </div>
         </main>
 
-        <!-- Dynamic Subpage View -->
+        <!-- Dynamic Subpage Overlay (Untuk Fitur Detail / Download) -->
         <div id="subpage-view" class="subpage-container">
-            <div class="subpage-header">
-                <button class="back-pill" onclick="closeSubpage()">
-                    <i class="fa-solid fa-chevron-left"></i> NexaKit Pro
-                </button>
-                <div class="page-badge" id="subpage-badge">
-                    <i class="fa-brands fa-instagram" style="color: var(--accent-pink);"></i>
-                    <span id="subpage-badge-text">INSTAGRAM DOWNLOADER</span>
-                    <span class="status-online" style="margin-left:4px;"></span>
-                </div>
-            </div>
-
-            <div class="studio-card">
-                <div class="studio-tag"><i class="fa-solid fa-layer-group"></i> MEDIA STUDIO</div>
-                <div class="studio-title" id="subpage-title">Instagram<br>Downloader</div>
-                <div class="studio-desc" id="subpage-desc">
-                    Ambil video, Reels, foto, carousel, metadata, dan caption dalam ruang download khusus.
-                </div>
-                <div class="studio-icon-bg" id="subpage-icon-bg">
-                    <i class="fa-brands fa-instagram"></i>
-                </div>
-            </div>
-
-            <div class="api-status-box">
-                <div class="api-info-text">
-                    <div class="api-name">
-                        NexRay API • <span class="dot-warning"></span> Belum diuji
-                    </div>
-                    <div class="api-subtext">Belum diuji • jalankan fitur</div>
-                </div>
-                <button class="refresh-btn"><i class="fa-solid fa-rotate-right"></i></button>
-            </div>
-
-            <div class="input-group">
-                <div class="input-info-text" id="subpage-input-info">
-                    Video, Reels, Foto & Carousel — info lengkap & copy caption.
-                </div>
-                <input type="text" class="custom-input" placeholder="Tempel link Instagram...">
-                <button class="submit-btn">
-                    <i class="fa-solid fa-download"></i> Ambil Media
-                </button>
-            </div>
+            <!-- Render otomatis oleh JS asli ketika menu diklik -->
         </div>
 
     </div>
 
+    <!-- Panggil Script-Script Bawaan Proyek Asli Anda -->
+    <script src="sw.js"></script>
+    <script src="api/supabase-config.js"></script>
     <script>
-        function openSubpage(title, desc) {
-            document.getElementById('home-view').style.display = 'none';
-            document.getElementById('subpage-view').style.display = 'block';
-            document.getElementById('subpage-title').innerHTML = title.replace(' ', '<br>');
-            document.getElementById('subpage-badge-text').innerText = title.toUpperCase();
-            if(desc) document.getElementById('subpage-desc').innerText = desc;
-            window.scrollTo(0, 0);
+        // Logika Deteksi Perangkat Real & Baterai Asli
+        async function initRealSystemInfo() {
+            // Browser & OS Detection
+            const ua = navigator.userAgent;
+            let device = "Desktop";
+            if (/android/i.test(ua)) device = "Android";
+            else if (/iPhone|iPad|iPod/i.test(ua)) device = "iOS";
+            
+            let browser = "Chrome";
+            if (/firefox/i.test(ua)) browser = "Firefox";
+            else if (/safari/i.test(ua) && !/chrome/i.test(ua)) browser = "Safari";
+
+            const devElem = document.getElementById('user-device');
+            const browElem = document.getElementById('user-browser');
+            if(devElem) devElem.innerText = device;
+            if(browElem) browElem.innerText = browser;
+
+            // Real Battery API Status
+            if ('getBattery' in navigator) {
+                try {
+                    const battery = await navigator.getBattery();
+                    const updateBattery = () => {
+                        const level = Math.round(battery.level * 100);
+                        const fillElem = document.getElementById('battery-level');
+                        const textElem = document.getElementById('battery-text');
+                        if (fillElem) fillElem.style.width = level + '%';
+                        if (textElem) textElem.innerText = level + '%';
+                    };
+                    updateBattery();
+                    battery.addEventListener('levelchange', updateBattery);
+                } catch(e) {}
+            }
+
+            // Real Country IP Detection
+            try {
+                const res = await fetch('https://ipapi.co/json/');
+                const data = await res.json();
+                const countryElem = document.getElementById('user-country');
+                if (data && data.country_name && countryElem) {
+                    countryElem.innerText = `🇮🇩 ${data.country_name}`;
+                }
+            } catch(e) {
+                const countryElem = document.getElementById('user-country');
+                if(countryElem) countryElem.innerText = "🇮🇩 Indonesia";
+            }
         }
 
-        function closeSubpage() {
-            document.getElementById('subpage-view').style.display = 'none';
-            document.getElementById('home-view').style.display = 'block';
-            window.scrollTo(0, 0);
-        }
+        window.addEventListener('DOMContentLoaded', initRealSystemInfo);
     </script>
 </body>
 </html>
