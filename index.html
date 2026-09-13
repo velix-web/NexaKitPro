@@ -175,6 +175,77 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
 .compare-divider{position:absolute;top:0;bottom:0;left:50%;width:2px;background:var(--tool-primary);box-shadow:0 0 18px var(--tool-glow);pointer-events:none}
 .compare-range{position:absolute;left:12px;right:12px;bottom:12px;width:calc(100% - 24px);accent-color:var(--tool-primary);z-index:3}
 .compare-labels{position:absolute;inset:12px 12px auto;display:flex;justify-content:space-between;pointer-events:none;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.compare-labels span{padding:6px 9px;border:1px solid var(--tool-border);background:rgba(9,5,18,.7);border-radius:999px;color:var(--text);backdrop-filter:blur(8px)}
+
+/* ===== NEXUS VISUAL PASS ===== */
+/* top bar: icon bubble + copy, no profile pill in header */
+.top-icon-bubble{width:38px;height:38px;flex:none;display:grid;place-items:center;border-radius:12px;border:1px solid var(--border);background:rgba(18,11,36,.75);color:var(--primary-2)}
+.top-icon-bubble .icon{width:18px;height:18px}
+.top-left strong{font-size:12.5px;font-weight:600;color:#b7abc6;display:block;line-height:1.35}
+.top-left .eyebrow{display:block!important;font-size:10px;margin-bottom:2px}
+
+/* hero: minimal Nexus-style brand mark instead of generic SaaS hero */
+.hero{padding:88px 20px 26px}
+.hero-copy{width:100%}
+.hero-eyebrow{display:none}
+.hero h1.hero-title{display:flex;align-items:center;gap:9px;font-size:clamp(22px,6vw,30px);margin:0 0 4px;letter-spacing:.02em;color:var(--primary-2);text-shadow:0 0 24px rgba(189,114,255,.5)}
+.hero h1.hero-title .icon{width:.85em;height:.85em;color:var(--primary-2);filter:drop-shadow(0 0 10px rgba(189,114,255,.6))}
+.hero-byline{font-size:12px;color:var(--muted);margin:0 0 14px;letter-spacing:.02em}
+.hero p{display:none}
+.hero-browse-link{display:inline-flex;align-items:center;gap:6px;border:0;background:transparent;color:var(--primary-2);font-weight:700;font-size:12.5px;padding:0}
+.hero-browse-link .icon{width:13px;height:13px;transform:scaleX(-1)}
+.hero-actions{margin-top:0}
+
+/* info card: real avatar + name row */
+.info-card{align-items:flex-start}
+.info-avatar{overflow:hidden}
+.info-avatar img{width:100%;height:100%;object-fit:cover}
+.info-name{font-size:13px;color:var(--muted);margin:0 0 10px}
+.info-name b{color:var(--text);font-weight:800}
+
+/* tool cards: plain glyph icon, no boxed background, tag badge */
+.tool-card{display:flex;flex-direction:column}
+.tool-card .tool-icon{background:transparent;color:var(--primary-2);width:34px;height:34px;margin:0 0 14px;border-radius:0;display:flex;align-items:center;justify-content:flex-start;padding:0}
+.tool-card .tool-icon .icon{width:30px;height:30px;stroke-width:1.6}
+.tool-card-top{display:none}
+.tool-card h3{margin:0 0 6px}
+.tool-card p{flex:1}
+.tool-tag{align-self:flex-start;margin-top:12px;padding:5px 11px;border-radius:999px;background:rgba(143,76,255,.14);border:1px solid var(--border);color:var(--primary-2);font-size:10px;font-weight:800;letter-spacing:.03em;text-transform:uppercase}
+.tool-arrow{right:15px;bottom:15px}
+@media(max-width:560px){.tool-card .tool-icon .icon{width:24px;height:24px}.tool-tag{font-size:9px;padding:4px 9px;margin-top:8px}}
+
+/* drawer: floating Nexus-style menu panel instead of full left sidebar */
+.drawer{left:50%;right:auto;top:82px;bottom:auto;transform:translateX(-50%) translateY(-10px) scale(.98);width:min(94vw,452px);max-height:calc(100vh - 110px);overflow:auto;background:#0e0a1c;border-radius:24px;box-shadow:0 30px 80px rgba(0,0,0,.55),var(--glow);opacity:0;pointer-events:none;visibility:hidden;transition:transform var(--normal) ease,opacity var(--normal) ease,visibility var(--normal);padding:16px}
+.drawer.open{transform:translateX(-50%) translateY(0) scale(1);opacity:1;pointer-events:auto;visibility:visible}
+.drawer-head{align-items:flex-start;margin-bottom:14px}
+.drawer-head-title{display:flex;flex-direction:column;gap:2px}
+.drawer-head-title strong{font-size:16px}
+.drawer-head-title span{font-size:12px;color:var(--muted)}
+.drawer-head-side{display:flex;align-items:center;gap:10px}
+.drawer-status{display:flex;align-items:center;gap:6px;border:1px solid rgba(73,216,138,.35);background:rgba(73,216,138,.12);color:var(--success);border-radius:999px;padding:6px 11px;font-size:10.5px;font-weight:800;letter-spacing:.06em}
+.drawer-list{display:grid;gap:10px}
+.drawer-item{display:flex;align-items:center;gap:13px;width:100%;text-align:left;border:1px solid var(--border);background:rgba(255,255,255,.03);color:var(--text);border-radius:16px;padding:13px;transition:all var(--normal);text-decoration:none}
+.drawer-item:hover{border-color:var(--border-strong);background:rgba(143,76,255,.1)}
+.drawer-item-icon{width:40px;height:40px;flex:none;display:grid;place-items:center;border-radius:12px;background:rgba(255,255,255,.05);color:var(--primary-2)}
+.drawer-item-icon .icon{width:18px;height:18px}
+.drawer-item-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.drawer-item-text strong{font-size:13.5px;font-weight:750}
+.drawer-item-text span{font-size:11.5px;color:var(--muted);line-height:1.4}
+.drawer-item-arrow{flex:none;width:15px;height:15px;color:var(--muted);transform:scaleX(-1)}
+.drawer .side-bottom{margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.drawer-item.danger{border-color:rgba(255,107,134,.3);background:rgba(255,107,134,.06)}
+.drawer-item.danger .drawer-item-icon{color:var(--danger);background:rgba(255,107,134,.12)}
+.drawer-item.danger:hover{background:rgba(255,107,134,.14);border-color:rgba(255,107,134,.5)}
+@media(max-width:400px){.drawer{padding:13px;top:76px}}
+
+/* tool info card on workspace pages */
+.tool-info-card{display:flex;align-items:flex-start;gap:14px;border:1px solid var(--tool-border,var(--border));background:rgba(255,255,255,.03);border-radius:22px;padding:17px;margin-bottom:14px}
+.tool-info-icon{width:50px;height:50px;flex:none;display:grid;place-items:center;border-radius:15px;background:var(--tool-glow,rgba(143,76,255,.16));color:var(--tool-primary,var(--primary-2))}
+.tool-info-icon .icon{width:24px;height:24px}
+.tool-info-text strong{display:block;font-size:16px;margin-bottom:4px}
+.tool-info-text span{color:var(--muted);font-size:12.5px;line-height:1.55}
+
+/* generic form field label above inputs */
+.field-label{font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#8a7d9c;margin:2px 0 -6px}
 </style></head><body>
 <svg hidden aria-hidden="true"><defs>
 <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></symbol>
@@ -242,12 +313,13 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
 <div id="app-shell" class="app-shell" hidden>
  <aside class="sidebar"><div class="side-brand"><div class="side-logo">NK</div><span class="brand-word">NexaKit Pro</span></div><nav class="side-nav" aria-label="Main navigation"><button class="nav-btn active" data-view="dashboard"><svg class="icon"><use href="#i-home"/></svg> <span>Dashboard</span></button><button class="nav-btn" data-view="tools" data-cat="all"><svg class="icon"><use href="#i-grid"/></svg> <span>All Tools</span></button><button class="nav-btn" data-view="tools" data-cat="downloader"><svg class="icon"><use href="#i-download"/></svg> <span>Downloader</span></button><button class="nav-btn" data-view="tools" data-cat="maker"><svg class="icon"><use href="#i-wand"/></svg> <span>Maker</span></button><button class="nav-btn" data-view="tools" data-cat="image"><svg class="icon"><use href="#i-image"/></svg> <span>Image</span></button></nav><div class="side-bottom"><button class="nav-btn" id="logout"><svg class="icon"><use href="#i-logout"/></svg> <span>Logout</span></button></div></aside>
  <main class="main">
-  <header class="topbar"><div class="top-left"><div><div class="eyebrow">Menu Informasi</div><strong>About Dev · Kritik/Saran · Setting</strong></div></div><div class="top-right"><div class="audio-player" id="audio-player"><button id="audio-mute" type="button" aria-label="Mute musik"><svg class="icon"><use href="#i-volume"/></svg></button><span class="audio-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span><button id="audio-toggle" type="button" aria-label="Putar musik"><svg class="icon"><use href="#i-play"/></svg></button><button id="audio-next" type="button" aria-label="Lagu berikutnya"><svg class="icon"><use href="#i-skip"/></svg></button></div><button id="menu-toggle" class="menu-toggle-btn" aria-label="Buka menu" aria-haspopup="true"><svg class="icon"><use href="#i-menu"/></svg></button><div class="profile-pill"><span class="status-dot"></span><span class="avatar" id="user-avatar">N</span><span id="user-name">Member</span></div></div><audio id="bg-audio" preload="none" loop></audio></header>
+  <header class="topbar"><div class="top-left"><div class="top-icon-bubble"><svg class="icon"><use href="#i-layers"/></svg></div><div><div class="eyebrow">Menu Informasi</div><strong>About Dev · Report Bug · Pengaturan</strong></div></div><div class="top-right"><div class="audio-player" id="audio-player"><button id="audio-mute" type="button" aria-label="Mute musik"><svg class="icon"><use href="#i-volume"/></svg></button><span class="audio-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span><button id="audio-toggle" type="button" aria-label="Putar musik"><svg class="icon"><use href="#i-play"/></svg></button><button id="audio-next" type="button" aria-label="Lagu berikutnya"><svg class="icon"><use href="#i-skip"/></svg></button></div><button id="menu-toggle" class="menu-toggle-btn" aria-label="Buka menu" aria-haspopup="true"><svg class="icon" id="menu-toggle-icon"><use href="#i-menu"/></svg></button></div><audio id="bg-audio" preload="none" loop></audio></header>
   <section id="dashboard-view" class="page">
-   <div class="hero"><video class="hero-video" src="https://files.catbox.moe/7xc5l9.mp4" autoplay muted loop playsinline aria-hidden="true"></video><div class="hero-overlay" aria-hidden="true"></div><div class="hero-copy"><div class="eyebrow">Creative • Downloader • Utility</div><h1 class="brand-word">NexaKit Pro</h1><p>Your all-in-one creative & utility toolkit. Satu workspace untuk downloader, maker, image tools, dan utilitas lainnya.</p><div class="hero-actions"><button id="hero-browse" class="primary-btn" style="width:auto;padding:0 20px">Jelajahi Tools</button></div></div></div>
+   <div class="hero"><video class="hero-video" src="https://files.catbox.moe/7xc5l9.mp4" autoplay muted loop playsinline aria-hidden="true"></video><div class="hero-overlay" aria-hidden="true"></div><div class="hero-copy"><h1 class="brand-word hero-title"><svg class="icon"><use href="#i-sparkle"/></svg> NexaKit Pro</h1><p class="hero-byline">by NexaKit Team</p><div class="hero-actions"><button id="hero-browse" class="hero-browse-link" type="button">Jelajahi Tools <svg class="icon"><use href="#i-chevron-left"/></svg></button></div></div></div>
    <div class="info-card" id="info-card">
-    <div class="info-avatar" id="info-avatar"><svg class="icon"><use href="#i-user"/></svg></div>
+    <div class="info-avatar" id="user-avatar"><svg class="icon"><use href="#i-user"/></svg></div>
     <div class="info-main">
+     <div class="info-name">Halo, <b id="user-name">Member</b></div>
      <div class="info-grid">
       <div><svg class="icon"><use href="#i-globe"/></svg> NEGARA <b id="info-country">Mendeteksi…</b></div>
       <div><svg class="icon"><use href="#i-phone"/></svg> DEVICE <b id="info-device">–</b></div>
@@ -268,6 +340,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
   <section id="workspace-view" class="page tool-themed" data-tool="tiktok" hidden>
    <div class="workspace-nav"><button id="back-tools" class="back-btn" type="button"><svg class="icon"><use href="#i-chevron-left"/></svg> All Tools</button><div class="workspace-title"><div id="workspace-icon" class="tool-icon"></div><span id="workspace-name">Tool</span></div><div class="workspace-status-pill"><span class="status-dot" style="background:var(--warning);box-shadow:none"></span> Not checked</div></div>
    <div class="workspace-hero"><div class="workspace-hero-badge" id="workspace-hero-badge"></div><div class="eyebrow"><svg class="icon"><use href="#i-layers"/></svg> <span id="workspace-eyebrow">Media Studio</span></div><h2 id="workspace-name-visual">Ready</h2><p id="workspace-desc">Pilih tool untuk mulai.</p></div>
+   <div class="tool-info-card" id="tool-info-card"><div class="tool-info-icon" id="tool-info-icon"></div><div class="tool-info-text"><strong id="tool-info-title">Tool</strong><span id="tool-info-desc">Pilih tool untuk mulai.</span></div></div>
    <div class="health-card" id="health-card"><div class="health-info"><div class="health-name"><span class="status-dot" id="health-dot" style="background:var(--warning);box-shadow:none"></span> <b id="health-provider">API</b> · <span id="health-status">Belum diuji</span></div><span class="health-sub" id="health-sub">Belum diuji · jalankan fitur</span></div><button id="health-check" class="health-refresh" type="button" aria-label="Cek status endpoint"><svg class="icon"><use href="#i-history"/></svg></button></div>
    <div class="workspace-body">
     <select id="tool-select" aria-label="Tool" hidden></select>
@@ -277,7 +350,19 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
   </section>
  </main>
 </div>
-<div id="drawer-overlay" class="overlay"></div><aside id="drawer" class="drawer" aria-label="Menu informasi"><div class="drawer-head"><strong class="brand-word">Menu Informasi</strong><button id="drawer-close" class="close-btn" type="button"><svg class="icon"><use href="#i-close"/></svg></button></div><nav class="side-nav"><a class="nav-btn" href="https://portofshakz.biz.id" target="_blank" rel="noopener"><svg class="icon"><use href="#i-user"/></svg> <span>Tentang Dev</span></a><button class="nav-btn" id="menu-feedback" type="button"><svg class="icon"><use href="#i-whatsapp"/></svg> <span>Saran / Kritik / Bug</span></button><button class="nav-btn" id="menu-settings" type="button"><svg class="icon"><use href="#i-wand"/></svg> <span>Setting User</span></button></nav><div class="side-bottom"><button id="mobile-logout" class="nav-btn" type="button"><svg class="icon"><use href="#i-logout"/></svg> <span>Logout</span></button></div></aside>
+<div id="drawer-overlay" class="overlay"></div>
+<aside id="drawer" class="drawer" aria-label="Menu informasi">
+ <div class="drawer-head">
+  <div class="drawer-head-title"><strong class="brand-word">Nexus Menu</strong><span>Informasi dan masukan</span></div>
+  <div class="drawer-head-side"><span class="drawer-status"><span class="status-dot"></span> ONLINE</span><button id="drawer-close" class="close-btn" type="button"><svg class="icon"><use href="#i-close"/></svg></button></div>
+ </div>
+ <nav class="drawer-list">
+  <a class="drawer-item" href="https://portofshakz.biz.id" target="_blank" rel="noopener"><div class="drawer-item-icon"><svg class="icon"><use href="#i-user"/></svg></div><div class="drawer-item-text"><strong>About Dev</strong><span>Profil developer, toolkit, dan daftar project.</span></div><svg class="icon drawer-item-arrow"><use href="#i-chevron-left"/></svg></a>
+  <button class="drawer-item" id="menu-feedback" type="button"><div class="drawer-item-icon"><svg class="icon"><use href="#i-whatsapp"/></svg></div><div class="drawer-item-text"><strong>Report Bug, Saran &amp; Ide</strong><span>Laporkan bug, kirim saran, atau ide fitur.</span></div><svg class="icon drawer-item-arrow"><use href="#i-chevron-left"/></svg></button>
+  <button class="drawer-item" id="menu-settings" type="button"><div class="drawer-item-icon"><svg class="icon"><use href="#i-wand"/></svg></div><div class="drawer-item-text"><strong>Pengaturan User</strong><span>Ubah nama tampilan, foto profil, dan password.</span></div><svg class="icon drawer-item-arrow"><use href="#i-chevron-left"/></svg></button>
+ </nav>
+ <div class="side-bottom"><button id="mobile-logout" class="drawer-item danger" type="button"><div class="drawer-item-icon"><svg class="icon"><use href="#i-logout"/></svg></div><div class="drawer-item-text"><strong>Logout</strong><span>Keluar dari akun NexaKit Pro kamu.</span></div></button></div>
+</aside>
 <div id="settings-overlay" class="overlay"></div>
 <div id="settings-modal" class="settings-modal" role="dialog" aria-modal="true" aria-label="Setting user" hidden>
  <div class="settings-head"><strong class="brand-word">Setting User</strong><button id="settings-close" class="close-btn" type="button"><svg class="icon"><use href="#i-close"/></svg></button></div>
@@ -303,26 +388,26 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
 window.icons={tiktok:'music',instagram:'camera',spotify:'disc',terabox:'box',youtube:'play',facebook:'facebook',twitter:'x',capcut:'scissors',savefrom:'link',lahelu:'sparkle',brat:'sparkle',iqc:'doc','sertifikat-tolol':'pencil','lobby-ml':'gamepad','lobby-ff':'gamepad',fakedana:'coin',fakedev:'code','img2link':'link','remove-background':'eraser','image-enhancer':'stars'};
 window.iconSvg=id=>`<svg class="icon"><use href="#i-${id}"/></svg>`;
 const TOOLS=[
-{id:'tt',slug:'tiktok',name:'TikTok',title:'TikTok Downloader',description:'Download video TikTok tanpa watermark',type:'tiktok'},
-{id:'ig',slug:'instagram',name:'Instagram',title:'Instagram Downloader',description:'Unduh video & foto Instagram HD',type:'generic-downloader',provider:'ig',paramKey:'url'},
-{id:'spotify',slug:'spotify',name:'Spotify',title:'Spotify Downloader',description:'Unduh musik Spotify ke MP3',type:'generic-downloader',provider:'spotify',paramKey:'url'},
-{id:'terabox',slug:'terabox',name:'Terabox',title:'Terabox Downloader',description:'Ambil file dari share Terabox',type:'generic-downloader',provider:'terabox',paramKey:'url'},
-{id:'yt_engine',slug:'youtube',name:'YouTube',title:'YouTube Downloader',description:'Unduh MP4 360p-1080p atau MP3 dari YouTube',type:'youtube'},
-{id:'fb',slug:'facebook',name:'Facebook',title:'Facebook Downloader',description:'Unduh video Facebook tanpa watermark',type:'generic-downloader',provider:'fb',paramKey:'url'},
-{id:'tw',slug:'twitter',name:'Twitter / X',title:'Twitter/X Downloader',description:'Unduh video & foto dari Twitter/X',type:'generic-downloader',provider:'tw',paramKey:'url'},
-{id:'capcut',slug:'capcut',name:'CapCut',title:'CapCut Downloader',description:'Unduh video template/hasil CapCut',type:'generic-downloader',provider:'capcut',paramKey:'url'},
-{id:'savefrom',slug:'savefrom',name:'SaveFrom',title:'SaveFrom Downloader',description:'Unduh media dari banyak platform',type:'generic-downloader',provider:'savefrom',paramKey:'url'},
-{id:'lahelu',slug:'lahelu',name:'Lahelu',title:'Lahelu Downloader',description:'Unduh video/gambar dari Lahelu',type:'generic-downloader',provider:'lahelu',paramKey:'url'},
-{id:'brat_gen',slug:'brat',name:'Brat Generator',title:'Brat Generator',description:'Buat stiker BRAT static & animated',type:'brat',provider:'brat'},
-{id:'iqc',slug:'iqc',name:'iPhone Quote Create',title:'iPhone Quote Create',description:'Buat kartu quote ala iPhone Notes',type:'iqc'},
-{id:'sertifikat_tolol',slug:'sertifikat-tolol',name:'Sertifikat Tolol',title:'Sertifikat Tolol',description:'Buat sertifikat meme kocak',type:'image-generator',provider:'sertifikat',paramKey:'text'},
-{id:'lobby_ml',slug:'lobby-ml',name:'Fake Lobby ML',title:'Fake Lobby ML',description:'Buat SS Lobby Mobile Legends',type:'lobby-ml',provider:'lobbyml'},
-{id:'lobby_ff',slug:'lobby-ff',name:'Fake Lobby FF',title:'Fake Lobby FF',description:'Buat SS Lobby Free Fire',type:'image-generator',provider:'lobbyff',paramKey:'nickname'},
-{id:'fakedana',slug:'fakedana',name:'Fake Saldo DANA',title:'Fake Saldo DANA',description:'Buat gambar saldo DANA palsu',type:'image-generator',provider:'fakedana',paramKey:'nominal'},
-{id:'fakedev',slug:'fakedev',name:'FakeDev Profile',title:'FakeDev Profile',description:'Generator kartu profil developer',type:'fakedev',provider:'fakedev'},
-{id:'img2link',slug:'img2link',name:'Foto To Link',title:'Foto To Link',description:'Upload gambar menjadi URL ImgBB',type:'img2link'},
-{id:'rmbg',slug:'remove-background',name:'Remove Background',title:'Remove Background',description:'Hapus background foto',type:'remove-bg'},
-{id:'enh',slug:'image-enhancer',name:'Image Enhancer',title:'Image Enhancer',description:'Tingkatkan kualitas foto HD',type:'image-enhancer'}
+{id:'tt',slug:'tiktok',name:'TikTok',title:'TikTok Downloader',description:'Download video TikTok tanpa watermark',type:'tiktok',tag:'MP4/MP3'},
+{id:'ig',slug:'instagram',name:'Instagram',title:'Instagram Downloader',description:'Unduh video & foto Instagram HD',type:'generic-downloader',provider:'ig',paramKey:'url',tag:'HD'},
+{id:'spotify',slug:'spotify',name:'Spotify',title:'Spotify Downloader',description:'Unduh musik Spotify ke MP3',type:'generic-downloader',provider:'spotify',paramKey:'url',tag:'MP3'},
+{id:'terabox',slug:'terabox',name:'Terabox',title:'Terabox Downloader',description:'Ambil file dari share Terabox',type:'generic-downloader',provider:'terabox',paramKey:'url',tag:'FILE'},
+{id:'yt_engine',slug:'youtube',name:'YouTube',title:'YouTube Downloader',description:'Unduh MP4 360p-1080p atau MP3 dari YouTube',type:'youtube',tag:'MP4/MP3'},
+{id:'fb',slug:'facebook',name:'Facebook',title:'Facebook Downloader',description:'Unduh video Facebook tanpa watermark',type:'generic-downloader',provider:'fb',paramKey:'url',tag:'MP4'},
+{id:'tw',slug:'twitter',name:'Twitter / X',title:'Twitter/X Downloader',description:'Unduh video & foto dari Twitter/X',type:'generic-downloader',provider:'tw',paramKey:'url',tag:'MP4/JPG'},
+{id:'capcut',slug:'capcut',name:'CapCut',title:'CapCut Downloader',description:'Unduh video template/hasil CapCut',type:'generic-downloader',provider:'capcut',paramKey:'url',tag:'MP4'},
+{id:'savefrom',slug:'savefrom',name:'SaveFrom',title:'SaveFrom Downloader',description:'Unduh media dari banyak platform',type:'generic-downloader',provider:'savefrom',paramKey:'url',tag:'MULTI'},
+{id:'lahelu',slug:'lahelu',name:'Lahelu',title:'Lahelu Downloader',description:'Unduh video/gambar dari Lahelu',type:'generic-downloader',provider:'lahelu',paramKey:'url',tag:'MEDIA'},
+{id:'brat_gen',slug:'brat',name:'Brat Generator',title:'Brat Generator',description:'Buat stiker BRAT static & animated',type:'brat',provider:'brat',tag:'STATIC/GIF'},
+{id:'iqc',slug:'iqc',name:'iPhone Quote Create',title:'iPhone Quote Create',description:'Buat kartu quote ala iPhone Notes',type:'iqc',tag:'IMAGE'},
+{id:'sertifikat_tolol',slug:'sertifikat-tolol',name:'Sertifikat Tolol',title:'Sertifikat Tolol',description:'Buat sertifikat meme kocak',type:'image-generator',provider:'sertifikat',paramKey:'text',tag:'IMAGE'},
+{id:'lobby_ml',slug:'lobby-ml',name:'Fake Lobby ML',title:'Fake Lobby ML',description:'Buat SS Lobby Mobile Legends',type:'lobby-ml',provider:'lobbyml',tag:'IMAGE'},
+{id:'lobby_ff',slug:'lobby-ff',name:'Fake Lobby FF',title:'Fake Lobby FF',description:'Buat SS Lobby Free Fire',type:'image-generator',provider:'lobbyff',paramKey:'nickname',tag:'IMAGE'},
+{id:'fakedana',slug:'fakedana',name:'Fake Saldo DANA',title:'Fake Saldo DANA',description:'Buat gambar saldo DANA palsu',type:'image-generator',provider:'fakedana',paramKey:'nominal',tag:'IMAGE'},
+{id:'fakedev',slug:'fakedev',name:'FakeDev Profile',title:'FakeDev Profile',description:'Generator kartu profil developer',type:'fakedev',provider:'fakedev',tag:'IMAGE'},
+{id:'img2link',slug:'img2link',name:'Foto To Link',title:'Foto To Link',description:'Upload gambar menjadi URL ImgBB',type:'img2link',tag:'LINK'},
+{id:'rmbg',slug:'remove-background',name:'Remove Background',title:'Remove Background',description:'Hapus background foto',type:'remove-bg',tag:'PNG'},
+{id:'enh',slug:'image-enhancer',name:'Image Enhancer',title:'Image Enhancer',description:'Tingkatkan kualitas foto HD',type:'image-enhancer',tag:'HD'}
 ];
 const $=id=>document.getElementById(id);
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -554,7 +639,7 @@ function renderCards(){
   const headingEl=$q('grid-heading');if(headingEl)headingEl.textContent=catLabel;
   const list=tools.filter(t=>(active==='all'||cat(t)===active)&&(!q||`${t.name} ${t.title} ${t.description}`.toLowerCase().includes(q)));
   grid.style.animation='none';grid.offsetHeight;grid.style.animation='fadeInGrid .28s ease';
-  grid.innerHTML=list.length?list.map(t=>{return `<article class="tool-card" tabindex="0" data-slug="${esc(t.slug)}"><div class="tool-icon" aria-hidden="true">${iconSvg(icons[t.slug]||'sparkle')}</div><div class="tool-card-top"><span class="tool-category">${esc(cat(t))}</span><span class="tool-arrow">${iconSvg('chevron-left')}</span></div><h3>${esc(t.title)}</h3><p>${esc(t.description)}</p></article>`}).join(''):`<div class="empty-state" style="grid-column:1/-1"><strong>Tool tidak ditemukan.</strong><br><span>Coba kata kunci lain atau pilih kategori All.</span></div>`;
+  grid.innerHTML=list.length?list.map(t=>{return `<article class="tool-card" tabindex="0" data-slug="${esc(t.slug)}"><div class="tool-icon" aria-hidden="true">${iconSvg(icons[t.slug]||'sparkle')}</div><h3>${esc(t.title)}</h3><p>${esc(t.description)}</p>${t.tag?`<span class="tool-tag">${esc(t.tag)}</span>`:''}<span class="tool-arrow">${iconSvg('chevron-left')}</span></article>`}).join(''):`<div class="empty-state" style="grid-column:1/-1"><strong>Tool tidak ditemukan.</strong><br><span>Coba kata kunci lain atau pilih kategori All.</span></div>`;
   grid.querySelectorAll('.tool-card').forEach(c=>{const go=()=>openTool(c.dataset.slug);c.addEventListener('click',go);c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}})});
 }
 function applyToolTheme(t){
@@ -605,8 +690,11 @@ function openTool(slug){
   $q('workspace-desc').textContent=t.description;
   $q('workspace-icon').innerHTML=iconSvg(icons[t.slug]||'sparkle');
   $q('workspace-hero-badge').innerHTML=iconSvg(icons[t.slug]||'sparkle');
-  const studioLabel={downloader:'Media Studio',maker:'Creative Studio',image:'Image Studio',utility:'Utility Studio'}[cat(t)]||'Media Studio';
+  const studioLabel={downloader:'Nexus Cloud Downloader',maker:'Nexus Creative Studio',image:'Nexus Image Lab',utility:'Nexus Utility Deck'}[cat(t)]||'Nexus Cloud Downloader';
   $q('workspace-eyebrow').textContent=studioLabel;
+  $q('tool-info-icon').innerHTML=iconSvg(icons[t.slug]||'sparkle');
+  $q('tool-info-title').textContent=t.title;
+  $q('tool-info-desc').textContent=t.description;
   resetHealthCheck(t);
   dashboard.hidden=true;workspace.hidden=false;
   window.scrollTo({top:0,behavior:'smooth'});
@@ -670,7 +758,7 @@ async function logout(){
 }
 function setPasswordVisibility(inputId,visible,buttonId){const input=$q(inputId),button=$q(buttonId);if(!input||!button)return;input.type=visible?'text':'password';button.textContent=visible?'Sembunyikan':'Lihat';button.setAttribute('aria-label',visible?'Sembunyikan password':'Tampilkan password')}
 function togglePassword(inputId,buttonId){const input=$q(inputId);if(input)setPasswordVisibility(inputId,input.type==='password',buttonId)}
-function openDrawer(v){$q('drawer').classList.toggle('open',v);$q('drawer-overlay').classList.toggle('open',v);document.body.classList.toggle('drawer-open',v)}
+function openDrawer(v){$q('drawer').classList.toggle('open',v);$q('drawer-overlay').classList.toggle('open',v);document.body.classList.toggle('drawer-open',v);const mi=$q('menu-toggle-icon');if(mi)mi.innerHTML=`<use href="#i-${v?'close':'menu'}"/>`}
 async function loadSupabase(){
   const r=await fetch(CONFIG_ENDPOINT,{cache:'no-store'});
   if(!r.ok)throw new Error('Supabase configuration unavailable');
