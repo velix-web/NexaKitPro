@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#090615"><meta name="description" content="NexaKit Pro — modern creative and utility toolkit"><link rel="manifest" href="/manifest.json"><title>NexaKit Pro</title>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0d0a18"><meta name="description" content="NexaKit Pro — fast online downloaders, generators, image tools, and utilities in one responsive toolkit."><meta name="robots" content="index,follow,max-image-preview:large"><meta name="author" content="NexaKit Pro"><meta name="application-name" content="NexaKit Pro"><meta property="og:type" content="website"><meta property="og:site_name" content="NexaKit Pro"><meta property="og:url" content="/"><meta property="og:title" content="NexaKit Pro — Downloaders, Generators & Tools"><meta property="og:description" content="Fast online downloaders, generators, image tools, and utilities in one place."><meta property="og:image" content="/icon-512.png"><meta property="og:image:alt" content="NexaKit Pro"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="NexaKit Pro — Downloaders, Generators & Tools"><meta name="twitter:description" content="Fast online downloaders, generators, image tools, and utilities in one place."><meta name="twitter:image" content="/icon-512.png"><link rel="canonical" href="/"><link rel="manifest" href="/manifest.json"><title>NexaKit Pro — Downloaders, Generators & Tools</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Orbitron:wght@600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
@@ -832,7 +832,7 @@ async function uploadToImgBB(file){const f=new FormData();f.append('image',file)
 let tiktokData=null,tiktokFormat='hd',ytInfo=null;
 function initTiktok(){const input=$('tiktok-url'),btn=$('preview-tiktok'),box=$('result-container'),content=$('result-content'),history=$('dl-history-container');
  function historyKey(){return `nexakit-history-tiktok:${window.nexakitUser||'guest'}`}
- function renderHistory(){const items=JSON.parse(localStorage.getItem(historyKey())||'[]');history.innerHTML=`<div class="dl-history-head"><div>${iconSvg('history')} HISTORY DOWNLOAD</div><button id="clear-history" class="btn-danger btn-compact" type="button">${iconSvg('trash')} Bersihkan</button></div>`+(items.length?items.map(h=>`<a class="dl-history-item" href="${esc(h.url)}" target="_blank" rel="noopener"><img src="${esc(h.cover||'')}" alt=""><span>${esc(h.title)}</span></a>`).join(''):'<div>Belum ada history TikTok. Download pertama akan muncul di sini.</div>');$('clear-history')?.addEventListener('click',()=>{localStorage.removeItem(historyKey());renderHistory()})}
+ function renderHistory(){const items=JSON.parse(localStorage.getItem(historyKey())||'[]');history.innerHTML=`<div class="dl-history-head"><div>${iconSvg('history')} Recent downloads</div><button id="clear-history" class="btn-danger btn-compact" type="button">${iconSvg('trash')} Bersihkan</button></div>`+(items.length?items.map(h=>`<a class="dl-history-item" href="${esc(h.url)}" target="_blank" rel="noopener"><img src="${esc(h.cover||'')}" alt=""><span>${esc(h.title)}</span></a>`).join(''):'<div>Belum ada history TikTok. Download pertama akan muncul di sini.</div>');$('clear-history')?.addEventListener('click',()=>{localStorage.removeItem(historyKey());renderHistory()})}
  function addHistory(x){const a=JSON.parse(localStorage.getItem(historyKey())||'[]');a.unshift(x);localStorage.setItem(historyKey(),JSON.stringify(a.slice(0,8)));renderHistory()}
  function render(){const d=tiktokData;const formats=[{id:'hd',name:'MP4 HD',url:d.hdplay||d.play},{id:'sd',name:'MP4 Standar',url:d.play},{id:'wm',name:'MP4 Watermark',url:d.wmplay},{id:'mp3',name:'MP3 Audio',url:d.music}].filter(x=>x.url);if(!formats.some(x=>x.id===tiktokFormat))tiktokFormat=formats[0]?.id;const s=formats.find(x=>x.id===tiktokFormat);content.innerHTML=`<div class="preview-media-box"><video src="${esc(d.play||d.hdplay)}" poster="${esc(d.cover||'')}" controls playsinline></video></div><div class="dl-profile-row"><img class="dl-avatar" src="${esc(d.author?.avatar||d.cover||'')}" alt=""><div><div>@${esc(d.author?.unique_id||d.author?.nickname||'tiktok')}</div><div>${esc(d.title||'(Tanpa judul)')}</div></div></div><div class="dl-stats-grid"><div class="dl-stat-box">${Number(d.play_count)||0}<br>Plays</div><div class="dl-stat-box">${Number(d.digg_count)||0}<br>Likes</div><div class="dl-stat-box">${Number(d.comment_count)||0}<br>Komen</div><div class="dl-stat-box">${Number(d.share_count)||0}<br>Share</div></div><div class="dl-caption-box"><b>CAPTION</b><div id="caption-text" class="dl-caption-text">${esc(d.title||'')}</div><button id="caption-toggle" class="link-btn" type="button" hidden>Baca selengkapnya</button></div><div class="dl-format-label"><span>PILIH FORMAT</span><span>${esc(s?.name||'')}</span></div>${formats.map(f=>`<button type="button" class="dl-format-row${f.id===tiktokFormat?' active':''}" data-format="${f.id}"><span class="dl-format-name">${f.id==='hd'?iconSvg('crown'):''}${f.name}</span>${iconSvg(f.id===tiktokFormat?'check':'circle')}</button>`).join('')}<button id="download-tiktok" type="button">Download ${esc(s?.name||'')}</button>`;const capEl=$('caption-text'),capBtn=$('caption-toggle');if(capEl.scrollHeight>capEl.clientHeight+4){capBtn.hidden=false;capBtn.onclick=()=>{capEl.classList.toggle('expanded');capBtn.textContent=capEl.classList.contains('expanded')?'Sembunyikan':'Baca selengkapnya'}}content.querySelectorAll('[data-format]').forEach(b=>b.onclick=()=>{tiktokFormat=b.dataset.format;render()});$('download-tiktok')?.addEventListener('click',async()=>{const url=formats.find(x=>x.id===tiktokFormat)?.url;if(url){await downloadFile(url,`nexakit-tiktok-${Date.now()}.${tiktokFormat==='mp3'?'mp3':'mp4'}`);addHistory({title:d.title||'TikTok Video',cover:d.cover,url})}})}
  async function run(){box.hidden=false;content.innerHTML=resultLoading();setBusy(true,'Mengambil preview…');btn.classList.add('btn-loading');try{const v=input.value.trim();if(!v)throw Error('Link TikTok tidak boleh kosong.');if(!isHttpUrl(v))throw Error('Link TikTok tidak valid.');const j=await safeJson('/api/proxy?provider=tiktok&url='+encodeURIComponent(v));if(j.code!==0||!j.data)throw Error('Videonya nggak ketemu, coba cek lagi linknya.');markInvalid(input,false);tiktokData=j.data;tiktokFormat=tiktokData.hdplay?'hd':'sd';render();renderHistory()}catch(e){markInvalid(input,true);content.innerHTML=resultError(e)}finally{setBusy(false);btn.classList.remove('btn-loading')}}btn.onclick=run;input.onkeydown=e=>{if(e.key==='Enter')run()};renderHistory()}
@@ -1001,7 +1001,7 @@ function setMode(mode){
   authError.textContent='';
 }
 function showAuth(){auth.hidden=false;app.hidden=true}
-function showApp(u){window.nexakitUser=u;auth.hidden=true;app.hidden=false;userName.textContent=u;userAvatar.textContent=u.slice(0,1).toUpperCase();renderCards();openDashboard();boot.classList.add('hide');loadProfileIntoUI()}
+function showApp(u){window.nexakitUser=u;auth.hidden=true;app.hidden=false;userName.textContent=u;userAvatar.textContent=u.slice(0,1).toUpperCase();renderCards();const savedTool=sessionStorage.getItem('nexakit-active-tool');if(savedTool&&tools.some(t=>t.slug===savedTool))openTool(savedTool);else openDashboard();boot.classList.add('hide');loadProfileIntoUI()}
 async function loadProfileIntoUI(){
   const {data:{user}}=await supabase.auth.getUser();
   if(!user)return;
@@ -1043,7 +1043,7 @@ function renderCards(){
   const headingEl=$q('grid-heading');if(headingEl)headingEl.textContent=catLabel;
   const list=tools.filter(t=>(active==='all'||cat(t)===active)&&(!q||`${t.name} ${t.title} ${t.description}`.toLowerCase().includes(q)));
   grid.style.animation='none';grid.offsetHeight;grid.style.animation='fadeInGrid .28s ease';
-  grid.innerHTML=list.length?list.map(t=>{return `<article class="tool-card" tabindex="0" data-slug="${esc(t.slug)}"><div class="tool-icon" aria-hidden="true">${iconSvg(icons[t.slug]||'sparkle')}</div><h3>${esc(t.title)}</h3><p>${esc(t.description)}</p>${t.tag?`<span class="tool-tag">${esc(t.tag)}</span>`:''}<span class="tool-arrow">${iconSvg('chevron-left')}</span></article>`}).join(''):`<div class="empty-state" style="grid-column:1/-1"><strong>Tool tidak ditemukan.</strong><br><span>Coba kata kunci lain atau pilih kategori All.</span></div>`;
+  grid.innerHTML=list.length?list.map(t=>{const th=toolThemes[t.slug]||toolThemes.tiktok;return `<article class="tool-card" tabindex="0" data-slug="${esc(t.slug)}" style="--card-accent:${th.primary};--card-secondary:${th.secondary};--card-glow:${th.glow};--card-surface:${th.surface}"><div class="tool-icon" aria-hidden="true">${iconSvg(icons[t.slug]||'sparkle')}</div><div class="tool-card-copy"><h3>${esc(t.title)}</h3><p>${esc(t.description)}</p></div>${t.tag?`<span class="tool-tag">${esc(t.tag)}</span>`:''}<span class="tool-arrow">${iconSvg('chevron-left')}</span></article>`}).join(''):`<div class="empty-state" style="grid-column:1/-1"><strong>Tool tidak ditemukan.</strong><br><span>Coba kata kunci lain atau pilih kategori All.</span></div>`;
   grid.querySelectorAll('.tool-card').forEach(c=>{const go=()=>openTool(c.dataset.slug);c.addEventListener('click',go);c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}})});
 }
 function applyToolTheme(t){
@@ -1064,7 +1064,7 @@ function resetHealthCheck(t){
  $q('health-provider').textContent=(t.provider||t.slug).toUpperCase();
  $q('health-status').textContent='Belum diuji';$q('health-status').style.color='';
  $q('health-dot').style.background='var(--warning)';$q('health-dot').style.boxShadow='none';
- $q('health-sub').textContent='Belum diuji · jalankan fitur';
+ $q('health-sub').textContent='Endpoint status · siap diperiksa';
 }
 $q('health-check').onclick=async()=>{
  if(!healthTool)return;
@@ -1076,25 +1076,26 @@ $q('health-check').onclick=async()=>{
   clearTimeout(timer);
   $q('health-status').textContent='Aktif';$q('health-status').style.color='var(--success)';
   $q('health-dot').style.background='var(--success)';$q('health-dot').style.boxShadow='0 0 14px rgba(73,216,138,.65)';
-  $q('health-sub').textContent='Endpoint merespons · dicek barusan';
+  $q('health-sub').textContent='Endpoint online · baru saja diperiksa';
  }catch(e){
   clearTimeout(timer);
   $q('health-status').textContent='Tidak merespons';$q('health-status').style.color='var(--danger)';
   $q('health-dot').style.background='var(--danger)';$q('health-dot').style.boxShadow='none';
-  $q('health-sub').textContent='Gagal terhubung · coba lagi nanti';
+  $q('health-sub').textContent='Endpoint belum merespons · coba lagi';
  }finally{btn.disabled=false}
 };
 function openTool(slug){
   const t=tools.find(x=>x.slug===slug);if(!t)return;
   applyToolTheme(t);
   activeTool=t;
+  sessionStorage.setItem('nexakit-active-tool',t.slug);
   render(t);
   $q('workspace-name').textContent=t.title;
   $q('workspace-name-visual').textContent=t.title;
   $q('workspace-desc').textContent=t.description;
   $q('workspace-icon').innerHTML=iconSvg(icons[t.slug]||'sparkle');
   $q('workspace-hero-badge').innerHTML=iconSvg(icons[t.slug]||'sparkle');
-  const studioLabel={downloader:'Nexus Cloud Downloader',maker:'Nexus Creative Studio',image:'Nexus Image Lab',utility:'Nexus Utility Deck'}[cat(t)]||'Nexus Cloud Downloader';
+  const studioLabel={downloader:`${t.name} · Media Tool`,maker:`${t.name} · Creator Tool`,image:`${t.name} · Image Tool`,utility:`${t.name} · Utility Tool`}[cat(t)]||`${t.name} · Tool`;
   $q('workspace-eyebrow').textContent=studioLabel;
   $q('tool-info-icon').innerHTML=iconSvg(icons[t.slug]||'sparkle');
   $q('tool-info-title').textContent=t.title;
@@ -1205,10 +1206,48 @@ document.addEventListener('input',e=>{
 });
 window.addEventListener('error',e=>{console.error('[NexaKit UI]',e.error||e.message)});
 window.addEventListener('unhandledrejection',e=>{console.error('[NexaKit Promise]',e.reason)});
+(function setupSeoUrl(){const u=location.href.split('#')[0];const c=document.querySelector('link[rel=canonical]');if(c)c.href=u;document.querySelectorAll('meta[property="og:url"]').forEach(m=>m.content=u)})();
 init();
 if ('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js',{updateViaCache:'none'}).catch(error=>console.warn('Service worker registration failed:',error)));
 </script>
 
+<style id="nexakit-theme-responsive-v6">
+/* v6: theme-aware cards, full-width desktop canvas, neutral main hero, larger FA hero icons. */
+html,body{background:linear-gradient(135deg,#0b0714 0%,#151022 48%,#09131a 100%)!important}
+.app-shell{max-width:none!important;width:100%!important;background:transparent!important}
+.main,.page,.topbar,.hero,.workspace-hero{max-width:none!important;width:100%!important}
+.main{padding-left:clamp(14px,2.5vw,38px)!important;padding-right:clamp(14px,2.5vw,38px)!important}
+.page{margin-inline:0!important}
+.hero{margin-left:0!important;margin-right:0!important;background:linear-gradient(135deg,rgba(27,25,35,.96),rgba(13,24,29,.96))!important;border:1px solid rgba(255,255,255,.08)}
+.hero-overlay{background:linear-gradient(180deg,rgba(10,9,15,.12),rgba(10,9,15,.78))!important}
+.tool-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:clamp(12px,1.35vw,20px)!important}
+.tool-card{background:linear-gradient(145deg,var(--card-surface,rgba(18,11,36,.9)),rgba(10,8,18,.96))!important;border-color:color-mix(in srgb,var(--card-accent,#8f4cff) 28%,transparent)!important;box-shadow:0 14px 42px rgba(0,0,0,.18),0 0 0 0 var(--card-glow)!important;overflow:hidden}
+.tool-card:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,color-mix(in srgb,var(--card-accent) 10%,transparent),transparent 55%);pointer-events:none}
+.tool-card:hover{border-color:var(--card-accent)!important;box-shadow:0 20px 52px rgba(0,0,0,.26),0 0 28px var(--card-glow)!important}
+.tool-card .tool-icon{background:linear-gradient(135deg,color-mix(in srgb,var(--card-accent) 20%,transparent),color-mix(in srgb,var(--card-secondary) 9%,transparent))!important;color:var(--card-accent)!important;border:1px solid color-mix(in srgb,var(--card-accent) 26%,transparent);width:52px;height:52px;border-radius:15px;font-size:25px;box-shadow:0 8px 22px var(--card-glow);position:relative;z-index:1}
+.tool-card h3,.tool-card p,.tool-card .tool-tag,.tool-card .tool-arrow{position:relative;z-index:1}.tool-card h3{color:var(--text)}.tool-card p{color:#a89cb8}.tool-card .tool-tag{border-color:color-mix(in srgb,var(--card-accent) 30%,transparent);color:var(--card-accent);background:color-mix(in srgb,var(--card-accent) 9%,transparent)}.tool-card .tool-arrow{color:var(--card-accent)!important}
+.workspace-hero{background:linear-gradient(135deg,color-mix(in srgb,var(--tool-primary,#8f4cff) 16%,#17121f),color-mix(in srgb,var(--tool-secondary,#55cfff) 8%,#0e0c16))!important;border-color:color-mix(in srgb,var(--tool-primary,#8f4cff) 28%,transparent)!important;box-shadow:0 18px 55px rgba(0,0,0,.18),0 0 40px var(--tool-glow)!important}
+.workspace-hero:after{border-color:color-mix(in srgb,var(--tool-primary,#8f4cff) 18%,transparent)!important}
+.workspace-hero-badge{width:78px!important;height:78px!important;border-radius:22px!important;background:linear-gradient(145deg,color-mix(in srgb,var(--tool-primary) 20%,transparent),color-mix(in srgb,var(--tool-secondary) 10%,transparent))!important;color:var(--tool-primary)!important;box-shadow:0 0 34px var(--tool-glow)!important}
+.workspace-hero-badge .icon{width:42px!important;height:42px!important;font-size:42px!important}
+.workspace-title .tool-icon{background:linear-gradient(145deg,color-mix(in srgb,var(--tool-primary) 18%,transparent),color-mix(in srgb,var(--tool-secondary) 9%,transparent))!important;color:var(--tool-primary)!important;border-color:var(--tool-border)!important}
+.tool-themed .workspace-body,.tool-themed .health-card,.tool-themed .tool-info-card{background:linear-gradient(145deg,var(--tool-surface),rgba(10,7,17,.94))!important}
+.tool-themed .health-card,.tool-themed .tool-info-card{border-color:var(--tool-border)!important}
+.tool-themed .health-refresh{color:var(--tool-primary)!important;border-color:var(--tool-border)!important}
+.workspace-hero h2{font-size:clamp(30px,3.2vw,42px)!important}
+.workspace-hero p{max-width:760px}
+/* The small supporting copy is an intentional status/context layer, not disposable filler. */
+.health-sub{letter-spacing:.01em}
+/* No browser-looking controls. */
+select{background-image:none!important}
+@media(min-width:1101px){.tool-grid{grid-template-columns:repeat(5,minmax(0,1fr))!important}.hero{border-radius:24px!important}.page{padding-inline:0!important}}
+@media(max-width:1100px){.tool-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:760px){.tool-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.workspace-hero-badge{width:64px!important;height:64px!important}.workspace-hero-badge .icon{width:34px!important;height:34px!important;font-size:34px!important}.workspace-hero{padding:22px!important}.workspace-hero h2{font-size:clamp(28px,8vw,36px)!important}}
+@media(max-width:430px){.tool-grid{grid-template-columns:1fr!important}.tool-card{min-height:150px}.tool-card .tool-icon{width:48px;height:48px;font-size:23px}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"NexaKit Pro","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","description":"Fast online downloaders, generators, image tools, and utilities in one responsive toolkit.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+</script>
 <script id="nexakit-motion-responsive-v4-js">
 (function(){
   const root=document.documentElement;
@@ -1253,4 +1292,143 @@ if ('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.s
   setTimeout(()=>{prepareCards();reveal();setupReadMore()},700);
 })();
 </script>
-</body></html>
+</body></html><style>
+/* v7 — purple section field + neon edge treatment + non-stretched cards */
+#dashboard-view,
+#workspace-view{
+  position:relative;
+  isolation:isolate;
+  overflow:visible;
+}
+
+#dashboard-view::before,
+#workspace-view::before{
+  content:"";
+  position:absolute;
+  z-index:-2;
+  left:-8vw;
+  top:-18px;
+  width:50%;
+  height:calc(100% + 36px);
+  pointer-events:none;
+  background:linear-gradient(180deg,
+    rgba(138,43,226,.20) 0%,
+    rgba(111,35,176,.14) 48%,
+    rgba(76,24,124,.08) 100%);
+  border-radius:0 34px 34px 0;
+  filter:blur(.2px);
+}
+
+#dashboard-view::after,
+#workspace-view::after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  top:12px;
+  right:-18px;
+  width:150px;
+  height:150px;
+  pointer-events:none;
+  border-top:1px solid rgba(205,137,255,.58);
+  border-right:1px solid rgba(205,137,255,.58);
+  border-radius:0 28px 0 0;
+  box-shadow:
+    0 -4px 28px rgba(168,74,255,.28),
+    4px 0 32px rgba(168,74,255,.20),
+    inset -8px 8px 24px rgba(168,74,255,.05);
+  opacity:.9;
+}
+
+#dashboard-view .section-heading,
+#dashboard-view .toolbar,
+#dashboard-view .tool-grid,
+#workspace-view .workspace-nav,
+#workspace-view .workspace-hero,
+#workspace-view .tool-info-card,
+#workspace-view .health-card,
+#workspace-view .workspace-body{
+  position:relative;
+}
+
+#dashboard-view .section-heading::before,
+#workspace-view .workspace-nav::before,
+#workspace-view .workspace-body::before{
+  content:"";
+  position:absolute;
+  pointer-events:none;
+  left:-12px;
+  top:0;
+  bottom:0;
+  width:2px;
+  border-radius:99px;
+  background:linear-gradient(180deg,rgba(205,137,255,.9),rgba(139,43,226,.18),transparent);
+  box-shadow:0 0 14px rgba(177,79,255,.62),0 0 30px rgba(177,79,255,.25);
+}
+
+/* Keep cards compact instead of stretching them to consume the viewport. */
+.tool-grid{
+  grid-template-columns:repeat(5,minmax(0,220px));
+  justify-content:start;
+  align-items:start;
+  gap:12px;
+}
+.tool-card{
+  width:100%;
+  max-width:220px;
+  min-height:176px;
+  height:176px;
+  box-sizing:border-box;
+}
+
+@media(max-width:1180px){
+  .tool-grid{grid-template-columns:repeat(4,minmax(0,220px));}
+}
+@media(max-width:930px){
+  .tool-grid{grid-template-columns:repeat(3,minmax(0,210px));}
+}
+@media(max-width:680px){
+  .tool-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    justify-content:stretch;
+  }
+  .tool-card{
+    max-width:none;
+    height:156px;
+    min-height:156px;
+  }
+}
+@media(max-width:390px){
+  .tool-grid{gap:9px;}
+  .tool-card{height:148px;min-height:148px;}
+}
+
+/* Purple-only neon atmosphere: no cyan/blue mixed into section backgrounds. */
+.dashboard-section,
+.workspace-section{
+  background:linear-gradient(90deg,rgba(126,34,206,.13) 0%,rgba(91,33,182,.07) 50%,transparent 50%);
+}
+
+/* Crisp corner glows on major cards, while preserving each tool's own accent. */
+.tool-card::before,
+.workspace-hero::before,
+.tool-info-card::before,
+.health-card::before{
+  content:"";
+  position:absolute;
+  pointer-events:none;
+  top:-1px;
+  left:18px;
+  right:18px;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(203,125,255,.68),transparent);
+  box-shadow:0 0 14px rgba(180,72,255,.46),0 0 28px rgba(180,72,255,.18);
+  opacity:.78;
+}
+
+@media(max-width:560px){
+  #dashboard-view::before,
+  #workspace-view::before{left:-18px;width:52%;}
+  #dashboard-view::after,
+  #workspace-view::after{width:105px;height:105px;right:-10px;top:8px;border-radius:0 20px 0 0;}
+}
+</style>
