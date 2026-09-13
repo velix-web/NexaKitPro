@@ -485,8 +485,8 @@ const toolThemes = {
   'image-enhancer':{primary:'#a37cff',secondary:'#59d8ff',glow:'rgba(163,124,255,.18)',border:'rgba(163,124,255,.22)',surface:'rgba(15,11,35,.76)'}
 };
 const categories=[['all','All','grid'],['downloader','Downloader','download'],['maker','Maker','wand'],['image','Image','image'],['utility','Utility','sparkle']];
-const icons={tiktok:'music',instagram:'camera',spotify:'disc',terabox:'box',youtube:'play',facebook:'facebook',twitter:'x',capcut:'scissors',savefrom:'link',lahelu:'sparkle',brat:'sparkle',iqc:'doc','sertifikat-tolol':'pencil','lobby-ml':'gamepad','lobby-ff':'gamepad',fakedana:'coin',fakedev:'code','img2link':'link','remove-background':'eraser','image-enhancer':'stars'};
-const iconSvg=id=>`<svg class="icon"><use href="#i-${id}"/></svg>`;
+window.icons={tiktok:'music',instagram:'camera',spotify:'disc',terabox:'box',youtube:'play',facebook:'facebook',twitter:'x',capcut:'scissors',savefrom:'link',lahelu:'sparkle',brat:'sparkle',iqc:'doc','sertifikat-tolol':'pencil','lobby-ml':'gamepad','lobby-ff':'gamepad',fakedana:'coin',fakedev:'code','img2link':'link','remove-background':'eraser','image-enhancer':'stars'};
+window.iconSvg=id=>`<svg class="icon"><use href="#i-${id}"/></svg>`;
 function cat(t){if(['tiktok','instagram','spotify','terabox','youtube','facebook','twitter','capcut','savefrom','lahelu'].includes(t.slug))return 'downloader';if(['brat','iqc','sertifikat-tolol','lobby-ml','lobby-ff','fakedana','fakedev'].includes(t.slug))return 'maker';if(['img2link','remove-background','image-enhancer'].includes(t.slug))return 'image';return 'utility'}
 function usernameEmail(username){return `${username.toLowerCase()}@users.nexakitpro.local`}
 function validUsername(u){return /^[a-zA-Z0-9._-]{3,24}$/.test(u)}
