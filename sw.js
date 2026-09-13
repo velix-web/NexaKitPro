@@ -19,7 +19,10 @@ self.addEventListener('fetch', event => {
   if (url.origin !== location.origin) return;
   event.respondWith(
     fetch(event.request, {cache:'no-store'}).then(response => {
-      if (response.ok && response.status === 200) caches.open(CACHE).then(c => c.put(event.request, response.clone()));
+      if (response.ok && response.status === 200) {
+        const copy = response.clone();
+        event.waitUntil(caches.open(CACHE).then(c => c.put(event.request, copy)).catch(() => {}));
+      }
       return response;
     }).catch(() => caches.match(event.request).then(cached => cached || (
       event.request.mode === 'navigate' ? caches.match('/') : new Response('', {status:504})

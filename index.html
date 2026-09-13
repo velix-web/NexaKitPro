@@ -2,6 +2,7 @@
 <html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#090615"><meta name="description" content="NexaKit Pro — modern creative and utility toolkit"><link rel="manifest" href="/manifest.json"><title>NexaKit Pro</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Orbitron:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 <style>
 :root{
  --bg:#0b0512;--bg-2:#0e091d;--surface:#120b24;--surface-2:#18102e;--surface-3:#21153d;
@@ -16,8 +17,8 @@
  --space-xs:6px;--space-sm:10px;--space:14px;--space-lg:20px;--space-xl:28px;
 }
 .brand-word{font-family:var(--font-display);font-weight:700;letter-spacing:-.01em}
-.icon{width:1em;height:1em;display:inline-block;vertical-align:-.15em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.icon.filled{fill:currentColor;stroke:none}
+.icon{width:1em;height:1em;display:inline-block;vertical-align:-.125em;line-height:1;font-size:1em}
+.icon.filled{font-weight:900}
 *{box-sizing:border-box}
 html{background:var(--bg);scroll-behavior:smooth}
 body{margin:0;min-height:100vh;background:
@@ -353,56 +354,53 @@ body.workspace-open .tool-themed .workspace-hero-badge{color:var(--tool-primary)
  .tool-card{min-height:142px;padding:10px}.tool-card h3{font-size:10.5px}.tool-card p{font-size:9px}
 }
 @media(max-width:340px){.tool-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style><style id="nexus-reference-fidelity-v3">
+/* Nexus reference fidelity: typography, icon scale, spacing */
+body.workspace-open{background:linear-gradient(180deg,#070510 0%,#0b0617 48%,#080511 100%)!important}
+body.workspace-open .main{max-width:980px!important;margin:0 auto!important;padding:0 12px 48px!important}
+body.workspace-open #workspace-view{padding-top:12px!important}
+body.workspace-open .workspace-nav{grid-template-columns:auto minmax(0,1fr) auto!important;gap:12px!important;margin-bottom:18px!important;min-height:56px!important}
+body.workspace-open .back-btn{height:56px!important;padding:0 28px!important;border-radius:30px!important;background:linear-gradient(145deg,#121a3a,#10152d)!important;border:1px solid rgba(67,191,255,.28)!important;font-family:var(--font)!important;font-weight:700!important;font-size:14px!important}
+body.workspace-open .workspace-title{gap:12px!important;font-family:var(--font)!important;font-size:14px!important;font-weight:800!important}
+body.workspace-open .workspace-title .tool-icon{width:44px!important;height:44px!important;border-radius:15px!important;background:rgba(49,164,230,.12)!important;border:1px solid rgba(69,191,255,.22)!important;color:#45c7ff!important;box-shadow:none!important}
+body.workspace-open .workspace-title .tool-icon .icon{width:23px!important;height:23px!important}
+body.workspace-open #workspace-name{font-family:var(--font)!important;color:#f7f3ff!important;font-weight:800!important}
+body.workspace-open .workspace-status-pill{height:48px!important;padding:0 18px!important;border-radius:25px!important;background:rgba(18,17,38,.8)!important;border-color:rgba(115,104,175,.24)!important;font-size:13px!important}
+body.workspace-open .workspace-hero{min-height:160px!important;height:auto!important;padding:28px 22px 24px!important;margin-bottom:14px!important;border-radius:24px!important;background:linear-gradient(135deg,rgba(28,42,77,.72),rgba(18,10,35,.96) 62%)!important;border-color:rgba(77,177,245,.26)!important;box-shadow:none!important}
+body.workspace-open .workspace-hero .eyebrow{font-family:var(--font-heading)!important;font-size:12px!important;letter-spacing:.16em!important;color:#43c5ff!important;font-weight:700!important}
+body.workspace-open .workspace-hero h2,
+body.workspace-open #workspace-name-visual{font-family:'Orbitron',monospace!important;font-size:clamp(29.6px,3.4vw,34px)!important;line-height:1.16!important;letter-spacing:-.02em!important;color:#f7f1ff!important;font-weight:700!important;margin:10px 0 8px!important}
+body.workspace-open .workspace-hero p{font-family:var(--font)!important;font-size:15px!important;line-height:1.55!important;color:#a99fc0!important}
+body.workspace-open .workspace-hero-badge{width:58px!important;height:58px!important;top:26px!important;right:24px!important;border-radius:18px!important;background:rgba(52,176,238,.13)!important;border:1px solid rgba(67,191,255,.25)!important;color:#43c7ff!important;box-shadow:none!important}
+body.workspace-open .workspace-hero-badge .icon{width:27px!important;height:27px!important}
+body.workspace-open .tool-info-card{padding:22px 28px!important;min-height:100px!important;margin-bottom:14px!important;border-radius:24px!important;background:linear-gradient(145deg,rgba(28,18,51,.92),rgba(17,10,33,.96))!important;border:1px solid rgba(130,92,205,.24)!important}
+body.workspace-open .tool-info-icon{width:58px!important;height:58px!important;border-radius:17px!important;color:#53c8ff!important;background:rgba(67,191,255,.11)!important;border:1px solid rgba(67,191,255,.18)!important}
+body.workspace-open .tool-info-icon .icon{width:28px!important;height:28px!important}
+body.workspace-open .tool-info-text strong{font-family:var(--font)!important;font-size:20px!important;color:#f7f3ff!important}
+body.workspace-open .tool-info-text span{font-family:var(--font)!important;font-size:14px!important;line-height:1.6!important;color:#aaa0c0!important}
+body.workspace-open .health-card{padding:13px 16px!important;min-height:58px!important;margin-bottom:16px!important;border-radius:18px!important;background:rgba(18,10,35,.82)!important;border:1px solid rgba(126,92,191,.2)!important}
+body.workspace-open .health-name{font-family:var(--font)!important;font-size:12px!important}.health-sub{font-family:var(--font)!important}
+body.workspace-open .workspace-body{padding:30px 30px 28px!important;border-radius:24px!important;background:linear-gradient(145deg,rgba(22,12,42,.94),rgba(11,6,24,.96))!important;border:1px solid rgba(126,92,191,.22)!important}
+body.workspace-open #tool-area label{font-family:var(--font)!important;color:#b6aacb!important;font-size:13px!important;font-weight:600!important}
+body.workspace-open #tool-area input,body.workspace-open #tool-area textarea,body.workspace-open #tool-area select{font-family:var(--font)!important;background:#0d0818!important;border:1px solid rgba(126,92,191,.28)!important;border-radius:20px!important;color:#f4effb!important}
+body.workspace-open #tool-area button:not(.dl-format-row){font-family:var(--font)!important;border-radius:18px!important}
+/* Tool-specific icons should keep one consistent visual system */
+.tool-icon,.workspace-hero-badge,.tool-info-icon{display:grid;place-items:center}
+.tool-icon .icon,.workspace-hero-badge .icon,.tool-info-icon .icon{line-height:1}
+@media(max-width:700px){
+ body.workspace-open .main{padding:0 17px 36px!important}
+ body.workspace-open .workspace-nav{gap:8px!important}
+ body.workspace-open .back-btn{height:52px!important;padding:0 16px!important;font-size:12px!important}
+ body.workspace-open .workspace-title{font-size:11px!important;gap:8px!important}
+ body.workspace-open .workspace-title .tool-icon{width:40px!important;height:40px!important}
+ body.workspace-open .workspace-status-pill{height:44px!important;padding:0 12px!important;font-size:10px!important}
+ body.workspace-open .workspace-hero{min-height:220px!important;padding:30px 22px 24px!important}
+ body.workspace-open .workspace-hero h2,body.workspace-open #workspace-name-visual{font-size:clamp(29.6px,8.5vw,40px)!important;max-width:78%!important}
+ body.workspace-open .workspace-hero-badge{width:58px!important;height:58px!important;right:22px!important;top:28px!important}
+ body.workspace-open .tool-info-card{padding:18px!important}
+ body.workspace-open .workspace-body{padding:22px 16px!important}
+}
 </style></head><body>
-<svg hidden aria-hidden="true"><defs>
-<symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></symbol>
-<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></symbol>
-<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M4 20h16"/></symbol>
-<symbol id="i-wand" viewBox="0 0 24 24"><path d="M4 20l10-10"/><path d="M17 3v4"/><path d="M19 5h-4"/><path d="M20 12v3"/><path d="M21.5 13.5h-3"/><path d="M8 3v3"/><path d="M9.5 4.5h-3"/></symbol>
-<symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 16l-5-5-6 6"/></symbol>
-<symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h4"/><path d="M15 16l5-4-5-4"/><path d="M20 12H9"/></symbol>
-<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
-<symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
-<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol>
-<symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></symbol>
-<symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></symbol>
-<symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3l10 18H2L12 3z"/><path d="M12 10v4"/><circle cx="12" cy="17.5" r=".6" class="filled"/></symbol>
-<symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18z"/></symbol>
-<symbol id="i-phone" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></symbol>
-<symbol id="i-signal" viewBox="0 0 24 24"><path d="M4 20v-4"/><path d="M9 20v-8"/><path d="M14 20V8"/><path d="M19 20V4"/></symbol>
-<symbol id="i-battery" viewBox="0 0 24 24"><rect x="2" y="7" width="18" height="10" rx="2"/><path d="M22 10v4"/></symbol>
-<symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-6 8-6s8 2 8 6"/></symbol>
-<symbol id="i-whatsapp" viewBox="0 0 24 24" class="filled"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm5.7 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5.2.5.7 1.8.8 1.9.1.1.1.3 0 .5-.1.2-.1.3-.3.5l-.4.5c-.1.1-.3.3-.1.6.2.3.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.7 1.6.3.1.5.1.6-.1l.7-.8c.2-.3.4-.2.7-.1l1.7.8c.2.1.4.2.5.3.1.2.1.9-.1 1.6z"/></symbol>
-<symbol id="i-volume" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 8.5a5 5 0 0 1 0 7"/></symbol>
-<symbol id="i-volume-mute" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 9l5 6"/><path d="M21 9l-5 6"/></symbol>
-<symbol id="i-pause" viewBox="0 0 24 24" class="filled"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></symbol>
-<symbol id="i-skip" viewBox="0 0 24 24" class="filled"><path d="M6 5l10 7-10 7V5z"/><rect x="17" y="5" width="2" height="14"/></symbol>
-<symbol id="i-camera-plus" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="10" cy="13" r="4"/><path d="M17 9v4"/><path d="M15 11h4"/><path d="M8 6l1.5-2h5L16 6"/></symbol>
-<symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
-<symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 20V8"/><path d="M7 12l5-5 5 5"/><path d="M4 20h16"/></symbol>
-<symbol id="i-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 7v5l4 2"/></symbol>
-<symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M9 7V4h6v3"/><path d="M6 7l1 13h10l1-13"/></symbol>
-<symbol id="i-crown" viewBox="0 0 24 24" class="filled"><path d="M3 8l4 3 5-6 5 6 4-3-2 11H5L3 8z"/></symbol>
-<symbol id="i-check" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></symbol>
-<symbol id="i-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></symbol>
-<symbol id="i-music" viewBox="0 0 24 24" class="filled"><path d="M9 18a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M11.5 15.5V4l6-1.2v3.2l-6 1.2"/></symbol>
-<symbol id="i-camera" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="4"/><path d="M8 6l1.5-2h5L16 6"/></symbol>
-<symbol id="i-disc" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></symbol>
-<symbol id="i-box" viewBox="0 0 24 24"><path d="M3 8l9-5 9 5-9 5-9-5z"/><path d="M3 8v9l9 5 9-5V8"/><path d="M12 13v9"/></symbol>
-<symbol id="i-play" viewBox="0 0 24 24" class="filled"><path d="M8 5l12 7-12 7V5z"/></symbol>
-<symbol id="i-facebook" viewBox="0 0 24 24"><path d="M15 8h2V4h-2a4 4 0 0 0-4 4v2H9v4h2v8h4v-8h2.5l.5-4H15V8a1 1 0 0 1 1-1z" fill="none"/></symbol>
-<symbol id="i-x" viewBox="0 0 24 24"><path d="M4 4l16 16"/><path d="M20 4L4 20"/></symbol>
-<symbol id="i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><path d="M8 8l12 12"/><path d="M20 4L8 16"/></symbol>
-<symbol id="i-link" viewBox="0 0 24 24"><path d="M9 15l6-6"/><path d="M11 5l1-1a4 4 0 0 1 6 6l-1 1"/><path d="M13 19l-1 1a4 4 0 0 1-6-6l1-1"/></symbol>
-<symbol id="i-sparkle" viewBox="0 0 24 24" class="filled"><path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8L12 2z"/></symbol>
-<symbol id="i-doc" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M9 12h6"/><path d="M9 16h6"/></symbol>
-<symbol id="i-pencil" viewBox="0 0 24 24"><path d="M4 20l1-4.5L15.5 5 19 8.5 8.5 19 4 20z"/><path d="M13.5 6.5L17.5 10.5"/></symbol>
-<symbol id="i-gamepad" viewBox="0 0 24 24"><rect x="2" y="8" width="20" height="9" rx="4"/><path d="M7 10.5v4"/><path d="M5 12.5h4"/><circle cx="16" cy="11" r="1" class="filled"/><circle cx="18.5" cy="13.5" r="1" class="filled"/></symbol>
-<symbol id="i-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9.5a3 2 0 1 1 3 2.5 3 2 0 1 0 3 2.5"/><path d="M12 7v10"/></symbol>
-<symbol id="i-code" viewBox="0 0 24 24"><path d="M9 8l-5 4 5 4"/><path d="M15 8l5 4-5 4"/></symbol>
-<symbol id="i-eraser" viewBox="0 0 24 24"><path d="M20 20H10l-6-6a2 2 0 0 1 0-2.8l7.5-7.5a2 2 0 0 1 2.8 0l6 6a2 2 0 0 1 0 2.8L13 20"/></symbol>
-<symbol id="i-stars" viewBox="0 0 24 24" class="filled"><path d="M6 3l1 3 3 1-3 1-1 3-1-3-3-1 3-1 1-3z"/><path d="M16 9l1.5 4 4 1.5-4 1.5L16 20l-1.5-4-4-1.5 4-1.5L16 9z"/></symbol>
-</defs></svg>
 <div id="boot" class="boot"><div class="boot-inner"><div class="boot-eyebrow">System Ready</div><div class="brand-mark brand-word">NK</div><div class="boot-title brand-word">NexaKit Pro</div><div class="boot-sub">Initializing your toolkit...</div><div class="boot-track"><div id="boot-bar" class="boot-bar"></div></div><div id="boot-step" class="boot-step">Initializing NexaKit</div></div></div>
 <section id="auth-screen" class="auth-screen" hidden>
  <div class="auth-orb"></div><div class="auth-card">
@@ -418,37 +416,37 @@ body.workspace-open .tool-themed .workspace-hero-badge{color:var(--tool-primary)
  </div>
 </section>
 <div id="app-shell" class="app-shell" hidden>
- <aside class="sidebar"><div class="side-brand"><div class="side-logo">NK</div><span class="brand-word">NexaKit Pro</span></div><nav class="side-nav" aria-label="Main navigation"><button class="nav-btn active" data-view="dashboard"><svg class="icon"><use href="#i-home"/></svg> <span>Dashboard</span></button><button class="nav-btn" data-view="tools" data-cat="all"><svg class="icon"><use href="#i-grid"/></svg> <span>All Tools</span></button><button class="nav-btn" data-view="tools" data-cat="downloader"><svg class="icon"><use href="#i-download"/></svg> <span>Downloader</span></button><button class="nav-btn" data-view="tools" data-cat="maker"><svg class="icon"><use href="#i-wand"/></svg> <span>Maker</span></button><button class="nav-btn" data-view="tools" data-cat="image"><svg class="icon"><use href="#i-image"/></svg> <span>Image</span></button></nav><div class="side-bottom"><button class="nav-btn" id="logout"><svg class="icon"><use href="#i-logout"/></svg> <span>Logout</span></button></div></aside>
+ <aside class="sidebar"><div class="side-brand"><div class="side-logo">NK</div><span class="brand-word">NexaKit Pro</span></div><nav class="side-nav" aria-label="Main navigation"><button class="nav-btn active" data-view="dashboard"><i class="icon fa-solid fa-house" aria-hidden="true"></i> <span>Dashboard</span></button><button class="nav-btn" data-view="tools" data-cat="all"><i class="icon fa-solid fa-grip" aria-hidden="true"></i> <span>All Tools</span></button><button class="nav-btn" data-view="tools" data-cat="downloader"><i class="icon fa-solid fa-download" aria-hidden="true"></i> <span>Downloader</span></button><button class="nav-btn" data-view="tools" data-cat="maker"><i class="icon fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> <span>Maker</span></button><button class="nav-btn" data-view="tools" data-cat="image"><i class="icon fa-solid fa-image" aria-hidden="true"></i> <span>Image</span></button></nav><div class="side-bottom"><button class="nav-btn" id="logout"><i class="icon fa-solid fa-right-from-bracket" aria-hidden="true"></i> <span>Logout</span></button></div></aside>
  <main class="main">
-  <header class="topbar"><div class="top-left"><div class="top-icon-bubble"><svg class="icon"><use href="#i-layers"/></svg></div><div class="title-wrap"><div class="eyebrow">Menu Informasi</div><strong>About Dev · Report Bug · Pengaturan</strong></div></div><div class="top-right"><div class="audio-player" id="audio-player"><button id="audio-mute" type="button" aria-label="Mute musik"><svg class="icon"><use href="#i-volume"/></svg></button><span class="audio-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span><button id="audio-toggle" type="button" aria-label="Putar musik"><svg class="icon"><use href="#i-play"/></svg></button><button id="audio-next" type="button" aria-label="Lagu berikutnya"><svg class="icon"><use href="#i-skip"/></svg></button></div><button id="menu-toggle" class="menu-toggle-btn" aria-label="Buka menu" aria-haspopup="true"><svg class="icon" id="menu-toggle-icon"><use href="#i-menu"/></svg></button></div><audio id="bg-audio" preload="none" loop></audio></header>
+  <header class="topbar"><div class="top-left"><div class="top-icon-bubble"><i class="icon fa-solid fa-layer-group" aria-hidden="true"></i></div><div class="title-wrap"><div class="eyebrow">Menu Informasi</div><strong>About Dev · Report Bug · Pengaturan</strong></div></div><div class="top-right"><div class="audio-player" id="audio-player"><button id="audio-mute" type="button" aria-label="Mute musik"><i class="icon fa-solid fa-volume-high" aria-hidden="true"></i></button><span class="audio-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span><button id="audio-toggle" type="button" aria-label="Putar musik"><i class="icon fa-solid fa-play" aria-hidden="true"></i></button><button id="audio-next" type="button" aria-label="Lagu berikutnya"><i class="icon fa-solid fa-forward-step" aria-hidden="true"></i></button></div><button id="menu-toggle" class="menu-toggle-btn" aria-label="Buka menu" aria-haspopup="true"><i class="icon fa-solid fa-bars" aria-hidden="true"></i></button></div><audio id="bg-audio" preload="none" loop></audio></header>
   <section id="dashboard-view" class="page">
-   <div class="hero"><video class="hero-video" src="https://files.catbox.moe/7xc5l9.mp4" autoplay muted loop playsinline aria-hidden="true"></video><div class="hero-overlay" aria-hidden="true"></div><div class="hero-copy"><h1 class="brand-word hero-title"><svg class="icon"><use href="#i-sparkle"/></svg> NexaKit Pro</h1><p class="hero-byline">by NexaKit Team</p><div class="hero-actions"><button id="hero-browse" class="hero-browse-link" type="button">Jelajahi Tools <svg class="icon"><use href="#i-chevron-left"/></svg></button></div></div></div>
+   <div class="hero"><video class="hero-video" src="https://files.catbox.moe/7xc5l9.mp4" autoplay muted loop playsinline aria-hidden="true"></video><div class="hero-overlay" aria-hidden="true"></div><div class="hero-copy"><h1 class="brand-word hero-title"><i class="icon fa-solid fa-sparkles" aria-hidden="true"></i> NexaKit Pro</h1><p class="hero-byline">by NexaKit Team</p><div class="hero-actions"><button id="hero-browse" class="hero-browse-link" type="button">Jelajahi Tools <i class="icon fa-solid fa-chevron-left" aria-hidden="true"></i></button></div></div></div>
    <div class="info-card" id="info-card">
-    <div class="info-avatar" id="user-avatar"><svg class="icon"><use href="#i-user"/></svg></div>
+    <div class="info-avatar" id="user-avatar"><i class="icon fa-solid fa-user" aria-hidden="true"></i></div>
     <div class="info-main">
      <div class="info-name">Halo, <b id="user-name">Member</b></div>
      <div class="info-grid">
-      <div><svg class="icon"><use href="#i-globe"/></svg> NEGARA <b id="info-country">Mendeteksi…</b></div>
-      <div><svg class="icon"><use href="#i-phone"/></svg> DEVICE <b id="info-device">–</b></div>
-      <div><svg class="icon"><use href="#i-globe"/></svg> BROWSER <b id="info-browser">–</b></div>
-      <div><svg class="icon"><use href="#i-signal"/></svg> STATUS <b id="info-status"><span class="status-dot"></span> Online</b></div>
+      <div><i class="icon fa-solid fa-globe" aria-hidden="true"></i> NEGARA <b id="info-country">Mendeteksi…</b></div>
+      <div><i class="icon fa-solid fa-mobile-screen-button" aria-hidden="true"></i> DEVICE <b id="info-device">–</b></div>
+      <div><i class="icon fa-solid fa-globe" aria-hidden="true"></i> BROWSER <b id="info-browser">–</b></div>
+      <div><i class="icon fa-solid fa-signal" aria-hidden="true"></i> STATUS <b id="info-status"><span class="status-dot"></span> Online</b></div>
      </div>
      <div class="info-row2">
       <div class="info-pill" id="battery-pill" hidden><span class="battery-shell"><span class="battery-fill" id="battery-fill"></span></span> <b id="battery-pct">–%</b></div>
-      <div class="info-pill"><svg class="icon"><use href="#i-user"/></svg> Role: <b id="role-label">Member</b></div>
-      <div class="vip-group" id="vip-group" hidden><div class="info-pill vip"><svg class="icon"><use href="#i-crown"/></svg> VVIP</div><button id="vip-upgrade" class="vip-arrow-btn" type="button" aria-label="Upgrade ke VVIP"><svg class="icon"><use href="#i-upload"/></svg></button></div>
+      <div class="info-pill"><i class="icon fa-solid fa-user" aria-hidden="true"></i> Role: <b id="role-label">Member</b></div>
+      <div class="vip-group" id="vip-group" hidden><div class="info-pill vip"><i class="icon fa-solid fa-crown" aria-hidden="true"></i> VVIP</div><button id="vip-upgrade" class="vip-arrow-btn" type="button" aria-label="Upgrade ke VVIP"><i class="icon fa-solid fa-arrow-up-from-bracket" aria-hidden="true"></i></button></div>
      </div>
     </div>
    </div>
-   <div class="toolbar"><div class="search"><span><svg class="icon"><use href="#i-search"/></svg></span><input id="tool-search" type="search" placeholder="Cari TikTok, Instagram, Remove BG…" aria-label="Cari tools"></div><div id="category-tabs" class="tabs" role="tablist"></div></div>
-   <div class="section-heading"><svg class="icon"><use href="#i-grid"/></svg> <span id="grid-heading">Semua Tools</span></div>
+   <div class="toolbar"><div class="search"><span><i class="icon fa-solid fa-magnifying-glass" aria-hidden="true"></i></span><input id="tool-search" type="search" placeholder="Cari TikTok, Instagram, Remove BG…" aria-label="Cari tools"></div><div id="category-tabs" class="tabs" role="tablist"></div></div>
+   <div class="section-heading"><i class="icon fa-solid fa-grip" aria-hidden="true"></i> <span id="grid-heading">Semua Tools</span></div>
    <section id="tool-grid" class="tool-grid" aria-label="Daftar tools"></section>
   </section>
   <section id="workspace-view" class="page tool-themed" data-tool="tiktok" hidden>
-   <div class="workspace-nav"><button id="back-tools" class="back-btn" type="button"><svg class="icon"><use href="#i-chevron-left"/></svg> All Tools Nexus</button><div class="workspace-title"><div id="workspace-icon" class="tool-icon"></div><span id="workspace-name">Tool</span></div><div class="workspace-status-pill"><span class="status-dot" style="background:var(--warning);box-shadow:none"></span> Not checked</div></div>
-   <div class="workspace-hero"><div class="workspace-hero-badge" id="workspace-hero-badge"></div><div class="eyebrow"><svg class="icon"><use href="#i-layers"/></svg> <span id="workspace-eyebrow">Media Studio</span></div><h2 id="workspace-name-visual">Ready</h2><p id="workspace-desc">Pilih tool untuk mulai.</p></div>
+   <div class="workspace-nav"><button id="back-tools" class="back-btn" type="button"><i class="icon fa-solid fa-chevron-left" aria-hidden="true"></i> All Tools Nexus</button><div class="workspace-title"><div id="workspace-icon" class="tool-icon"></div><span id="workspace-name">Tool</span></div><div class="workspace-status-pill"><span class="status-dot" style="background:var(--warning);box-shadow:none"></span> Not checked</div></div>
+   <div class="workspace-hero"><div class="workspace-hero-badge" id="workspace-hero-badge"></div><div class="eyebrow"><i class="icon fa-solid fa-layer-group" aria-hidden="true"></i> <span id="workspace-eyebrow">Media Studio</span></div><h2 id="workspace-name-visual">Ready</h2><p id="workspace-desc">Pilih tool untuk mulai.</p></div>
    <div class="tool-info-card" id="tool-info-card"><div class="tool-info-icon" id="tool-info-icon"></div><div class="tool-info-text"><strong id="tool-info-title">Tool</strong><span id="tool-info-desc">Pilih tool untuk mulai.</span></div></div>
-   <div class="health-card" id="health-card"><div class="health-info"><div class="health-name"><span class="status-dot" id="health-dot" style="background:var(--warning);box-shadow:none"></span> <b id="health-provider">API</b> · <span id="health-status">Belum diuji</span></div><span class="health-sub" id="health-sub">Belum diuji · jalankan fitur</span></div><button id="health-check" class="health-refresh" type="button" aria-label="Cek status endpoint"><svg class="icon"><use href="#i-history"/></svg></button></div>
+   <div class="health-card" id="health-card"><div class="health-info"><div class="health-name"><span class="status-dot" id="health-dot" style="background:var(--warning);box-shadow:none"></span> <b id="health-provider">API</b> · <span id="health-status">Belum diuji</span></div><span class="health-sub" id="health-sub">Belum diuji · jalankan fitur</span></div><button id="health-check" class="health-refresh" type="button" aria-label="Cek status endpoint"><i class="icon fa-solid fa-clock-rotate-left" aria-hidden="true"></i></button></div>
    <div class="workspace-body">
     <select id="tool-select" aria-label="Tool" hidden></select>
     <div id="tool-area"></div><div id="workspace-status" aria-live="polite">Siap digunakan</div>
@@ -461,29 +459,29 @@ body.workspace-open .tool-themed .workspace-hero-badge{color:var(--tool-primary)
 <aside id="drawer" class="drawer" aria-label="Menu informasi">
  <div class="drawer-head">
   <div class="drawer-head-title"><strong class="brand-word">Nexus Menu</strong><span>Informasi dan masukan</span></div>
-  <div class="drawer-head-side"><span class="drawer-status"><span class="status-dot"></span> ONLINE</span><button id="drawer-close" class="close-btn" type="button"><svg class="icon"><use href="#i-close"/></svg></button></div>
+  <div class="drawer-head-side"><span class="drawer-status"><span class="status-dot"></span> ONLINE</span><button id="drawer-close" class="close-btn" type="button"><i class="icon fa-solid fa-xmark" aria-hidden="true"></i></button></div>
  </div>
  <nav class="drawer-list">
-  <a class="drawer-item" href="https://portofshakz.biz.id" target="_blank" rel="noopener"><div class="drawer-item-icon"><svg class="icon"><use href="#i-user"/></svg></div><div class="drawer-item-text"><strong>About Dev</strong><span>Profil developer, toolkit, dan daftar project.</span></div><svg class="icon drawer-item-arrow"><use href="#i-chevron-left"/></svg></a>
-  <button class="drawer-item" id="menu-feedback" type="button"><div class="drawer-item-icon"><svg class="icon"><use href="#i-whatsapp"/></svg></div><div class="drawer-item-text"><strong>Report Bug, Saran &amp; Ide</strong><span>Laporkan bug, kirim saran, atau ide fitur.</span></div><svg class="icon drawer-item-arrow"><use href="#i-chevron-left"/></svg></button>
-  <button class="drawer-item" id="menu-settings" type="button"><div class="drawer-item-icon"><svg class="icon"><use href="#i-wand"/></svg></div><div class="drawer-item-text"><strong>Pengaturan User</strong><span>Ubah nama tampilan, foto profil, dan password.</span></div><svg class="icon drawer-item-arrow"><use href="#i-chevron-left"/></svg></button>
+  <a class="drawer-item" href="https://portofshakz.biz.id" target="_blank" rel="noopener"><div class="drawer-item-icon"><i class="icon fa-solid fa-user" aria-hidden="true"></i></div><div class="drawer-item-text"><strong>About Dev</strong><span>Profil developer, toolkit, dan daftar project.</span></div><i class="icon fa-solid fa-chevron-left drawer-item-arrow" aria-hidden="true"></i></a>
+  <button class="drawer-item" id="menu-feedback" type="button"><div class="drawer-item-icon"><i class="icon fa-brands fa-whatsapp" aria-hidden="true"></i></div><div class="drawer-item-text"><strong>Report Bug, Saran &amp; Ide</strong><span>Laporkan bug, kirim saran, atau ide fitur.</span></div><i class="icon fa-solid fa-chevron-left drawer-item-arrow" aria-hidden="true"></i></button>
+  <button class="drawer-item" id="menu-settings" type="button"><div class="drawer-item-icon"><i class="icon fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i></div><div class="drawer-item-text"><strong>Pengaturan User</strong><span>Ubah nama tampilan, foto profil, dan password.</span></div><i class="icon fa-solid fa-chevron-left drawer-item-arrow" aria-hidden="true"></i></button>
  </nav>
- <div class="side-bottom"><button id="mobile-logout" class="drawer-item danger" type="button"><div class="drawer-item-icon"><svg class="icon"><use href="#i-logout"/></svg></div><div class="drawer-item-text"><strong>Logout</strong><span>Keluar dari akun NexaKit Pro kamu.</span></div></button></div>
+ <div class="side-bottom"><button id="mobile-logout" class="drawer-item danger" type="button"><div class="drawer-item-icon"><i class="icon fa-solid fa-right-from-bracket" aria-hidden="true"></i></div><div class="drawer-item-text"><strong>Logout</strong><span>Keluar dari akun NexaKit Pro kamu.</span></div></button></div>
 </aside>
 <div id="settings-overlay" class="overlay"></div>
 <div id="settings-modal" class="settings-modal" role="dialog" aria-modal="true" aria-label="Setting user" hidden>
- <div class="settings-head"><strong class="brand-word">Setting User</strong><button id="settings-close" class="close-btn" type="button"><svg class="icon"><use href="#i-close"/></svg></button></div>
+ <div class="settings-head"><strong class="brand-word">Setting User</strong><button id="settings-close" class="close-btn" type="button"><i class="icon fa-solid fa-xmark" aria-hidden="true"></i></button></div>
  <div class="settings-body">
   <div class="avatar-drop" id="avatar-drop">
    <div class="avatar-preview" id="avatar-preview"><span id="avatar-preview-fallback">N</span><img id="avatar-preview-img" hidden alt="Foto profil"></div>
    <input id="avatar-input" type="file" accept="image/*" hidden>
-   <button type="button" id="avatar-pick-btn" class="soft-btn"><svg class="icon"><use href="#i-upload"/></svg> Ganti foto (seret ke sini atau klik)</button>
+   <button type="button" id="avatar-pick-btn" class="soft-btn"><i class="icon fa-solid fa-arrow-up-from-bracket" aria-hidden="true"></i> Ganti foto (seret ke sini atau klik)</button>
   </div>
   <div class="field"><label for="settings-name">Nama Tampilan</label><input id="settings-name" placeholder="Nama kamu" maxlength="30"></div>
   <button id="settings-save-profile" class="primary-btn" type="button">Simpan Perubahan</button>
   <div class="settings-divider"></div>
   <div class="field"><label for="settings-newpass">Password Baru</label><input id="settings-newpass" type="password" placeholder="Minimal 6 karakter" autocomplete="new-password"></div>
-  <button id="settings-save-pass" class="soft-btn" type="button"><svg class="icon"><use href="#i-lock"/></svg> Ganti Password</button>
+  <button id="settings-save-pass" class="soft-btn" type="button"><i class="icon fa-solid fa-lock" aria-hidden="true"></i> Ganti Password</button>
   <div id="settings-msg" class="state-box" hidden></div>
  </div>
 </div>
@@ -491,9 +489,10 @@ body.workspace-open .tool-themed .workspace-hero-badge{color:var(--tool-primary)
 <script>
 (()=>{const b=document.getElementById('boot-bar'),s=document.getElementById('boot-step');let i=0;const steps=['Initializing NexaKit','Loading tools','Checking session','Ready'];const t=setInterval(()=>{i++;b.style.width=Math.min(100,i*25)+'%';s.textContent=steps[Math.min(i,3)];if(i>=4)clearInterval(t)},180)})();
 </script><script>
-/* FULL NATIVE: no framework, no UI library, no external JS/CSS. */
-window.icons={tiktok:'music',instagram:'camera',spotify:'disc',terabox:'box',youtube:'play',facebook:'facebook',twitter:'x',capcut:'scissors',savefrom:'link',lahelu:'sparkle',brat:'sparkle',iqc:'doc','sertifikat-tolol':'pencil','lobby-ml':'gamepad','lobby-ff':'gamepad',fakedana:'coin',fakedev:'code','img2link':'link','remove-background':'eraser','image-enhancer':'stars'};
-window.iconSvg=id=>`<svg class="icon"><use href="#i-${id}"/></svg>`;
+/* FULL NATIVE: no framework or UI framework; icons use Font Awesome. */
+window.icons={tiktok:'music',instagram:'camera',spotify:'disc',terabox:'box',youtube:'play',facebook:'facebook',twitter:'x',capcut:'scissors',savefrom:'link',lahelu:'sparkle',brat:'sparkle',iqc:'doc','sertifikat-tolol':'pencil','lobby-ml':'gamepad','lobby-ff':'gamepad',fakedana:'money-bill-wave',fakedev:'code','img2link':'link','remove-background':'eraser','image-enhancer':'stars'};
+window.iconClasses={'home':'fa-solid fa-house', 'grid':'fa-solid fa-grip', 'download':'fa-solid fa-download', 'wand':'fa-solid fa-wand-magic-sparkles', 'image':'fa-solid fa-image', 'logout':'fa-solid fa-right-from-bracket', 'search':'fa-solid fa-magnifying-glass', 'chevron-left':'fa-solid fa-chevron-left', 'menu':'fa-solid fa-bars', 'layers':'fa-solid fa-layer-group', 'close':'fa-solid fa-xmark', 'alert':'fa-solid fa-triangle-exclamation', 'globe':'fa-solid fa-globe', 'phone':'fa-solid fa-mobile-screen-button', 'signal':'fa-solid fa-signal', 'battery':'fa-solid fa-battery-three-quarters', 'user':'fa-solid fa-user', 'whatsapp':'fa-brands fa-whatsapp', 'volume':'fa-solid fa-volume-high', 'volume-mute':'fa-solid fa-volume-xmark', 'pause':'fa-solid fa-pause', 'skip':'fa-solid fa-forward-step', 'camera-plus':'fa-solid fa-camera', 'lock':'fa-solid fa-lock', 'upload':'fa-solid fa-arrow-up-from-bracket', 'history':'fa-solid fa-clock-rotate-left', 'trash':'fa-solid fa-trash-can', 'crown':'fa-solid fa-crown', 'check':'fa-solid fa-check', 'circle':'fa-solid fa-circle', 'music':'fa-solid fa-music', 'camera':'fa-solid fa-camera', 'disc':'fa-solid fa-compact-disc', 'box':'fa-solid fa-box', 'play':'fa-solid fa-play', 'facebook':'fa-brands fa-facebook-f', 'x':'fa-brands fa-x-twitter', 'scissors':'fa-solid fa-scissors', 'link':'fa-solid fa-link', 'sparkle':'fa-solid fa-sparkles', 'doc':'fa-solid fa-file-lines', 'pencil':'fa-solid fa-pencil', 'gamepad':'fa-solid fa-gamepad', 'coin':'fa-solid fa-coins', 'money-bill-wave':'fa-solid fa-money-bill-wave', 'code':'fa-solid fa-code', 'eraser':'fa-solid fa-eraser', 'stars':'fa-solid fa-wand-magic-sparkles', 'logo':'fa-solid fa-layer-group'};
+window.iconSvg=id=>`<i class="icon ${window.iconClasses[id]||'fa-solid fa-circle-question'}" aria-hidden="true"></i>`;
 const TOOLS=[
 {id:'tt',slug:'tiktok',name:'TikTok',title:'TikTok Downloader',description:'Download video TikTok tanpa watermark',type:'tiktok',tag:'MP4/MP3'},
 {id:'ig',slug:'instagram',name:'Instagram',title:'Instagram Downloader',description:'Unduh video & foto Instagram HD',type:'generic-downloader',provider:'ig',paramKey:'url',tag:'HD'},
@@ -585,7 +584,7 @@ $('vip-upgrade')?.addEventListener('click',()=>{const msg=encodeURIComponent('Ha
  const tracks=['https://files.catbox.moe/wjft72.mp3','https://files.catbox.moe/hlmrj5.mp3','https://files.catbox.moe/pemxro.mp3'];
  const audio=$('bg-audio'),player=$('audio-player'),toggle=$('audio-toggle'),muteBtn=$('audio-mute'),nextBtn=$('audio-next');
  let i=0;audio.src=tracks[i];audio.volume=.55;
- function setIcon(btn,id){btn.innerHTML=`<svg class="icon"><use href="#i-${id}"/></svg>`}
+ function setIcon(btn,id){btn.innerHTML=iconSvg(id)}
  audio.addEventListener('play',()=>{player.classList.add('playing');setIcon(toggle,'pause')});
  audio.addEventListener('pause',()=>{player.classList.remove('playing');setIcon(toggle,'play')});
  audio.addEventListener('ended',()=>{i=(i+1)%tracks.length;audio.src=tracks[i];audio.play().catch(()=>{})});
@@ -865,7 +864,7 @@ async function logout(){
 }
 function setPasswordVisibility(inputId,visible,buttonId){const input=$q(inputId),button=$q(buttonId);if(!input||!button)return;input.type=visible?'text':'password';button.textContent=visible?'Sembunyikan':'Lihat';button.setAttribute('aria-label',visible?'Sembunyikan password':'Tampilkan password')}
 function togglePassword(inputId,buttonId){const input=$q(inputId);if(input)setPasswordVisibility(inputId,input.type==='password',buttonId)}
-function openDrawer(v){$q('drawer').classList.toggle('open',v);$q('drawer-overlay').classList.toggle('open',v);document.body.classList.toggle('drawer-open',v);const mi=$q('menu-toggle-icon');if(mi)mi.innerHTML=`<use href="#i-${v?'close':'menu'}"/>`}
+function openDrawer(v){$q('drawer').classList.toggle('open',v);$q('drawer-overlay').classList.toggle('open',v);document.body.classList.toggle('drawer-open',v);const mi=$q('menu-toggle-icon');if(mi)mi.outerHTML=iconSvg(v?'close':'menu').replace('aria-hidden="true"','id="menu-toggle-icon" aria-hidden="true"')}
 async function loadSupabase(){
   const r=await fetch(CONFIG_ENDPOINT,{cache:'no-store'});
   if(!r.ok)throw new Error('Supabase configuration unavailable');
@@ -901,6 +900,6 @@ async function init(){
   setTimeout(()=>{boot.classList.add('hide')},650);
 }
 init();
-if ('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(error=>console.warn('Service worker registration failed:',error)));
+if ('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js',{updateViaCache:'none'}).catch(error=>console.warn('Service worker registration failed:',error)));
 </script>
 </body></html>
