@@ -296,13 +296,13 @@ body.workspace-open .workspace-title .tool-icon{width:44px;height:44px;border-ra
 body.workspace-open .workspace-title .tool-icon .icon{width:23px;height:23px}
 body.workspace-open #workspace-name{overflow:hidden;text-overflow:ellipsis;color:#f5efff!important;font-weight:800}
 body.workspace-open .workspace-status-pill{height:48px;padding:0 17px;border-radius:25px;background:rgba(18,17,38,.78);border-color:rgba(115,104,175,.24);white-space:nowrap}
-body.workspace-open .workspace-hero{min-height:266px;padding:42px 34px 34px;margin-bottom:20px;border-radius:25px;background:linear-gradient(145deg,rgba(25,47,85,.58) 0%,rgba(14,17,38,.94) 44%,rgba(14,8,29,.98) 100%);border-color:rgba(78,176,245,.28);box-shadow:0 22px 60px rgba(4,10,30,.32);}
-body.workspace-open .workspace-hero:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 10% 35%,rgba(73,142,255,.18),transparent 35%),radial-gradient(circle at 90% 15%,rgba(53,101,255,.10),transparent 30%);pointer-events:none}
+body.workspace-open .workspace-hero{min-height:266px;padding:42px 34px 34px;margin-bottom:20px;border-radius:25px;background:linear-gradient(145deg,color-mix(in srgb,var(--tool-primary) 18%,#0a0015),rgba(10,0,21,.96) 62%);border-color:var(--tool-border);box-shadow:0 22px 60px rgba(0,0,0,.32),0 0 42px var(--tool-glow);}
+body.workspace-open .workspace-hero:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 88% 16%,var(--tool-glow),transparent 30%),radial-gradient(circle at 8% 90%,color-mix(in srgb,var(--tool-secondary) 12%,transparent),transparent 28%);pointer-events:none}
 body.workspace-open .workspace-hero:after{top:-92px;right:-80px;width:290px;height:290px;border-color:rgba(107,143,206,.12)}
-body.workspace-open .workspace-hero .eyebrow{position:relative;font-size:12px;letter-spacing:.16em;color:#55c9ff!important}
+body.workspace-open .workspace-hero .eyebrow{position:relative;font-size:12px;letter-spacing:.16em;color:var(--tool-primary)!important;text-shadow:0 0 18px var(--tool-glow)}
 body.workspace-open .workspace-hero h2{position:relative;font-family:var(--font-heading);font-size:clamp(38px,7vw,52px);line-height:1.05;color:#f7f2ff!important;margin:18px 0 18px;font-weight:800;letter-spacing:-.035em;max-width:80%}
 body.workspace-open .workspace-hero p{position:relative;color:#afa4c1;font-size:15px;line-height:1.65;max-width:650px}
-body.workspace-open .workspace-hero-badge{width:72px;height:72px;top:42px;right:34px;border-radius:22px;background:rgba(46,174,228,.13);border-color:rgba(78,190,255,.27);color:#59d0ff;box-shadow:0 0 35px rgba(52,175,255,.12)}
+body.workspace-open .workspace-hero-badge{width:72px;height:72px;top:42px;right:34px;border-radius:22px;background:var(--tool-glow);border-color:var(--tool-border);color:var(--tool-primary);box-shadow:0 0 35px var(--tool-glow),inset 0 0 22px var(--tool-glow);overflow:hidden}
 body.workspace-open .workspace-hero-badge .icon{width:30px;height:30px}
 body.workspace-open .tool-info-card{min-height:104px;padding:22px 28px;margin-bottom:20px;border-radius:24px;background:linear-gradient(145deg,rgba(29,18,55,.94),rgba(22,12,41,.94));border-color:rgba(139,103,222,.22)}
 body.workspace-open .tool-info-icon{width:58px;height:58px;border-radius:18px;background:rgba(66,125,219,.14);border-color:rgba(91,154,246,.20);color:#5cbcff}.tool-info-text strong{font-size:19px}.tool-info-text span{font-size:13px}
@@ -318,7 +318,6 @@ body.workspace-open #result-container{margin-top:20px}
 body.workspace-open .preview-media-box{border-radius:20px;background:rgba(8,4,18,.80)}
 body.workspace-open .dl-format-row{min-height:52px;border-radius:15px!important}
 /* universal tool themes: reference uses restrained accent, never giant neon title */
-body.workspace-open .tool-themed{--tool-primary:#5ecbff;--tool-secondary:#8b68ff;--tool-glow:rgba(70,174,255,.15);--tool-border:rgba(79,174,240,.25);--tool-surface:rgba(21,15,43,.78)}
 body.workspace-open .tool-themed .workspace-hero h2{color:#f5f1fa!important}
 body.workspace-open .tool-themed .workspace-hero .eyebrow{color:var(--tool-primary)!important}
 body.workspace-open .tool-themed .workspace-hero-badge{color:var(--tool-primary);border-color:var(--tool-border);background:var(--tool-glow)}
@@ -354,6 +353,58 @@ body.workspace-open .tool-themed .workspace-hero-badge{color:var(--tool-primary)
  .tool-card{min-height:142px;padding:10px}.tool-card h3{font-size:10.5px}.tool-card p{font-size:9px}
 }
 @media(max-width:340px){.tool-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* v10 — active tool theme propagates through the entire workspace */
+body.workspace-open .tool-themed{
+  --tool-primary:var(--tool-primary);
+  --tool-secondary:var(--tool-secondary);
+}
+body.workspace-open .workspace-nav .back-btn,
+body.workspace-open .workspace-status-pill,
+body.workspace-open .workspace-body,
+body.workspace-open .tool-info-card,
+body.workspace-open .health-card{
+  border-color:var(--tool-border);
+}
+body.workspace-open .workspace-nav .back-btn:hover,
+body.workspace-open .workspace-status-pill:hover{
+  color:var(--tool-primary);
+  border-color:var(--tool-primary);
+  box-shadow:0 0 22px var(--tool-glow);
+}
+body.workspace-open .workspace-title .tool-icon,
+body.workspace-open .tool-info-icon{
+  color:var(--tool-primary)!important;
+  background:var(--tool-glow)!important;
+  border-color:var(--tool-border)!important;
+  box-shadow:0 0 24px var(--tool-glow);
+}
+body.workspace-open #tool-area input,
+body.workspace-open #tool-area textarea,
+body.workspace-open #tool-area select{
+  border-color:color-mix(in srgb,var(--tool-primary) 24%,var(--border));
+}
+body.workspace-open #tool-area input:focus,
+body.workspace-open #tool-area textarea:focus,
+body.workspace-open #tool-area select:focus{
+  border-color:var(--tool-primary);
+  box-shadow:0 0 0 4px var(--tool-glow),0 0 26px var(--tool-glow);
+}
+body.workspace-open #tool-area button:not(.dl-format-row){
+  background:linear-gradient(135deg,var(--tool-primary),var(--tool-secondary));
+  color:#10051c;
+  box-shadow:0 12px 32px var(--tool-glow);
+}
+body.workspace-open #tool-area button:not(.dl-format-row):hover{filter:brightness(1.08);box-shadow:0 14px 38px var(--tool-glow);}
+body.workspace-open .workspace-status-pill .status-live,
+body.workspace-open .status-live{color:var(--tool-primary)!important;}
+body.workspace-open .workspace-hero-badge .icon{width:34px;height:34px;max-width:34px;max-height:34px;display:block;object-fit:contain;}
+body.workspace-open .workspace-hero:after{border-color:var(--tool-border);box-shadow:0 0 30px var(--tool-glow);}
+@media(max-width:560px){
+  body.workspace-open .workspace-hero{padding:28px 22px 26px;}
+  body.workspace-open .workspace-hero-badge{width:60px;height:60px;top:26px;right:22px;border-radius:18px;}
+  body.workspace-open .workspace-hero-badge .icon{width:29px;height:29px;max-width:29px;max-height:29px;}
+}
 </style><style id="nexus-reference-fidelity-v3">
 /* Nexus reference fidelity: typography, icon scale, spacing */
 body.workspace-open{background:linear-gradient(180deg,#070510 0%,#0b0617 48%,#080511 100%)!important}
