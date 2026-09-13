@@ -1431,4 +1431,57 @@ select{background-image:none!important}
   #dashboard-view::after,
   #workspace-view::after{width:105px;height:105px;right:-10px;top:8px;border-radius:0 20px 0 0;}
 }
+
+/* v8 visual correction: compact fixed cards + unified purple neon surface */
+:root{
+  --page-bg:#0A0015;
+  --body-text:#E0D0FF;
+  --purple:#8b3dff;
+  --purple-soft:#b56cff;
+}
+html,body{background:#0A0015 !important;color:#E0D0FF !important;}
+body{color:#E0D0FF !important;}
+.app-shell,.main,.page,.workspace,.dashboard,.tools-section,.section,.content{background:#0A0015 !important;color:#E0D0FF !important;}
+/* Purple is a separate ambient layer, not a mixed rainbow gradient. */
+.main::before,.page::before,.dashboard::before,.workspace::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
+  background:
+    radial-gradient(ellipse 55% 28% at 0% 0%, rgba(139,61,255,.38), transparent 68%),
+    radial-gradient(ellipse 48% 25% at 100% 100%, rgba(139,61,255,.28), transparent 68%);
+}
+.hero,.workspace-hero{
+  background:#0A0015 !important;
+  position:relative;overflow:hidden;
+}
+.hero::after,.workspace-hero::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  border-radius:inherit;
+  box-shadow:inset 0 1px 0 rgba(181,108,255,.30), inset 0 -1px 0 rgba(139,61,255,.22);
+}
+/* Neon only at edges/corners */
+.hero::before,.workspace-hero::before{
+  content:"";position:absolute;pointer-events:none;
+  width:220px;height:220px;right:-100px;top:-120px;border-radius:50%;
+  background:rgba(139,61,255,.32);filter:blur(42px);
+}
+.tool-grid{
+  grid-template-columns:repeat(auto-fill, minmax(159px,159px)) !important;
+  justify-content:start !important;
+  align-items:start !important;
+  gap:18px !important;
+}
+.tool-card{
+  width:159px !important;height:201px !important;
+  min-width:159px !important;max-width:159px !important;
+  min-height:201px !important;max-height:201px !important;
+  flex:none !important;
+}
+.tool-card::before{
+  background:linear-gradient(180deg, color-mix(in srgb,var(--card-accent,#8b3dff) 16%, transparent), transparent 55%) !important;
+}
+.tool-card .icon{color:var(--card-accent,#b56cff) !important;text-shadow:0 0 18px color-mix(in srgb,var(--card-accent,#b56cff) 55%, transparent);}
+@media (max-width:760px){
+  .tool-grid{grid-template-columns:repeat(2,116px) !important;gap:14px !important;justify-content:center !important;}
+  .tool-card{width:116px !important;height:173px !important;min-width:116px !important;max-width:116px !important;min-height:173px !important;max-height:173px !important;}
+}
 </style>
