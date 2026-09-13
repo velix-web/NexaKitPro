@@ -1,4 +1,4 @@
-const CACHE = 'nexakit-pro-v20';
+const CACHE = 'nexakit-pro-v21';
 const PRECACHE = ['/', '/index.html', '/manifest.json', '/icon-192.png', '/icon-512.png'];
 
 self.addEventListener('install', event => {
@@ -17,6 +17,8 @@ self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
   const url = new URL(event.request.url);
   if (url.origin !== location.origin) return;
+  // Never cache API responses: downloader/maker/health endpoints are dynamic.
+  if (url.pathname.startsWith('/api/')) return;
   event.respondWith(
     fetch(event.request, {cache:'no-store'}).then(response => {
       if (response.ok && response.status === 200) {

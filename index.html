@@ -400,6 +400,309 @@ body.workspace-open #tool-area button:not(.dl-format-row){font-family:var(--font
  body.workspace-open .tool-info-card{padding:18px!important}
  body.workspace-open .workspace-body{padding:22px 16px!important}
 }
+</style>
+<style id="nexakit-motion-responsive-v4">
+/* =========================================================
+   NEXAKIT PRO — MOTION / RESPONSIVE / UI-UX SYSTEM v4
+   12 motion rules: hierarchy, continuity, anticipation, feedback,
+   easing, duration, stagger, reveal, loading, state transition,
+   restraint, reduced-motion accessibility.
+   ========================================================= */
+:root{
+  --motion-fast:160ms;
+  --motion-med:280ms;
+  --motion-slow:520ms;
+  --ease-standard:cubic-bezier(.2,.75,.25,1);
+  --ease-emphasized:cubic-bezier(.16,1,.3,1);
+  --ease-exit:cubic-bezier(.4,0,1,1);
+  --surface-0:#10091f;
+  --surface-1:#17102b;
+  --surface-2:#20133a;
+  --surface-3:#281847;
+  --ink:#f1ebfb;
+  --ink-soft:#c7bdd5;
+  --line-soft:rgba(201,177,238,.16);
+  --line-med:rgba(201,177,238,.26);
+}
+
+html{scroll-behavior:smooth;background:var(--surface-0)}
+body{
+  overflow-x:hidden;
+  background:
+    radial-gradient(900px 500px at 8% -10%,rgba(123,74,196,.18),transparent 62%),
+    radial-gradient(800px 520px at 100% 12%,rgba(56,150,207,.13),transparent 62%),
+    linear-gradient(145deg,#10091f 0%,#130b24 42%,#0f0b1d 100%);
+  color:var(--ink);
+}
+/* One readable UI font; decorative display variables inherit it. */
+body,input,textarea,select,button{font-family:'Poppins',system-ui,sans-serif}
+:root{--font:'Poppins',system-ui,sans-serif;--font-heading:var(--font);--font-display:var(--font)}
+
+/* 1–2. Spatial hierarchy + smooth motion */
+*{box-sizing:border-box}
+a,button,.tool-card,.nav-btn,.tab,.soft-btn,.btn-icon,.back-btn,.workspace-status-pill,.profile-pill,.drawer-item,
+.choice-pill,.info-pill,.vip-arrow-btn,input,textarea,select,.auth-tab,.primary-btn{
+  transition:
+    transform var(--motion-fast) var(--ease-standard),
+    opacity var(--motion-fast) var(--ease-standard),
+    color var(--motion-fast) var(--ease-standard),
+    background-color var(--motion-med) var(--ease-standard),
+    border-color var(--motion-med) var(--ease-standard),
+    box-shadow var(--motion-med) var(--ease-standard),
+    filter var(--motion-med) var(--ease-standard);
+}
+
+/* 3. Anticipation / hover lift — restrained, no bouncing UI */
+.tool-card:hover,.section-card:hover,.info-card:hover,.health-card:hover,.tool-info-card:hover{transform:translateY(-3px)}
+.tool-card:active,.soft-btn:active,.btn-icon:active,.back-btn:active,.primary-btn:active,.menu-toggle-btn:active{transform:translateY(0) scale(.985)}
+
+/* 4. Feedback: focus rings + input validation */
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,.tool-card:focus-visible,a:focus-visible{
+  outline:2px solid #72d5ff;outline-offset:3px;box-shadow:0 0 0 5px rgba(114,213,255,.10)
+}
+input::placeholder,textarea::placeholder{color:#8f849d;opacity:1}
+input:focus,textarea:focus,select:focus{border-color:rgba(114,213,255,.48)!important;background:#17102a!important;box-shadow:0 0 0 4px rgba(114,213,255,.08),0 10px 28px rgba(0,0,0,.12)}
+
+/* 5. Gradients everywhere — no flat black/white section surfaces */
+.app-shell,.main,.page,.section-card,.info-card,.tool-workspace,.workspace-body,.health-card,.tool-info-card,
+.drawer,.auth-card,.state-box,.empty-state,.tool-card,.tabs-wrap,.hero,.workspace-hero,.preview-media-box,
+.settings-card,.profile-card,.result-card{
+  background-image:
+    linear-gradient(145deg,rgba(43,25,72,.90),rgba(17,10,34,.94));
+}
+.section-card,.info-card,.tool-workspace,.health-card,.tool-info-card,.workspace-body,.state-box,.result-card{
+  border-color:var(--line-soft)!important;
+}
+.hero{
+  background:
+    linear-gradient(135deg,rgba(39,21,70,.92),rgba(18,11,39,.90)),
+    radial-gradient(circle at 80% 20%,rgba(85,197,255,.16),transparent 35%);
+}
+.tool-card{
+  background:
+    linear-gradient(145deg,rgba(39,22,67,.90),rgba(20,12,40,.94));
+}
+.workspace-hero{
+  background:
+    radial-gradient(circle at 8% 25%,rgba(84,174,255,.15),transparent 34%),
+    linear-gradient(145deg,rgba(37,29,77,.96),rgba(17,12,35,.96));
+}
+.auth-screen{background:
+  radial-gradient(circle at 20% 10%,rgba(126,78,206,.18),transparent 32%),
+  radial-gradient(circle at 90% 90%,rgba(62,177,224,.12),transparent 30%),
+  linear-gradient(145deg,#110a22,#160c2c 55%,#10091f);
+}
+
+/* 6. Reveal / entrance: content appears in hierarchy, not all at once */
+.motion-reveal{opacity:0;transform:translateY(14px);animation:nkReveal var(--motion-slow) var(--ease-emphasized) forwards}
+@keyframes nkReveal{to{opacity:1;transform:none}}
+.tool-card{animation:nkCardIn 460ms var(--ease-emphasized) both;animation-delay:calc(var(--stagger,0) * 45ms)}
+@keyframes nkCardIn{from{opacity:0;transform:translateY(12px) scale(.985)}to{opacity:1;transform:none}}
+
+/* 7. Shared skeleton loading — avoids the classic spinner-only experience */
+.nk-skeleton{position:relative;overflow:hidden;background:rgba(255,255,255,.055)!important;color:transparent!important;border-color:rgba(255,255,255,.08)!important}
+.nk-skeleton>*{visibility:hidden}
+.nk-skeleton:after{content:"";position:absolute;inset:0;transform:translateX(-100%);background:linear-gradient(90deg,transparent,rgba(255,255,255,.10),transparent);animation:nkShimmer 1.35s infinite}
+@keyframes nkShimmer{to{transform:translateX(100%)}}
+
+/* 8. Progress / state continuity */
+.nk-progress{height:4px;width:100%;overflow:hidden;border-radius:999px;background:rgba(255,255,255,.07);margin-top:10px}
+.nk-progress>span{display:block;height:100%;width:38%;border-radius:inherit;background:linear-gradient(90deg,#7c5cff,#59cfff);animation:nkProgress 1.35s ease-in-out infinite}
+@keyframes nkProgress{0%{transform:translateX(-120%)}100%{transform:translateX(300%)}}
+
+/* 9. Micro-interactions: button/icon polish */
+.tool-card .tool-icon .icon,.section-heading .icon,.top-icon-bubble .icon,.menu-toggle-btn .icon{transition:transform var(--motion-med) var(--ease-emphasized),filter var(--motion-med) var(--ease-standard)}
+.tool-card:hover .tool-icon .icon{transform:scale(1.08) rotate(-2deg);filter:drop-shadow(0 6px 14px rgba(115,205,255,.18))}
+.btn-icon:hover .icon,.menu-toggle-btn:hover .icon{transform:scale(1.08)}
+
+/* 10. Drawer / modal transition */
+.drawer{transform:translateX(105%);opacity:.75;visibility:hidden;transition:transform 360ms var(--ease-emphasized),opacity 220ms ease,visibility 0s linear 360ms!important}
+.drawer.open{transform:translateX(0);opacity:1;visibility:visible;transition-delay:0s!important}
+.drawer-overlay{opacity:0;visibility:hidden;transition:opacity 280ms ease,visibility 0s linear 280ms!important}
+.drawer-overlay.open{opacity:1;visibility:visible;transition-delay:0s!important}
+
+/* Full-width responsive shell: desktop expands, mobile stays fluid. */
+.app-shell{width:100%;max-width:1440px!important;min-height:100vh;margin:0 auto;background:transparent!important;box-shadow:none!important}
+.main{min-width:0}
+@media(min-width:1101px){.page,.hero,.topbar{width:100%}.tool-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+/* 11. Consistent rhythm / responsive grid */
+.main{width:100%;max-width:1440px;margin:0 auto;padding-inline:clamp(14px,3vw,42px)}
+.page{width:100%;max-width:1280px;margin-inline:auto}
+.tool-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,1.5vw,20px)}
+.section-card,.info-card,.tool-workspace{border-radius:clamp(18px,2vw,26px)}
+.section-card{padding:clamp(16px,2vw,24px)}
+.tool-card{min-width:0;padding:clamp(15px,1.6vw,21px);min-height:170px}
+.hero,.workspace-hero{width:100%;max-width:1280px;margin-inline:auto}
+.topbar{max-width:1280px;margin-inline:auto}
+
+/* 12. Mobile-first composition: never overflow controls or forms */
+@media(max-width:1100px){
+  .tool-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:760px){
+  .main{padding-inline:12px;padding-bottom:34px}
+  .topbar{padding-block:8px;gap:8px}
+  .top-right{gap:6px}
+  .audio-player{max-width:150px}
+  .profile-pill span{display:none}
+  .hero{margin-inline:0;min-height:300px;aspect-ratio:auto;padding:24px 18px;border-radius:0 0 22px 22px}
+  .hero h1.hero-title{font-size:clamp(24px,7vw,32px)}
+  .tool-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+  .tool-card{min-height:158px;border-radius:17px}
+  .section-heading{font-size:15px;margin-top:18px}
+  .workspace-nav{grid-template-columns:auto minmax(0,1fr) auto!important;gap:7px!important}
+  body.workspace-open .main{padding-inline:12px}
+  body.workspace-open .workspace-hero{min-height:240px;padding:28px 20px 24px}
+  body.workspace-open .workspace-hero h2{font-size:clamp(30px,8vw,42px);max-width:78%;margin-top:14px}
+  body.workspace-open .workspace-hero-badge{width:56px;height:56px;right:20px;top:28px;border-radius:17px}
+  body.workspace-open .workspace-body{padding:17px}
+  #tool-area .row{grid-template-columns:1fr}
+  #tool-area button{width:100%}
+  .info-grid{grid-template-columns:1fr!important}
+}
+@media(max-width:480px){
+  .menu-toggle-btn{width:40px;height:40px}
+  .audio-player{padding:5px 7px;gap:5px}
+  .audio-player .audio-bars{display:none}
+  .hero{min-height:270px;padding:20px 16px}
+  .tool-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  .tool-card{padding:14px;min-height:145px}
+  .tool-card .tool-icon{margin-bottom:10px}
+  .tool-card h3{font-size:13px}
+  .tool-card p{font-size:10.5px}
+  .tool-arrow{right:11px;bottom:10px}
+  body.workspace-open .workspace-nav{grid-template-columns:auto 1fr auto!important}
+  body.workspace-open .back-btn{height:44px;padding:0 12px;font-size:11px}
+  body.workspace-open .workspace-title .tool-icon{width:38px;height:38px}
+  body.workspace-open .workspace-title #workspace-name{font-size:11px}
+  body.workspace-open .workspace-status-pill{height:40px;padding:0 10px;font-size:10px}
+  body.workspace-open .workspace-hero h2{font-size:30px;max-width:74%}
+  body.workspace-open .workspace-hero p{font-size:12px;line-height:1.55}
+  body.workspace-open .workspace-hero .eyebrow{font-size:10px}
+}
+@media(max-width:360px){
+  .tool-grid{grid-template-columns:1fr}
+  .tool-card{min-height:130px}
+  .audio-player #audio-next{display:none}
+  .top-icon-bubble{width:36px;height:36px}
+}
+
+/* Form UX: boxes, vertical alignment, radio/checklist, fewer visual distractions */
+#tool-area form{display:flex!important;flex-direction:column;align-items:stretch;gap:15px}
+#tool-area form>label,#tool-area form>span,#tool-area .field,#tool-area .form-field{display:flex;flex-direction:column;align-items:stretch;gap:7px}
+#tool-area label{line-height:1.35}
+#tool-area input,#tool-area textarea,#tool-area select{border-radius:14px!important;background:rgba(12,7,25,.68)!important;border:1px solid rgba(196,169,235,.16)!important}
+#tool-area .choice-group{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.choice-pill{min-height:46px;display:flex;align-items:center;justify-content:center;gap:8px;border-radius:13px!important;border:1px solid rgba(196,169,235,.15);background:linear-gradient(145deg,rgba(39,22,66,.72),rgba(19,11,37,.82));cursor:pointer}
+.choice-pill:hover{border-color:rgba(114,213,255,.34)}
+.choice-pill.active{border-color:rgba(114,213,255,.42);background:linear-gradient(145deg,rgba(50,39,94,.86),rgba(20,16,44,.92));box-shadow:0 8px 24px rgba(63,150,220,.10)}
+.choice-pill input{accent-color:#64cfff}
+
+/* Long text: readable, with optional Read more utility */
+.read-more-btn{margin-top:7px;align-self:flex-start;border:0;background:none;color:#6dd4ff;padding:0;font-weight:700;cursor:pointer}
+.clamp-long{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.clamp-long.expanded{display:block}
+
+/* Error location + reason */
+.nk-field-error{font-size:11px;line-height:1.45;color:#ff9cad;padding:8px 10px;border-radius:10px;background:rgba(255,94,122,.08);border:1px solid rgba(255,94,122,.15)}
+
+/* Avoid saturation overload in dark mode */
+.tool-card,.section-card,.workspace-hero,.tool-info-card,.health-card{filter:saturate(.90)}
+
+/* Accessibility: reduced motion is a hard rule, not optional */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .motion-reveal,.tool-card{opacity:1!important;transform:none!important}
+}
+</style>
+
+<style id="nexakit-native-free-audit-v5">
+/* Native-free interaction layer: keep semantic HTML, replace browser-looking controls with NexaKit styling. */
+:root{
+  --surface-gradient:linear-gradient(145deg,rgba(39,20,70,.88),rgba(18,9,36,.96));
+  --field-gradient:linear-gradient(145deg,rgba(28,14,50,.96),rgba(14,8,28,.98));
+  --accent-gradient:linear-gradient(135deg,#8250ee,#55cfff);
+  --danger-gradient:linear-gradient(135deg,#ff6f8c,#ff9b8d);
+}
+html,body{background:linear-gradient(135deg,#0f0620 0%,#17082d 42%,#0d1025 100%)!important}
+body{min-width:0}
+.app-shell,.auth-screen,.workspace-body,.tool-info-card,.health-card,.info-card,.tool-card,.drawer,.settings-modal,.auth-card,.boot{background-image:var(--surface-gradient)!important}
+.hero,.workspace-hero{background-image:linear-gradient(135deg,rgba(65,28,110,.92),rgba(18,10,40,.94))!important}
+.hero-video{opacity:.22;mix-blend-mode:screen}
+/* Remove browser appearance while preserving keyboard/screen-reader semantics. */
+input,textarea,select,button{appearance:none;-webkit-appearance:none;-moz-appearance:none}
+input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{appearance:none;margin:0}
+input[type="search"]::-webkit-search-decoration,input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-results-button,input[type="search"]::-webkit-search-results-decoration{appearance:none;-webkit-appearance:none}
+input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus{ -webkit-text-fill-color:var(--text); transition:background-color 9999s ease-out 0s; }
+input,textarea{background:var(--field-gradient)!important;border:1px solid rgba(165,125,230,.20)!important;box-shadow:inset 0 1px rgba(255,255,255,.025),0 10px 28px rgba(0,0,0,.08)}
+textarea{resize:none;min-height:120px}
+input::placeholder,textarea::placeholder{color:#766b89;opacity:1}
+input:focus,textarea:focus{transform:translateY(-1px);border-color:rgba(89,201,255,.55)!important;box-shadow:0 0 0 4px rgba(89,201,255,.08),0 14px 34px rgba(0,0,0,.13)!important}
+button{border:1px solid rgba(165,125,230,.18);background:linear-gradient(145deg,rgba(38,19,68,.95),rgba(22,11,42,.98));color:var(--text);min-height:48px;border-radius:15px;transition:transform 160ms ease,background 220ms ease,border-color 220ms ease,box-shadow 220ms ease,filter 220ms ease}
+button:hover:not(:disabled){transform:translateY(-2px);border-color:rgba(89,201,255,.35);box-shadow:0 12px 28px rgba(0,0,0,.16)}
+button:active:not(:disabled){transform:translateY(0) scale(.985)}
+button:disabled{opacity:.52;cursor:not-allowed}
+.primary-btn,#tool-area button[type="submit"],#tool-submit,#maker-download,#download-result,#download-tiktok,#download-image-result{background:var(--accent-gradient)!important;border-color:transparent!important;box-shadow:0 12px 30px rgba(103,82,238,.20)!important}
+/* File inputs never expose the browser's native file-picker button. */
+input[type="file"]{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap!important;border:0!important}
+.file-drop,.avatar-drop{cursor:pointer;position:relative;isolation:isolate}
+.file-drop::after,.avatar-drop::after{content:"";position:absolute;inset:0;border-radius:inherit;border:1px dashed rgba(89,201,255,.22);pointer-events:none;transition:border-color 220ms ease,background 220ms ease}
+.file-drop:hover::after,.file-drop.drag::after,.avatar-drop:hover::after{border-color:rgba(89,201,255,.60);background:rgba(89,201,255,.035)}
+/* Radio choices: custom indicator, no browser radio glyph. */
+.choice-pill{position:relative;display:flex!important;align-items:center;gap:9px;cursor:pointer;user-select:none}
+.choice-pill input[type="radio"]{position:absolute!important;opacity:0!important;pointer-events:none!important;width:1px!important;height:1px!important}
+.choice-pill::before{content:"";width:17px;height:17px;flex:none;border:1px solid rgba(165,125,230,.35);border-radius:50%;background:rgba(10,6,20,.65);box-shadow:inset 0 0 0 4px rgba(0,0,0,0);transition:all 180ms ease}
+.choice-pill.active::before,.choice-pill:has(input:checked)::before{border-color:#65d1ff;background:#65d1ff;box-shadow:inset 0 0 0 4px #17102d}
+/* Custom range: no native slider thumb/track styling. */
+.compare-range{appearance:none!important;-webkit-appearance:none!important;width:100%;height:8px!important;padding:0!important;border:0!important;border-radius:999px!important;background:linear-gradient(90deg,#6e4cf1 0 50%,rgba(255,255,255,.10) 50% 100%)!important;box-shadow:none!important;cursor:pointer}
+.compare-range::-webkit-slider-runnable-track{height:8px;border-radius:999px;background:transparent}
+.compare-range::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:22px;height:22px;margin-top:-7px;border:2px solid #dff7ff;border-radius:50%;background:#62d4ff;box-shadow:0 5px 18px rgba(98,212,255,.30);cursor:grab}
+.compare-range::-moz-range-track{height:8px;border-radius:999px;background:transparent}
+.compare-range::-moz-range-thumb{width:18px;height:18px;border:2px solid #dff7ff;border-radius:50%;background:#62d4ff;box-shadow:0 5px 18px rgba(98,212,255,.30);cursor:grab}
+/* Error states explain both location and reason. */
+.state-box-error{display:flex;align-items:flex-start;gap:12px;border:1px solid rgba(255,113,139,.30)!important;background:linear-gradient(145deg,rgba(92,26,48,.28),rgba(35,12,30,.55))!important;color:#ffdce3}
+.state-box-error .icon{color:#ff8098;flex:none;margin-top:2px}
+.state-box-error strong{display:block}.state-box-error span{display:block;color:#bca9b9;font-size:12px;margin-top:4px;line-height:1.5}
+/* Keep layouts fluid instead of browser-default overflow behavior. */
+.main{width:min(100%,1280px);margin-inline:auto;padding-inline:clamp(14px,2.5vw,32px)}
+.hero{width:100%;margin-inline:0}
+.tool-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))!important}
+.toolbar{align-items:stretch}
+.search{flex:1 1 280px}
+.tabs{max-width:100%;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
+.workspace-body form{width:min(100%,760px)}
+#tool-area .row{grid-template-columns:minmax(0,1fr) auto}
+.preview-img,.preview-media-box img,.preview-media-box video{max-width:100%;height:auto;display:block}
+.dl-format-row{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px}
+@media(max-width:720px){
+ .main{padding-inline:14px}.hero{border-radius:0 0 24px 24px}
+ .tool-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ #tool-area .row{grid-template-columns:1fr}
+ #tool-area .row button{width:100%}
+}
+@media(max-width:460px){
+ .main{padding-inline:10px}.hero{min-height:250px;padding:24px 18px 20px}
+ .tool-grid{grid-template-columns:1fr!important}
+ .tool-card{min-height:150px}
+ .audio-player{max-width:160px}.audio-bars{display:none}
+ .workspace-nav{flex-wrap:wrap}.workspace-status-pill{margin-left:auto}
+ .workspace-body{padding:14px!important;border-radius:20px!important}
+ .choice-group{grid-template-columns:1fr!important}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
+</style>
+<style id="nexakit-native-free-scroll-v5">
+/* Native scrollbar/selection cleanup */
+*{scrollbar-width:thin;scrollbar-color:rgba(132,92,220,.55) rgba(20,10,38,.65)}
+*::-webkit-scrollbar{width:8px;height:8px}
+*::-webkit-scrollbar-track{background:rgba(20,10,38,.65);border-radius:999px}
+*::-webkit-scrollbar-thumb{background:linear-gradient(180deg,rgba(132,92,220,.75),rgba(89,201,255,.55));border-radius:999px;border:2px solid rgba(20,10,38,.65)}
+::selection{background:rgba(89,201,255,.28);color:#f4efff}
+.file-drop b{color:#6fd7ff}
+#tool-area input[readonly]{cursor:text}
+#tool-area audio{width:100%;border-radius:16px;filter:saturate(.8) brightness(.82)}
 </style></head><body>
 <div id="boot" class="boot"><div class="boot-inner"><div class="boot-eyebrow">System Ready</div><div class="brand-mark brand-word">NK</div><div class="boot-title brand-word">NexaKit Pro</div><div class="boot-sub">Initializing your toolkit...</div><div class="boot-track"><div id="boot-bar" class="boot-bar"></div></div><div id="boot-step" class="boot-step">Initializing NexaKit</div></div></div>
 <section id="auth-screen" class="auth-screen" hidden>
@@ -410,7 +713,6 @@ body.workspace-open #tool-area button:not(.dl-format-row){font-family:var(--font
   <form id="auth-form" novalidate>
    <div class="field"><label for="auth-username">Username</label><input id="auth-username" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="Masukkan username"></div>
    <div class="field"><label for="auth-password">Password</label><div class="field-row"><input id="auth-password" type="password" autocomplete="current-password" placeholder="Masukkan password"><button class="password-toggle" type="button" id="toggle-pass" aria-label="Tampilkan password">Lihat</button></div></div>
-   <div class="field confirm-wrap" hidden><label for="auth-confirm">Konfirmasi Password</label><div class="field-row"><input id="auth-confirm" type="password" autocomplete="new-password" placeholder="Ulangi password"><button class="password-toggle" type="button" id="toggle-confirm" aria-label="Tampilkan konfirmasi password">Lihat</button></div></div>
    <div id="auth-error" class="form-error" role="alert"></div><button class="primary-btn submit-auth" type="submit">Masuk</button>
   </form><div class="auth-note">Login aman menggunakan Supabase Auth. Password tidak disimpan di NexaKit Pro.</div>
  </div>
@@ -448,7 +750,6 @@ body.workspace-open #tool-area button:not(.dl-format-row){font-family:var(--font
    <div class="tool-info-card" id="tool-info-card"><div class="tool-info-icon" id="tool-info-icon"></div><div class="tool-info-text"><strong id="tool-info-title">Tool</strong><span id="tool-info-desc">Pilih tool untuk mulai.</span></div></div>
    <div class="health-card" id="health-card"><div class="health-info"><div class="health-name"><span class="status-dot" id="health-dot" style="background:var(--warning);box-shadow:none"></span> <b id="health-provider">API</b> · <span id="health-status">Belum diuji</span></div><span class="health-sub" id="health-sub">Belum diuji · jalankan fitur</span></div><button id="health-check" class="health-refresh" type="button" aria-label="Cek status endpoint"><i class="icon fa-solid fa-clock-rotate-left" aria-hidden="true"></i></button></div>
    <div class="workspace-body">
-    <select id="tool-select" aria-label="Tool" hidden></select>
     <div id="tool-area"></div><div id="workspace-status" aria-live="polite">Siap digunakan</div>
     <section id="result-container" hidden><div id="result-content"></div></section><section id="dl-history-container"></section>
    </div>
@@ -490,8 +791,8 @@ body.workspace-open #tool-area button:not(.dl-format-row){font-family:var(--font
 (()=>{const b=document.getElementById('boot-bar'),s=document.getElementById('boot-step');let i=0;const steps=['Initializing NexaKit','Loading tools','Checking session','Ready'];const t=setInterval(()=>{i++;b.style.width=Math.min(100,i*25)+'%';s.textContent=steps[Math.min(i,3)];if(i>=4)clearInterval(t)},180)})();
 </script><script>
 /* FULL NATIVE: no framework or UI framework; icons use Font Awesome. */
-window.icons={tiktok:'music',instagram:'camera',spotify:'disc',terabox:'box',youtube:'play',facebook:'facebook',twitter:'x',capcut:'scissors',savefrom:'link',lahelu:'sparkle',brat:'sparkle',iqc:'doc','sertifikat-tolol':'pencil','lobby-ml':'gamepad','lobby-ff':'gamepad',fakedana:'money-bill-wave',fakedev:'code','img2link':'link','remove-background':'eraser','image-enhancer':'stars'};
-window.iconClasses={'home':'fa-solid fa-house', 'grid':'fa-solid fa-grip', 'download':'fa-solid fa-download', 'wand':'fa-solid fa-wand-magic-sparkles', 'image':'fa-solid fa-image', 'logout':'fa-solid fa-right-from-bracket', 'search':'fa-solid fa-magnifying-glass', 'chevron-left':'fa-solid fa-chevron-left', 'menu':'fa-solid fa-bars', 'layers':'fa-solid fa-layer-group', 'close':'fa-solid fa-xmark', 'alert':'fa-solid fa-triangle-exclamation', 'globe':'fa-solid fa-globe', 'phone':'fa-solid fa-mobile-screen-button', 'signal':'fa-solid fa-signal', 'battery':'fa-solid fa-battery-three-quarters', 'user':'fa-solid fa-user', 'whatsapp':'fa-brands fa-whatsapp', 'volume':'fa-solid fa-volume-high', 'volume-mute':'fa-solid fa-volume-xmark', 'pause':'fa-solid fa-pause', 'skip':'fa-solid fa-forward-step', 'camera-plus':'fa-solid fa-camera', 'lock':'fa-solid fa-lock', 'upload':'fa-solid fa-arrow-up-from-bracket', 'history':'fa-solid fa-clock-rotate-left', 'trash':'fa-solid fa-trash-can', 'crown':'fa-solid fa-crown', 'check':'fa-solid fa-check', 'circle':'fa-solid fa-circle', 'music':'fa-solid fa-music', 'camera':'fa-solid fa-camera', 'disc':'fa-solid fa-compact-disc', 'box':'fa-solid fa-box', 'play':'fa-solid fa-play', 'facebook':'fa-brands fa-facebook-f', 'x':'fa-brands fa-x-twitter', 'scissors':'fa-solid fa-scissors', 'link':'fa-solid fa-link', 'sparkle':'fa-solid fa-sparkles', 'doc':'fa-solid fa-file-lines', 'pencil':'fa-solid fa-pencil', 'gamepad':'fa-solid fa-gamepad', 'coin':'fa-solid fa-coins', 'money-bill-wave':'fa-solid fa-money-bill-wave', 'code':'fa-solid fa-code', 'eraser':'fa-solid fa-eraser', 'stars':'fa-solid fa-wand-magic-sparkles', 'logo':'fa-solid fa-layer-group'};
+window.icons={tiktok:'tiktok',instagram:'instagram',spotify:'spotify',terabox:'terabox',youtube:'youtube',facebook:'facebook',twitter:'x',capcut:'capcut',savefrom:'savefrom',lahelu:'lahelu',brat:'brat',iqc:'doc','sertifikat-tolol':'pencil','lobby-ml':'gamepad','lobby-ff':'gamepad',fakedana:'money-bill-wave',fakedev:'code','img2link':'link','remove-background':'eraser','image-enhancer':'stars'};
+window.iconClasses={'home':'fa-solid fa-house', 'grid':'fa-solid fa-grip', 'download':'fa-solid fa-download', 'wand':'fa-solid fa-wand-magic-sparkles', 'image':'fa-solid fa-image', 'logout':'fa-solid fa-right-from-bracket', 'search':'fa-solid fa-magnifying-glass', 'chevron-left':'fa-solid fa-chevron-left', 'menu':'fa-solid fa-bars', 'layers':'fa-solid fa-layer-group', 'close':'fa-solid fa-xmark', 'alert':'fa-solid fa-triangle-exclamation', 'globe':'fa-solid fa-globe', 'phone':'fa-solid fa-mobile-screen-button', 'signal':'fa-solid fa-signal', 'battery':'fa-solid fa-battery-three-quarters', 'user':'fa-solid fa-user', 'whatsapp':'fa-brands fa-whatsapp', 'volume':'fa-solid fa-volume-high', 'volume-mute':'fa-solid fa-volume-xmark', 'pause':'fa-solid fa-pause', 'skip':'fa-solid fa-forward-step', 'camera-plus':'fa-solid fa-camera', 'lock':'fa-solid fa-lock', 'upload':'fa-solid fa-arrow-up-from-bracket', 'history':'fa-solid fa-clock-rotate-left', 'trash':'fa-solid fa-trash-can', 'crown':'fa-solid fa-crown', 'check':'fa-solid fa-check', 'circle':'fa-solid fa-circle', 'music':'fa-solid fa-music', 'camera':'fa-solid fa-camera', 'disc':'fa-solid fa-compact-disc', 'box':'fa-solid fa-box', 'play':'fa-solid fa-play', 'tiktok':'fa-brands fa-tiktok', 'instagram':'fa-brands fa-instagram', 'spotify':'fa-brands fa-spotify', 'youtube':'fa-brands fa-youtube', 'facebook':'fa-brands fa-facebook-f', 'x':'fa-brands fa-x-twitter', 'whatsapp':'fa-brands fa-whatsapp', 'terabox':'fa-solid fa-box-open', 'capcut':'fa-solid fa-scissors', 'savefrom':'fa-solid fa-cloud-arrow-down', 'lahelu':'fa-solid fa-face-grin-squint-tears', 'brat':'fa-solid fa-font', 'scissors':'fa-solid fa-scissors', 'link':'fa-solid fa-link', 'sparkle':'fa-solid fa-sparkles', 'doc':'fa-solid fa-file-lines', 'pencil':'fa-solid fa-pencil', 'gamepad':'fa-solid fa-gamepad', 'coin':'fa-solid fa-coins', 'money-bill-wave':'fa-solid fa-money-bill-wave', 'code':'fa-solid fa-code', 'eraser':'fa-solid fa-eraser', 'stars':'fa-solid fa-wand-magic-sparkles', 'logo':'fa-solid fa-layer-group'};
 window.iconSvg=id=>`<i class="icon ${window.iconClasses[id]||'fa-solid fa-circle-question'}" aria-hidden="true"></i>`;
 const TOOLS=[
 {id:'tt',slug:'tiktok',name:'TikTok',title:'TikTok Downloader',description:'Download video TikTok tanpa watermark',type:'tiktok',tag:'MP4/MP3'},
@@ -537,11 +838,11 @@ function initTiktok(){const input=$('tiktok-url'),btn=$('preview-tiktok'),box=$(
  async function run(){box.hidden=false;content.innerHTML=resultLoading();setBusy(true,'Mengambil preview…');btn.classList.add('btn-loading');try{const v=input.value.trim();if(!v)throw Error('Link TikTok tidak boleh kosong.');if(!isHttpUrl(v))throw Error('Link TikTok tidak valid.');const j=await safeJson('/api/proxy?provider=tiktok&url='+encodeURIComponent(v));if(j.code!==0||!j.data)throw Error('Videonya nggak ketemu, coba cek lagi linknya.');markInvalid(input,false);tiktokData=j.data;tiktokFormat=tiktokData.hdplay?'hd':'sd';render();renderHistory()}catch(e){markInvalid(input,true);content.innerHTML=resultError(e)}finally{setBusy(false);btn.classList.remove('btn-loading')}}btn.onclick=run;input.onkeydown=e=>{if(e.key==='Enter')run()};renderHistory()}
 function initYoutube(){const input=$('youtube-url'),btn=$('preview-youtube'),box=$('result-container'),content=$('result-content');async function run(){const v=input.value.trim();box.hidden=false;content.innerHTML=resultLoading();setBusy(true,'Mengambil info video…');try{if(!v)throw Error('Link YouTube tidak boleh kosong.');if(!isHttpUrl(v))throw Error('Link YouTube tidak valid.');const id=(v.match(/[?&]v=([^&]+)/)||v.match(/youtu\.be\/([^?]+)/)||v.match(/shorts\/([^?]+)/))?.[1];if(!id)throw Error('Link YouTube tidak valid.');const o=await safeJson('https://www.youtube.com/oembed?url='+encodeURIComponent(v)+'&format=json');markInvalid(input,false);ytInfo={url:v,id,title:o.title,author:o.author_name,thumb:`https://i.ytimg.com/vi/${encodeURIComponent(id)}/hqdefault.jpg`};render()}catch(e){markInvalid(input,true);content.innerHTML=resultError(e)}finally{setBusy(false)}}function render(){content.innerHTML=`<div class="preview-media-box"><img src="${esc(ytInfo.thumb)}" alt="Thumbnail"></div><div>${esc(ytInfo.author)}</div><div>${esc(ytInfo.title)}</div><div class="dl-format-label"><span>VIDEO</span><span>MP4</span></div>${['360','480','720','1080'].map(q=>`<button class="dl-format-row" data-q="${q}" type="button"><span>MP4 ${q}p</span>${iconSvg('download')}</button>`).join('')}<div class="dl-format-label"><span>AUDIO</span><span>MP3</span></div><button class="dl-format-row" id="yt-mp3" type="button"><span>MP3 Audio</span>${iconSvg('download')}</button>`;content.querySelectorAll('[data-q]').forEach(b=>b.onclick=()=>downloadYoutube('mp4',b.dataset.q,b));$('yt-mp3').onclick=()=>downloadYoutube('mp3','',$('yt-mp3'))}async function downloadYoutube(type,q,b){const old=b.innerHTML;b.disabled=true;b.textContent='Menyiapkan…';try{const ep=type==='mp4'?`/api/proxy?provider=ytmp4&resolusi=${encodeURIComponent(q)}&url=${encodeURIComponent(ytInfo.url)}`:`/api/proxy?provider=ytmp3&url=${encodeURIComponent(ytInfo.url)}`;const j=await safeJson(ep);const u=j.url||j.result||j.data?.url||j.data?.downloadUrl;if(!u)throw Error('URL download tidak tersedia dari server.');await downloadFile(u,`nexakit-youtube-${q||'mp3'}-${Date.now()}.${type==='mp4'?'mp4':'mp3'}`)}catch(e){showToast(e.message,'error')}finally{b.disabled=false;b.innerHTML=old}}btn.onclick=run;input.onkeydown=e=>{if(e.key==='Enter')run()}}
 function initGeneric(tool){const form=$('tool-form'),input=$('tool-input'),box=$('result-container'),content=$('result-content');form.onsubmit=async e=>{e.preventDefault();const v=input.value.trim();box.hidden=false;content.innerHTML=resultLoading();setBusy(true,'Mengambil media…');try{if(!v)throw Error('Link-nya belum diisi nih.');if(!isHttpUrl(v))throw Error('Link-nya kelihatannya belum valid, pastiin pakai http:// atau https://.');const j=await safeJson(`/api/proxy?provider=${encodeURIComponent(tool.provider)}&${tool.paramKey}=${encodeURIComponent(v)}`);let u,title;if(Array.isArray(j.result)&&j.result.length){u=j.result[0].url||j.result[0].link;title=j.result[0].title||j.result[0].caption}else if(Array.isArray(j.data)&&j.data.length){u=j.data[0]?.url||j.data[0]?.link||j.data[0];title=j.data[0]?.title||j.data[0]?.caption}else{u=j.result||j.url||j.link||j.data?.url||j.data?.downloadUrl;title=j.title||j.caption||j.data?.title}if(!u||typeof u!=='string')throw Error(j.error||j.message||'Gagal mendapatkan media.');markInvalid(input,false);const video=/\.(mp4|mov|webm)(\?|$)/i.test(u)||tool.id==='ig';const audio=!video&&(/\.(mp3|wav|m4a)(\?|$)/i.test(u)||tool.id==='spotify');let media=video?`<div class="preview-media-box"><video src="${esc(u)}" controls playsinline></video></div>`:audio?`<audio src="${esc(u)}" controls style="width:100%"></audio>`:`<div class="preview-media-box"><img src="${esc(u)}" alt="Preview"></div>`;content.innerHTML=media+(title?`<div><b>INFO</b><div>${esc(title)}</div></div>`:'')+`<button id="download-result" type="button">Download</button>`;$('download-result').onclick=()=>downloadFile(u,`nexakit-${tool.slug}-${Date.now()}`)}catch(e){markInvalid(input,true);content.innerHTML=resultError(e)}finally{setBusy(false)}}}
-function initImageTool(type){const input=$('image-file'),btn=$('tool-submit'),box=$('result-container'),content=$('result-content');makeDropzone(input,file=>uploadPreview(file,'file-preview'));btn.onclick=async e=>{e.preventDefault();box.hidden=false;content.innerHTML=resultLoading();setBusy(true,'Memproses gambar…');try{const file=input.files[0];if(!file)throw Error('Pilih gambar terlebih dahulu.');if(type==='remove-bg'){const f=new FormData();f.append('image_file',file);f.append('size','auto');const r=await fetch('/api/remove-bg',{method:'POST',body:f});if(!r.ok)throw Error('Gagal menghapus background.');const blob=await r.blob(),u=URL.createObjectURL(blob);content.innerHTML=`<img class="preview-img" src="${u}" alt="Hasil Remove Background"><a class="action-btn" href="${u}" download="removebg-result.png">Unduh PNG</a>`}else if(type==='img2link'){const u=await uploadToImgBB(file);content.innerHTML=`<img class="preview-img" src="${esc(u)}" alt="Uploaded image"><input value="${esc(u)}" readonly><button id="copy-url" type="button">Salin Link</button>`;$('copy-url').onclick=()=>navigator.clipboard.writeText(u).then(()=>showToast('Link tersalin'))}else{const up=await uploadToImgBB(file);const u=`/api/proxy?provider=enhancer&url=${encodeURIComponent(up)}`;content.innerHTML=`<div class="compare-wrap" data-compare><img src="${esc(up)}" alt="Sebelum"><img class="compare-after" data-after src="${esc(u)}" alt="Sesudah"><div class="compare-divider" data-divider></div><div class="compare-labels"><span>Sebelum</span><span>Sesudah</span></div><input class="compare-range" data-range type="range" min="0" max="100" value="50" aria-label="Geser perbandingan sebelum dan sesudah"></div><button id="download-image-result" type="button">Unduh Hasil</button>`;const range=content.querySelector('[data-range]'),after=content.querySelector('[data-after]'),divider=content.querySelector('[data-divider]');range.oninput=()=>{const v=Number(range.value);after.style.clipPath=`inset(0 0 0 ${v}%)`;divider.style.left=v+'%'};$('download-image-result').onclick=()=>downloadFile(u,`nexakit-enhanced-${Date.now()}.png`)}}catch(e){content.innerHTML=resultError(e)}finally{setBusy(false)}}}
-function initMaker(tool){const form=$('maker-form'),box=$('result-container'),content=$('result-content');const fileInput=$('maker-file');if(fileInput)makeDropzone(fileInput,()=>{});form.onsubmit=async e=>{e.preventDefault();box.hidden=false;content.innerHTML=resultLoading();setBusy(true,'Membuat gambar…');try{let u,name='nexakit-result.png',original=false;if(tool.type==='brat'){const text=$('maker-text').value.trim();if(!text)throw Error('Masukkan teks untuk Brat.');const animated=document.querySelector('input[name="brat-animated"]:checked').value==='true',delay=$('brat-delay').value||500;u=`/api/proxy?provider=brat&text=${encodeURIComponent(text)}${animated?'&isAnimated=true&delay='+encodeURIComponent(delay):''}`;name=`nexakit-brat-${Date.now()}.${animated?'gif':'png'}`;original=animated}else if(tool.type==='iqc'){const text=$('maker-text').value.trim(),time=$('maker-time').value.trim();if(!text)throw Error('Masukkan quote.');u=`/api/iqc-text?text=${encodeURIComponent(text)}&time=${encodeURIComponent(time||Date.now())}`;name=`nexakit-iqc-${Date.now()}.png`}else if(tool.type==='lobby-ml'){const nick=$('maker-text').value.trim(),file=$('maker-file').files[0];if(!nick||!file)throw Error('Nickname dan avatar wajib diisi.');const av=await uploadToImgBB(file);u=`/api/proxy?provider=lobbyml&nickname=${encodeURIComponent(nick)}&avatar=${encodeURIComponent(av)}`;name=`nexakit-lobby-ml-${Date.now()}.png`}else if(tool.type==='fakedev'){const n=$('maker-name').value.trim(),bio=$('maker-bio').value.trim(),file=$('maker-file').files[0];if(!n||!bio||!file)throw Error('Nama, bio, dan avatar wajib diisi.');const av=await uploadToImgBB(file);u=`/api/proxy?provider=fakedev&nama=${encodeURIComponent(n)}&bio=${encodeURIComponent(bio)}&image=${encodeURIComponent(av)}`;name=`nexakit-fakedev-${Date.now()}.png`}else{let v=$('maker-text').value.trim();if(!v)throw Error('Input wajib diisi.');if(tool.provider==='fakedana')v=v.replace(/\D/g,'');u=`/api/proxy?provider=${encodeURIComponent(tool.provider)}&${encodeURIComponent(tool.paramKey)}=${encodeURIComponent(v)}`;name=`nexakit-${tool.slug}-${Date.now()}.png`}content.innerHTML=`<img class="preview-img" src="${esc(u)}" alt="Hasil"><button id="maker-download" type="button">Simpan Gambar</button>`;$('maker-download').onclick=()=>downloadFile(u,name)}catch(e){content.innerHTML=resultError(e)}finally{setBusy(false)}};if(tool.type==='brat')document.querySelectorAll('input[name="brat-animated"]').forEach(r=>r.onchange=e=>{$('brat-delay-wrap').hidden=e.target.value!=='true';document.querySelectorAll('.choice-pill').forEach(p=>p.classList.toggle('active',p.querySelector('input').checked))})}
+function initImageTool(type){const input=$('image-file'),btn=$('tool-submit'),box=$('result-container'),content=$('result-content');makeDropzone(input,file=>uploadPreview(file,'file-preview'));btn.onclick=async e=>{e.preventDefault();box.hidden=false;content.innerHTML=resultLoading();setBusy(true,'Memproses gambar…');try{const file=input.files[0];if(!file)throw Error('Pilih gambar terlebih dahulu.');if(type==='remove-bg'){const f=new FormData();f.append('image_file',file);f.append('size','auto');const r=await fetch('/api/remove-bg',{method:'POST',body:f});if(!r.ok)throw Error('Gagal menghapus background.');const blob=await r.blob(),u=URL.createObjectURL(blob);content.innerHTML=`<img class="preview-img" src="${u}" alt="Hasil Remove Background"><a class="action-btn" href="${u}" download="removebg-result.png">Unduh PNG</a>`}else if(type==='img2link'){const u=await uploadToImgBB(file);content.innerHTML=`<img class="preview-img" src="${esc(u)}" alt="Uploaded image"><input value="${esc(u)}" readonly><button id="copy-url" type="button">Salin Link</button>`;$('copy-url').onclick=()=>navigator.clipboard.writeText(u).then(()=>showToast('Link tersalin'))}else{const up=await uploadToImgBB(file);const u=`/api/proxy?provider=enhancer&url=${encodeURIComponent(up)}`;content.innerHTML=`<div class="compare-wrap" data-compare><img src="${esc(up)}" alt="Sebelum"><img class="compare-after" data-after src="${esc(u)}" alt="Sesudah"><div class="compare-divider" data-divider></div><div class="compare-labels"><span>Sebelum</span><span>Sesudah</span></div><input class="compare-range" data-range type="range" min="0" max="100" value="50" aria-label="Geser perbandingan sebelum dan sesudah"></div><button id="download-image-result" type="button">Unduh Hasil</button>`;const range=content.querySelector('[data-range]'),after=content.querySelector('[data-after]'),divider=content.querySelector('[data-divider]');range.oninput=()=>{const v=Number(range.value);after.style.clipPath=`inset(0 0 0 ${v}%)`;divider.style.left=v+'%';range.style.background=`linear-gradient(90deg,#6e4cf1 0 ${v}%,rgba(255,255,255,.10) ${v}% 100%)`};range.dispatchEvent(new Event('input'));$('download-image-result').onclick=()=>downloadFile(u,`nexakit-enhanced-${Date.now()}.png`)}}catch(e){content.innerHTML=resultError(e)}finally{setBusy(false)}}}
+function initMaker(tool){const form=$('maker-form'),box=$('result-container'),content=$('result-content');const fileInput=$('maker-file');if(fileInput)makeDropzone(fileInput,()=>{});form.onsubmit=async e=>{e.preventDefault();box.hidden=false;content.innerHTML=resultLoading();setBusy(true,'Membuat gambar…');try{let u,name='nexakit-result.png',original=false;if(tool.type==='brat'){const text=$('maker-text').value.trim();if(!text)throw Error('Masukkan teks untuk Brat.');const animated=document.querySelector('input[name="brat-animated"]:checked').value==='true',delay=$('brat-delay').value||500;u=`/api/proxy?provider=brat&text=${encodeURIComponent(text)}${animated?'&isAnimated=true&delay='+encodeURIComponent(delay):''}`;name=`nexakit-brat-${Date.now()}.${animated?'gif':'png'}`;original=animated}else if(tool.type==='iqc'){const text=$('maker-text').value.trim(),time=$('maker-time').value.trim();if(!text)throw Error('Masukkan quote.');u=`/api/iqc-text?text=${encodeURIComponent(text)}&time=${encodeURIComponent(time||Date.now())}`;name=`nexakit-iqc-${Date.now()}.png`}else if(tool.type==='lobby-ml'){const nick=$('maker-text').value.trim(),file=$('maker-file').files[0];if(!nick||!file)throw Error('Nickname dan avatar wajib diisi.');const av=await uploadToImgBB(file);u=`/api/proxy?provider=lobbyml&nickname=${encodeURIComponent(nick)}&avatar=${encodeURIComponent(av)}`;name=`nexakit-lobby-ml-${Date.now()}.png`}else if(tool.type==='fakedev'){const n=$('maker-name').value.trim(),bio=$('maker-bio').value.trim(),file=$('maker-file').files[0];if(!n||!bio||!file)throw Error('Nama, bio, dan avatar wajib diisi.');const av=await uploadToImgBB(file);u=`/api/proxy?provider=fakedev&nama=${encodeURIComponent(n)}&bio=${encodeURIComponent(bio)}&image=${encodeURIComponent(av)}`;name=`nexakit-fakedev-${Date.now()}.png`}else{let v=$('maker-text').value.trim();if(!v)throw Error('Input wajib diisi.');if(tool.provider==='fakedana'){v=v.replace(/\D/g,'');if(!v)throw Error('Nominal saldo harus diisi dengan angka.');}u=`/api/proxy?provider=${encodeURIComponent(tool.provider)}&${encodeURIComponent(tool.paramKey)}=${encodeURIComponent(v)}`;name=`nexakit-${tool.slug}-${Date.now()}.png`}content.innerHTML=`<img class="preview-img" src="${esc(u)}" alt="Hasil"><button id="maker-download" type="button">Simpan Gambar</button>`;$('maker-download').onclick=()=>downloadFile(u,name)}catch(e){content.innerHTML=resultError(e)}finally{setBusy(false)}};if(tool.type==='brat')document.querySelectorAll('input[name="brat-animated"]').forEach(r=>r.onchange=e=>{$('brat-delay-wrap').hidden=e.target.value!=='true';document.querySelectorAll('.choice-pill').forEach(p=>p.classList.toggle('active',p.querySelector('input').checked))})}
 
-const select=$('tool-select'),area=$('tool-area');
-TOOLS.forEach(t=>{const o=document.createElement('option');o.value=t.slug;o.textContent=t.name;select.appendChild(o)});
+const area=$('tool-area');
+let activeTool=TOOLS[0];
 function clearView(){area.innerHTML='';$('result-container').hidden=true;$('result-content').innerHTML='';$('dl-history-container').innerHTML=''}
 function base(title,desc,form){area.innerHTML=`<h2>${esc(title)}</h2>${desc?`<p>${esc(desc)}</p>`:''}${form}`}
 function render(tool){clearView();
@@ -557,8 +858,7 @@ function render(tool){clearView();
  else form=`<form id="maker-form"><input id="maker-text" ${tool.paramKey==='nominal'?'inputmode="numeric" pattern="[0-9]*"':''} placeholder="${esc(tool.paramKey==='nominal'?'Nominal, cth: 500000':tool.title+' input')}"><button type="submit">BUAT</button></form>`;
  base(tool.title,tool.description,form);initMaker(tool)
 }
-select.onchange=()=>render(TOOLS.find(t=>t.slug===select.value));
-select.value='tiktok';render(TOOLS[0]);
+activeTool=TOOLS[0];render(activeTool);
 window.addEventListener('online',()=>{setBusy(false);updateNetStatus()});window.addEventListener('offline',()=>{setBusy(false);updateNetStatus()});
 function updateNetStatus(){const el=document.getElementById('info-status');if(!el)return;const on=navigator.onLine;el.innerHTML=`<span class="status-dot"${on?'':' style="background:var(--danger);box-shadow:none"'}></span> ${on?'Online':'Offline'}`}
 function flagEmoji(cc){if(!/^[A-Za-z]{2}$/.test(cc||''))return '';return String.fromCodePoint(...[...cc.toUpperCase()].map(c=>127397+c.charCodeAt(0)))}
@@ -662,7 +962,6 @@ const grid = $q('tool-grid'), search = $q('tool-search'), tabs = $q('category-ta
 const userName = $q('user-name'), userAvatar = $q('user-avatar');
 const authForm = $q('auth-form'), authMode = $q('auth-mode'), authError = $q('auth-error');
 const authSubmitButton = authForm.querySelector('.submit-auth');
-const confirmWrap = authForm.querySelector('.confirm-wrap');
 const loginTab = document.querySelector('.auth-tabs button[data-mode="login"]');
 const registerTab = document.querySelector('.auth-tabs button[data-mode="register"]');
 const toolThemes = {
@@ -696,7 +995,6 @@ function setMode(mode){
   authForm.dataset.mode=mode;
   authMode.textContent=mode==='login'?'Masuk':'Daftar';
   $q('auth-subtitle').textContent=mode==='login'?'Masuk untuk membuka semua tools NexaKit Pro.':'Buat akun NexaKit Pro dengan username dan password.';
-  confirmWrap.hidden=mode!=='register';
   $q('auth-password').autocomplete=mode==='login'?'current-password':'new-password';
   authSubmitButton.textContent=mode==='login'?'Masuk':'Daftar';
   [loginTab,registerTab].forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));
@@ -789,8 +1087,8 @@ $q('health-check').onclick=async()=>{
 function openTool(slug){
   const t=tools.find(x=>x.slug===slug);if(!t)return;
   applyToolTheme(t);
-  $q('tool-select').value=t.slug;
-  $q('tool-select').dispatchEvent(new Event('change'));
+  activeTool=t;
+  render(t);
   $q('workspace-name').textContent=t.title;
   $q('workspace-name-visual').textContent=t.title;
   $q('workspace-desc').textContent=t.description;
@@ -825,11 +1123,9 @@ async function authSubmit(e){
   const mode=authForm.dataset.mode||'login';
   const u=$q('auth-username').value.trim();
   const p=$q('auth-password').value;
-  const c=$q('auth-confirm').value;
   authError.textContent='';
   if(!validUsername(u)){authError.textContent='Username harus 3–24 karakter dan hanya boleh huruf, angka, titik, garis bawah, atau strip.';return}
   if(p.length<6){authError.textContent='Password minimal 6 karakter.';return}
-  if(mode==='register'&&p!==c){authError.textContent='Konfirmasi password tidak cocok.';return}
   setAuthBusy(true);
   try{
     const email=usernameEmail(u);
@@ -860,7 +1156,7 @@ async function notifyAuth(event,username){
 async function logout(){
   window.nexakitUser=null;
   try{await supabase.auth.signOut()}catch(error){console.error(error)}
-  showAuth();setMode('login');authForm.reset();authError.textContent='';setPasswordVisibility('auth-password',false,'toggle-pass');setPasswordVisibility('auth-confirm',false,'toggle-confirm');openDrawer(false);showToast('Anda sudah logout.');
+  showAuth();setMode('login');authForm.reset();authError.textContent='';setPasswordVisibility('auth-password',false,'toggle-pass');openDrawer(false);showToast('Anda sudah logout.');
 }
 function setPasswordVisibility(inputId,visible,buttonId){const input=$q(inputId),button=$q(buttonId);if(!input||!button)return;input.type=visible?'text':'password';button.textContent=visible?'Sembunyikan':'Lihat';button.setAttribute('aria-label',visible?'Sembunyikan password':'Tampilkan password')}
 function togglePassword(inputId,buttonId){const input=$q(inputId);if(input)setPasswordVisibility(inputId,input.type==='password',buttonId)}
@@ -880,7 +1176,6 @@ async function init(){
   loginTab.onclick=()=>setMode('login');registerTab.onclick=()=>setMode('register');
   authForm.addEventListener('submit',authSubmit);
   $q('toggle-pass').onclick=()=>togglePassword('auth-password','toggle-pass');
-  $q('toggle-confirm').onclick=()=>togglePassword('auth-confirm','toggle-confirm');
   $q('logout').onclick=logout;$q('mobile-logout').onclick=logout;$q('back-tools').onclick=openDashboard;
   $q('hero-browse').onclick=()=>window.scrollTo({top:$q('tool-grid').offsetTop-80,behavior:'smooth'});
   function goToCategory(catId){if(catId){tabs.querySelectorAll('.tab').forEach(x=>{const on=x.dataset.cat===catId;x.classList.toggle('active',on);x.setAttribute('aria-selected',String(on))});renderCards()}openDashboard();setTimeout(()=>window.scrollTo({top:$q('tool-grid').offsetTop-80,behavior:'smooth'}),50)}
@@ -899,7 +1194,63 @@ async function init(){
   }catch(error){console.error(error);showAuth();authError.textContent='Authentication belum terhubung. Pastikan environment Supabase sudah dikonfigurasi.'}
   setTimeout(()=>{boot.classList.add('hide')},650);
 }
+/* Input masks + lightweight validation audit fixes. */
+document.addEventListener('input',e=>{
+  const el=e.target;
+  if(el.matches('input[inputmode="numeric"],input[type="number"]')){
+    const start=el.selectionStart;
+    const cleaned=el.value.replace(/[^0-9]/g,'');
+    if(cleaned!==el.value){el.value=cleaned;try{el.setSelectionRange(Math.max(0,(start||0)-1),Math.max(0,(start||0)-1))}catch{}}
+  }
+});
+window.addEventListener('error',e=>{console.error('[NexaKit UI]',e.error||e.message)});
+window.addEventListener('unhandledrejection',e=>{console.error('[NexaKit Promise]',e.reason)});
 init();
 if ('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js',{updateViaCache:'none'}).catch(error=>console.warn('Service worker registration failed:',error)));
+</script>
+
+<script id="nexakit-motion-responsive-v4-js">
+(function(){
+  const root=document.documentElement;
+  root.classList.add('motion-ready');
+
+  // Motion rule: progressive disclosure / staggered cards.
+  function prepareCards(){
+    document.querySelectorAll('.tool-grid .tool-card').forEach((el,i)=>el.style.setProperty('--stagger',Math.min(i,12)));
+  }
+
+  // Motion rule: reveal only when content enters the viewport.
+  function reveal(){
+    const els=document.querySelectorAll('.section-card,.info-card,.health-card,.tool-info-card,.workspace-hero,.workspace-body');
+    if(!('IntersectionObserver' in window)){els.forEach(e=>e.classList.add('motion-reveal'));return}
+    const io=new IntersectionObserver(entries=>entries.forEach(x=>{if(x.isIntersecting){x.target.classList.add('motion-reveal');io.unobserve(x.target)}}),{threshold:.08,rootMargin:'0px 0px -30px'});
+    els.forEach(e=>io.observe(e));
+  }
+
+  // Motion rule: friendly button feedback without changing layout.
+  document.addEventListener('click',e=>{
+    const b=e.target.closest('button,.soft-btn,.primary-btn');
+    if(!b || b.disabled) return;
+    b.classList.remove('nk-click'); void b.offsetWidth; b.classList.add('nk-click');
+  },{passive:true});
+
+  // UX rule: long copy can be expanded instead of making the page huge.
+  function setupReadMore(){
+    document.querySelectorAll('[data-read-more]').forEach(el=>{
+      if(el.dataset.readMoreReady)return;
+      el.dataset.readMoreReady='1';
+      el.classList.add('clamp-long');
+      const btn=document.createElement('button');btn.type='button';btn.className='read-more-btn';btn.textContent='Read more';
+      btn.onclick=()=>{const open=el.classList.toggle('expanded');btn.textContent=open?'Show less':'Read more'};
+      el.after(btn);
+    });
+  }
+
+  // Re-run after SPA-like view changes.
+  const mo=new MutationObserver(()=>{prepareCards();setupReadMore()});
+  mo.observe(document.body,{childList:true,subtree:true});
+  window.addEventListener('load',()=>{prepareCards();reveal();setupReadMore()},{once:true});
+  setTimeout(()=>{prepareCards();reveal();setupReadMore()},700);
+})();
 </script>
 </body></html>
