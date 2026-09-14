@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NexaKit Pro</title>
+<link rel="manifest" href="/manifest.json">
+
+</head>
+<body>
+
+<!-- ================= AUTH ================= -->
+<section id="auth-screen">
+  <h1>NexaKit Pro</h1>
+  <div id="auth-tabs">
+    <button type="button" data-mode="login">Masuk</button>
+    <button type="button" data-mode="register">Daftar</button>
+  </div>
+  <h2 id="auth-mode">Masuk</h2>
+  <p id="auth-subtitle">Masuk untuk membuka semua tools NexaKit Pro.</p>
+  <form id="auth-form" novalidate>
+    <p>
+      <label for="auth-username">Username</label>
+      <input id="auth-username" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false">
+    </p>
+    <p>
+      <label for="auth-password">Password</label>
+      <input id="auth-password" type="password" autocomplete="current-password">
+    </p>
+    <p><button type="button" id="toggle-pass">Lihat password</button></p>
+    <p id="auth-error" role="alert"></p>
+    <button type="submit">Masuk</button>
+  </form>
+</section>
+
+<!-- ================= APP ================= -->
+<div id="app-shell" hidden>
+  <header>
+    <div>Halo, <b id="user-name">Member</b><span id="role-label">Member</span></div>
+    <div>
+      <button type="button" id="menu-settings">Pengaturan</button>
+      <button type="button" id="logout">Logout</button>
+    </div>
+  </header>
+
+  <section id="dashboard-view">
+    <h2>Semua Tools</h2>
+    <p><input id="tool-search" type="search" placeholder="Cari TikTok, Instagram, Remove BG..."></p>
+    <div id="category-tabs"></div>
+    <ul id="tool-grid"></ul>
+  </section>
+
+  <section id="workspace-view" hidden>
+    <p><button type="button" id="back-tools">&laquo; All Tools</button></p>
+    <h2 id="workspace-name">Tool</h2>
+    <p id="workspace-desc"></p>
+    <p>Endpoint: <b id="health-provider"></b> &middot; <span id="health-status">Belum diuji</span>
+      <button type="button" id="health-check">Cek status</button>
+    </p>
+    <div id="tool-area"></div>
+    <p id="workspace-status">Siap digunakan</p>
+    <section id="result-container" hidden>
+      <div id="result-content"></div>
+    </section>
+    <section id="dl-history-container"></section>
+  </section>
+
+  <p>
+    <a href="https://portofshakz.biz.id" target="_blank" rel="noopener">About Dev</a>
+    &middot;
+    <button type="button" id="menu-feedback">Report Bug / Saran</button>
+  </p>
+</div>
+
+<!-- ================= SETTINGS ================= -->
+<div id="settings-overlay" hidden></div>
+<div id="settings-modal" hidden>
+  <h2>Setting User</h2>
+  <p>
+    <span id="avatar-preview-fallback">N</span>
+    <img id="avatar-preview-img" hidden alt="Foto profil" width="56" height="56">
+    <br><br>
+    <input id="avatar-input" type="file" accept="image/*">
+  </p>
+  <p>
+    <label for="settings-name">Nama Tampilan</label>
+    <input id="settings-name" maxlength="30">
+  </p>
+  <button type="button" id="settings-save-profile">Simpan Perubahan</button>
+  <hr>
+  <p>
+    <label for="settings-newpass">Password Baru</label>
+    <input id="settings-newpass" type="password" autocomplete="new-password">
+  </p>
+  <button type="button" id="settings-save-pass">Ganti Password</button>
+  <p id="settings-msg" hidden></p>
+  <p><button type="button" id="settings-close">Tutup</button></p>
+</div>
+
+<p id="toast" hidden></p>
+
+<script>
+/* ============================================================
+   FEATURE LOGIC ONLY — visuals live entirely in the <style>
+   block above; nothing here decides how anything looks.
+   ============================================================ */
+const TOOLS=[
+{id:'tt',slug:'tiktok',name:'TikTok',title:'TikTok Downloader',description:'Download video TikTok tanpa watermark',type:'tiktok',tag:'MP4/MP3'},
+{id:'ig',slug:'instagram',name:'Instagram',title:'Instagram Downloader',description:'Unduh video & foto Instagram HD',type:'generic-downloader',provider:'ig',paramKey:'url',tag:'HD'},
+{id:'spotify',slug:'spotify',name:'Spotify',title:'Spotify Downloader',description:'Unduh musik Spotify ke MP3',type:'generic-downloader',provider:'spotify',paramKey:'url',tag:'MP3'},
+{id:'terabox',slug:'terabox',name:'Terabox',title:'Terabox Downloader',description:'Ambil file dari share Terabox',type:'generic-downloader',provider:'terabox',paramKey:'url',tag:'FILE'},
+{id:'yt_engine',slug:'youtube',name:'YouTube',title:'YouTube Downloader',description:'Unduh MP4 360p-1080p atau MP3 dari YouTube',type:'youtube',tag:'MP4/MP3'},
+{id:'fb',slug:'facebook',name:'Facebook',title:'Facebook Downloader',description:'Unduh video Facebook tanpa watermark',type:'generic-downloader',provider:'fb',paramKey:'url',tag:'MP4'},
+{id:'tw',slug:'twitter',name:'Twitter / X',title:'Twitter/X Downloader',description:'Unduh video & foto dari Twitter/X',type:'generic-downloader',provider:'tw',paramKey:'url',tag:'MP4/JPG'},
+{id:'capcut',slug:'capcut',name:'CapCut',title:'CapCut Downloader',description:'Unduh video template/hasil CapCut',type:'generic-downloader',provider:'capcut',paramKey:'url',tag:'MP4'},
+{id:'savefrom',slug:'savefrom',name:'SaveFrom',title:'SaveFrom Downloader',description:'Unduh media dari banyak platform',type:'generic-downloader',provider:'savefrom',paramKey:'url',tag:'MULTI'},
+{id:'lahelu',slug:'lahelu',name:'Lahelu',title:'Lahelu Downloader',description:'Unduh video/gambar dari Lahelu',type:'generic-downloader',provider:'lahelu',paramKey:'url',tag:'MEDIA'},
+{id:'brat_gen',slug:'brat',name:'Brat Generator',title:'Brat Generator',description:'Buat stiker BRAT static & animated',type:'brat',provider:'brat',tag:'STATIC/GIF'},
+{id:'iqc',slug:'iqc',name:'iPhone Quote Create',title:'iPhone Quote Create',description:'Buat kartu quote ala iPhone Notes',type:'iqc',tag:'IMAGE'},
+{id:'sertifikat_tolol',slug:'sertifikat-tolol',name:'Sertifikat Tolol',title:'Sertifikat Tolol',description:'Buat sertifikat meme kocak',type:'image-generator',provider:'sertifikat',paramKey:'text',tag:'IMAGE'},
+{id:'lobby_ml',slug:'lobby-ml',name:'Fake Lobby ML',title:'Fake Lobby ML',description:'Buat SS Lobby Mobile Legends',type:'lobby-ml',provider:'lobbyml',tag:'IMAGE'},
+{id:'lobby_ff',slug:'lobby-ff',name:'Fake Lobby FF',title:'Fake Lobby FF',description:'Buat SS Lobby Free Fire',type:'image-generator',provider:'lobbyff',paramKey:'nickname',tag:'IMAGE'},
+{id:'fakedana',slug:'fakedana',name:'Fake Saldo DANA',title:'Fake Saldo DANA',description:'Buat gambar saldo DANA palsu',type:'image-generator',provider:'fakedana',paramKey:'nominal',tag:'IMAGE'},
+{id:'fakedev',slug:'fakedev',name:'FakeDev Profile',title:'FakeDev Profile',description:'Generator kartu profil developer',type:'fakedev',provider:'fakedev',tag:'IMAGE'},
+{id:'img2link',slug:'img2link',name:'Foto To Link',title:'Foto To Link',description:'Upload gambar menjadi URL ImgBB',type:'img2link',tag:'LINK'},
+{id:'rmbg',slug:'remove-background',name:'Remove Background',title:'Remove Background',description:'Hapus background foto',type:'remove-bg',tag:'PNG'},
+{id:'enh',slug:'image-enhancer',name:'Image Enhancer',title:'Image Enhancer',description:'Tingkatkan kualitas foto HD',type:'image-enhancer',tag:'HD'}
+];
+const $=id=>document.getElementById(id);
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function isHttpUrl(value){try{const u=new URL(value);return u.protocol==='https:'||u.protocol==='http:'}catch{return false}}
+function setBusy(b,label='Memproses…'){const e=$('workspace-status');if(e)e.textContent=b?label:(navigator.onLine?'Siap digunakan':'Offline');document.querySelectorAll('#tool-area button,#tool-area input,#tool-area textarea,#tool-area select').forEach(el=>el.disabled=b)}
+function showToast(msg,type='success'){const e=$('toast');e.hidden=false;e.textContent=(type==='error'?'Error: ':'')+msg;clearTimeout(showToast.t);showToast.t=setTimeout(()=>{e.hidden=true},3000)}
+async function safeJson(url,opt){if(!navigator.onLine)throw Error('Tidak ada koneksi internet.');let r;try{r=await fetch(url,opt)}catch{throw Error('Gagal terhubung ke server.')}const text=await r.text();if(!r.ok||!text)throw Error('Server sedang bermasalah.');try{return JSON.parse(text)}catch{throw Error('Respons server tidak valid.')}}
+async function downloadFile(url,name='nexakit-download'){setBusy(true,'Menyiapkan download…');try{const r=await fetch(url,{mode:'cors',credentials:'omit'});if(!r.ok)throw 0;const b=await r.blob();const o=URL.createObjectURL(b),a=document.createElement('a');a.href=o;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(o),60000);showToast('Download siap')}catch{const a=document.createElement('a');a.href=url;a.download=name;a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();a.remove();showToast('Download dibuka oleh browser.')}finally{setBusy(false)}}
+function resultLoading(){return '<p>Memuat…</p>'}
+function resultError(e){return `<p>${esc(e?.message||'Terjadi kesalahan.')}</p>`}
+function uploadPreview(file,id){if(!file)return;const img=$(id);if(!img)return;const r=new FileReader();r.onload=e=>{img.src=e.target.result;img.hidden=false};r.readAsDataURL(file)}
+async function uploadToImgBB(file){const f=new FormData();f.append('image',file);const j=await safeJson('/api/imgbb-upload',{method:'POST',body:f});if(j.success)return j.data.url;throw Error('Gagal unggah foto ke ImgBB.')}
+
+let tiktokData=null,tiktokFormat='hd',ytInfo=null;
+function initTiktok(){const input=$('tiktok-url'),btn=$('preview-tiktok'),box=$('result-container'),content=$('result-content'),history=$('dl-history-container');
+ function historyKey(){return `nexakit-history-tiktok:${window.nexakitUser||'guest'}`}
+ function renderHistory(){const items=JSON.parse(localStorage.getItem(historyKey())||'[]');history.innerHTML=`<p><b>Recent downloads</b> <button id="clear-history" type="button">Bersihkan</button></p>`+(items.length?'<ul>'+items.map(h=>`<li><a href="${esc(h.url)}" target="_blank" rel="noopener">${esc(h.title)}</a></li>`).join('')+'</ul>':'<p>Belum ada history TikTok. Download pertama akan muncul di sini.</p>');$('clear-history')?.addEventListener('click',()=>{localStorage.removeItem(historyKey());renderHistory()})}
+ function addHistory(x){const a=JSON.parse(localStorage.getItem(historyKey())||'[]');a.unshift(x);localStorage.setItem(historyKey(),JSON.stringify(a.slice(0,8)));renderHistory()}
+ function render(){const d=tiktokData;const formats=[{id:'hd',name:'MP4 HD',url:d.hdplay||d.play},{id:'sd',name:'MP4 Standar',url:d.play},{id:'wm',name:'MP4 Watermark',url:d.wmplay},{id:'mp3',name:'MP3 Audio',url:d.music}].filter(x=>x.url);if(!formats.some(x=>x.id===tiktokFormat))tiktokFormat=formats[0]?.id;const s=formats.find(x=>x.id===tiktokFormat);content.innerHTML=`<video src="${esc(d.play||d.hdplay)}" controls playsinline></video><p>@${esc(d.author?.unique_id||d.author?.nickname||'tiktok')} — ${esc(d.title||'(Tanpa judul)')}</p><p>Plays: ${Number(d.play_count)||0} · Likes: ${Number(d.digg_count)||0} · Komen: ${Number(d.comment_count)||0} · Share: ${Number(d.share_count)||0}</p><p><label for="tiktok-format">Format</label><select id="tiktok-format">${formats.map(f=>`<option value="${f.id}"${f.id===tiktokFormat?' selected':''}>${f.name}</option>`).join('')}</select></p><button id="download-tiktok" type="button">Download ${esc(s?.name||'')}</button>`;$('tiktok-format').onchange=e=>{tiktokFormat=e.target.value;render()};$('download-tiktok')?.addEventListener('click',async()=>{const url=formats.find(x=>x.id===tiktokFormat)?.url;if(url){await downloadFile(url,`nexakit-tiktok-${Date.now()}.${tiktokFormat==='mp3'?'mp3':'mp4'}`);addHistory({title:d.title||'TikTok Video',url})}})}
+ async function run(){box.hidden=false;content.innerHTML=resultLoading();setBusy(true,'Mengambil preview…');try{const v=input.value.trim();if(!v)throw Error('Link TikTok tidak boleh kosong.');if(!isHttpUrl(v))throw Error('Link TikTok tidak valid.');const j=await safeJson('/api/proxy?provider=tiktok&url='+encodeURIComponent(v));if(j.code!==0||!j.data)throw Error('Videonya nggak ketemu, coba cek lagi linknya.');tiktokData=j.data;tiktokFormat=tiktokData.hdplay?'hd':'sd';render();renderHistory()}catch(e){content.innerHTML=resultError(e)}finally{setBusy(false)}}
+ btn.onclick=run;input.onkeydown=e=>{if(e.key==='Enter')run()};renderHistory()}
+function initYoutube(){const input=$('youtube-url'),btn=$('preview-youtube'),box=$('result-container'),content=$('result-content');async function run(){const v=input.value.trim();box.hidden=false;content.innerHTML=resultLoading();setBusy(true,'Mengambil info video…');try{if(!v)throw Error('Link YouTube tidak boleh kosong.');if(!isHttpUrl(v))throw Error('Link YouTube tidak valid.');const id=(v.match(/[?&]v=([^&]+)/)||v.match(/youtu\.be\/([^?]+)/)||v.match(/shorts\/([^?]+)/))?.[1];if(!id)throw Error('Link YouTube tidak valid.');const o=await safeJson('https://www.youtube.com/oembed?url='+encodeURIComponent(v)+'&format=json');ytInfo={url:v,id,title:o.title,author:o.author_name,thumb:`https://i.ytimg.com/vi/${encodeURIComponent(id)}/hqdefault.jpg`};render()}catch(e){content.innerHTML=resultError(e)}finally{setBusy(false)}}function render(){content.innerHTML=`<img src="${esc(ytInfo.thumb)}" alt="Thumbnail"><p>${esc(ytInfo.author)} — ${esc(ytInfo.title)}</p><p>Video</p><p>${['360','480','720','1080'].map(q=>`<button data-q="${q}" type="button">MP4 ${q}p</button>`).join(' ')}</p><p>Audio</p><p><button id="yt-mp3" type="button">MP3 Audio</button></p>`;content.querySelectorAll('[data-q]').forEach(b=>b.onclick=()=>downloadYoutube('mp4',b.dataset.q,b));$('yt-mp3').onclick=()=>downloadYoutube('mp3','',$('yt-mp3'))}async function downloadYoutube(type,q,b){const old=b.textContent;b.disabled=true;b.textContent='Menyiapkan…';try{const ep=type==='mp4'?`/api/proxy?provider=ytmp4&resolusi=${encodeURIComponent(q)}&url=${encodeURIComponent(ytInfo.url)}`:`/api/proxy?provider=ytmp3&url=${encodeURIComponent(ytInfo.url)}`;const j=await safeJson(ep);const u=j.url||j.result||j.data?.url||j.data?.downloadUrl;if(!u)throw Error('URL download tidak tersedia dari server.');await downloadFile(u,`nexakit-youtube-${q||'mp3'}-${Date.now()}.${type==='mp4'?'mp4':'mp3'}`)}catch(e){showToast(e.message,'error')}finally{b.disabled=false;b.textContent=old}}btn.onclick=run;input.onkeydown=e=>{if(e.key==='Enter')run()}}
+function initGeneric(tool){const form=$('tool-form'),input=$('tool-input'),box=$('result-container'),content=$('result-content');form.onsubmit=async e=>{e.preventDefault();const v=input.value.trim();box.hidden=false;content.innerHTML=resultLoading();setBusy(true,'Mengambil media…');try{if(!v)throw Error('Link-nya belum diisi nih.');if(!isHttpUrl(v))throw Error('Link-nya kelihatannya belum valid, pastiin pakai http:// atau https://.');const j=await safeJson(`/api/proxy?provider=${encodeURIComponent(tool.provider)}&${tool.paramKey}=${encodeURIComponent(v)}`);let u,title;if(Array.isArray(j.result)&&j.result.length){u=j.result[0].url||j.result[0].link;title=j.result[0].title||j.result[0].caption}else if(Array.isArray(j.data)&&j.data.length){u=j.data[0]?.url||j.data[0]?.link||j.data[0];title=j.data[0]?.title||j.data[0]?.caption}else{u=j.result||j.url||j.link||j.data?.url||j.data?.downloadUrl;title=j.title||j.caption||j.data?.title}if(!u||typeof u!=='string')throw Error(j.error||j.message||'Gagal mendapatkan media.');const video=/\.(mp4|mov|webm)(\?|$)/i.test(u)||tool.id==='ig';const audio=!video&&(/\.(mp3|wav|m4a)(\?|$)/i.test(u)||tool.id==='spotify');let media=video?`<video src="${esc(u)}" controls playsinline></video>`:audio?`<audio src="${esc(u)}" controls></audio>`:`<img src="${esc(u)}" alt="Preview">`;content.innerHTML=media+(title?`<p><b>Info:</b> ${esc(title)}</p>`:'')+`<p><button id="download-result" type="button">Download</button></p>`;$('download-result').onclick=()=>downloadFile(u,`nexakit-${tool.slug}-${Date.now()}`)}catch(e){content.innerHTML=resultError(e)}finally{setBusy(false)}}}
+function initImageTool(type){const input=$('image-file'),btn=$('tool-submit'),box=$('result-container'),content=$('result-content');input.addEventListener('change',()=>uploadPreview(input.files[0],'file-preview'));btn.onclick=async e=>{e.preventDefault();box.hidden=false;content.innerHTML=resultLoading();setBusy(true,'Memproses gambar…');try{const file=input.files[0];if(!file)throw Error('Pilih gambar terlebih dahulu.');if(type==='remove-bg'){const f=new FormData();f.append('image_file',file);f.append('size','auto');const r=await fetch('/api/remove-bg',{method:'POST',body:f});if(!r.ok)throw Error('Gagal menghapus background.');const blob=await r.blob(),u=URL.createObjectURL(blob);content.innerHTML=`<img src="${u}" alt="Hasil Remove Background"><p><a href="${u}" download="removebg-result.png">Unduh PNG</a></p>`}else if(type==='img2link'){const u=await uploadToImgBB(file);content.innerHTML=`<img src="${esc(u)}" alt="Uploaded image"><p><input value="${esc(u)}" readonly></p><p><button id="copy-url" type="button">Salin Link</button></p>`;$('copy-url').onclick=()=>navigator.clipboard.writeText(u).then(()=>showToast('Link tersalin'))}else{const up=await uploadToImgBB(file);const u=`/api/proxy?provider=enhancer&url=${encodeURIComponent(up)}`;content.innerHTML=`<p>Sebelum</p><img src="${esc(up)}" alt="Sebelum"><p>Sesudah</p><img src="${esc(u)}" alt="Sesudah"><p><button id="download-image-result" type="button">Unduh Hasil</button></p>`;$('download-image-result').onclick=()=>downloadFile(u,`nexakit-enhanced-${Date.now()}.png`)}}catch(e){content.innerHTML=resultError(e)}finally{setBusy(false)}}}
+function initMaker(tool){const form=$('maker-form'),box=$('result-container'),content=$('result-content');form.onsubmit=async e=>{e.preventDefault();box.hidden=false;content.innerHTML=resultLoading();setBusy(true,'Membuat gambar…');try{let u,name='nexakit-result.png';if(tool.type==='brat'){const text=$('maker-text').value.trim();if(!text)throw Error('Masukkan teks untuk Brat.');const animated=document.querySelector('input[name="brat-animated"]:checked').value==='true',delay=$('brat-delay').value||500;u=`/api/proxy?provider=brat&text=${encodeURIComponent(text)}${animated?'&isAnimated=true&delay='+encodeURIComponent(delay):''}`;name=`nexakit-brat-${Date.now()}.${animated?'gif':'png'}`}else if(tool.type==='iqc'){const text=$('maker-text').value.trim(),time=$('maker-time').value.trim();if(!text)throw Error('Masukkan quote.');u=`/api/iqc-text?text=${encodeURIComponent(text)}&time=${encodeURIComponent(time||Date.now())}`;name=`nexakit-iqc-${Date.now()}.png`}else if(tool.type==='lobby-ml'){const nick=$('maker-text').value.trim(),file=$('maker-file').files[0];if(!nick||!file)throw Error('Nickname dan avatar wajib diisi.');const av=await uploadToImgBB(file);u=`/api/proxy?provider=lobbyml&nickname=${encodeURIComponent(nick)}&avatar=${encodeURIComponent(av)}`;name=`nexakit-lobby-ml-${Date.now()}.png`}else if(tool.type==='fakedev'){const n=$('maker-name').value.trim(),bio=$('maker-bio').value.trim(),file=$('maker-file').files[0];if(!n||!bio||!file)throw Error('Nama, bio, dan avatar wajib diisi.');const av=await uploadToImgBB(file);u=`/api/proxy?provider=fakedev&nama=${encodeURIComponent(n)}&bio=${encodeURIComponent(bio)}&image=${encodeURIComponent(av)}`;name=`nexakit-fakedev-${Date.now()}.png`}else{let v=$('maker-text').value.trim();if(!v)throw Error('Input wajib diisi.');if(tool.provider==='fakedana'){v=v.replace(/\D/g,'');if(!v)throw Error('Nominal saldo harus diisi dengan angka.');}u=`/api/proxy?provider=${encodeURIComponent(tool.provider)}&${encodeURIComponent(tool.paramKey)}=${encodeURIComponent(v)}`;name=`nexakit-${tool.slug}-${Date.now()}.png`}content.innerHTML=`<img src="${esc(u)}" alt="Hasil"><p><button id="maker-download" type="button">Simpan Gambar</button></p>`;$('maker-download').onclick=()=>downloadFile(u,name)}catch(e){content.innerHTML=resultError(e)}finally{setBusy(false)}};if(tool.type==='brat')document.querySelectorAll('input[name="brat-animated"]').forEach(r=>r.onchange=e=>{$('brat-delay-wrap').hidden=e.target.value!=='true'})}
+
+const area=$('tool-area');
+let activeTool=TOOLS[0];
+function clearView(){area.innerHTML='';$('result-container').hidden=true;$('result-content').innerHTML='';$('dl-history-container').innerHTML=''}
+function base(title,desc,form){area.innerHTML=`<h3>${esc(title)}</h3>${desc?`<p>${esc(desc)}</p>`:''}${form}`}
+function render(tool){clearView();
+ if(tool.type==='tiktok'){base('Link TikTok','',`<p><input id="tiktok-url" type="url" placeholder="Tempel link TikTok..."></p><button id="preview-tiktok" type="button">Preview</button>`);initTiktok();return}
+ if(tool.type==='youtube'){base('Link YouTube','',`<p><input id="youtube-url" type="url" placeholder="Tempel link YouTube..."></p><button id="preview-youtube" type="button">Preview</button>`);initYoutube();return}
+ if(tool.type==='generic-downloader'){base('Link '+tool.name,'',`<form id="tool-form"><p><input id="tool-input" type="url" placeholder="Tempel link ${esc(tool.name)}..."></p><button type="submit">Preview</button></form>`);initGeneric(tool);return}
+ if(['remove-bg','img2link','image-enhancer'].includes(tool.type)){const action=tool.type==='remove-bg'?'Remove Background':tool.type==='img2link'?'Upload':'Enhance';base(tool.title,'',`<form><p><input id="image-file" type="file" accept="image/*"></p><p><img id="file-preview" hidden alt="Preview"></p><button id="tool-submit" type="submit">${action}</button></form>`);initImageTool(tool.type);return}
+ let form='';
+ if(tool.type==='brat')form=`<form id="maker-form"><p><input id="maker-text" placeholder="Tulis teks..."></p><p><label><input type="radio" name="brat-animated" value="false" checked> Static</label> <label><input type="radio" name="brat-animated" value="true"> Animated</label></p><p id="brat-delay-wrap" hidden><input id="brat-delay" type="number" min="100" step="100" value="500" placeholder="Delay (ms), cth: 500"></p><button type="submit">Buat</button></form>`;
+ else if(tool.type==='iqc')form=`<form id="maker-form"><p><textarea id="maker-text" placeholder="Tulis quote..."></textarea></p><p><input id="maker-time" placeholder="Waktu, cth: 09:41 (opsional)"></p><button type="submit">Buat</button></form>`;
+ else if(tool.type==='lobby-ml')form=`<form id="maker-form"><p><input id="maker-text" placeholder="Nickname"></p><p><input id="maker-file" type="file" accept="image/*"></p><button type="submit">Buat</button></form>`;
+ else if(tool.type==='fakedev')form=`<form id="maker-form"><p><input id="maker-name" placeholder="Nama"></p><p><textarea id="maker-bio" placeholder="Bio"></textarea></p><p><input id="maker-file" type="file" accept="image/*"></p><button type="submit">Buat</button></form>`;
+ else form=`<form id="maker-form"><p><input id="maker-text" ${tool.paramKey==='nominal'?'inputmode="numeric" pattern="[0-9]*"':''} placeholder="${esc(tool.paramKey==='nominal'?'Nominal, cth: 500000':tool.title+' input')}"></p><button type="submit">Buat</button></form>`;
+ base(tool.title,tool.description,form);initMaker(tool)
+}
+window.NEXAKIT_render=render;
+window.addEventListener('online',()=>setBusy(false));
+window.addEventListener('offline',()=>setBusy(false));
+
+// Settings dialog (backdrop click or close button dismisses it)
+function openSettings(){$('settings-overlay').hidden=false;$('settings-modal').hidden=false}
+function closeSettings(){$('settings-overlay').hidden=true;$('settings-modal').hidden=true}
+window.NEXAKIT_openSettings=openSettings;
+$('settings-overlay').onclick=closeSettings;
+$('settings-close').onclick=closeSettings;
+function settingsMsg(text,type){const e=$('settings-msg');e.hidden=false;e.textContent=(type==='error'?'Error: ':'')+text;e.className=type==='error'?'status-err':'status-ok'}
+$('settings-save-profile').onclick=async()=>{
+ const btn=$('settings-save-profile');btn.disabled=true;
+ try{await window.nexakitApi.updateProfile({display_name:$('settings-name').value.trim()||window.nexakitUser});settingsMsg('Profil tersimpan.','ok');$('user-name').textContent=$('settings-name').value.trim()||window.nexakitUser}
+ catch(e){settingsMsg(e.message,'error')}
+ finally{btn.disabled=false}
+};
+$('settings-save-pass').onclick=async()=>{
+ const btn=$('settings-save-pass'),pass=$('settings-newpass').value;btn.disabled=true;
+ try{await window.nexakitApi.changePassword(pass);settingsMsg('Password berhasil diganti.','ok');$('settings-newpass').value=''}
+ catch(e){settingsMsg(e.message,'error')}
+ finally{btn.disabled=false}
+};
+$('avatar-input').addEventListener('change',async()=>{
+ const file=$('avatar-input').files[0];if(!file)return;
+ try{
+  const dataUrl=await new Promise((resolve,reject)=>{const img=new Image(),reader=new FileReader();reader.onerror=()=>reject(Error('Gagal membaca file.'));reader.onload=()=>{img.onload=()=>{const scale=Math.min(1,320/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=img.width*scale;c.height=img.height*scale;c.getContext('2d').drawImage(img,0,0,c.width,c.height);resolve(c.toDataURL('image/jpeg',.82))};img.onerror=()=>reject(Error('File gambar tidak valid.'));img.src=reader.result};reader.readAsDataURL(file)});
+  $('avatar-preview-img').src=dataUrl;$('avatar-preview-img').hidden=false;$('avatar-preview-fallback').hidden=true;
+  await window.nexakitApi.updateProfile({avatar_url:dataUrl});
+  settingsMsg('Foto profil tersimpan.','ok');
+ }catch(e){settingsMsg(e.message,'error')}
+});
+</script>
+
+<script type="module">
+/* ============================================================
+   AUTH + ROUTING — Supabase logic, unchanged behaviourally.
+   ============================================================ */
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+const CONFIG_ENDPOINT = '/api/supabase-config';
+const tools = TOOLS;
+const render = window.NEXAKIT_render;
+const $q = id => document.getElementById(id);
+const app = $q('app-shell'), auth = $q('auth-screen');
+const dashboard = $q('dashboard-view'), workspace = $q('workspace-view');
+const grid = $q('tool-grid'), search = $q('tool-search'), tabs = $q('category-tabs');
+const userName = $q('user-name');
+const authForm = $q('auth-form'), authMode = $q('auth-mode'), authError = $q('auth-error');
+const authSubmitButton = authForm.querySelector('button[type="submit"]');
+const loginTab = document.querySelector('[data-mode="login"]');
+const registerTab = document.querySelector('[data-mode="register"]');
+const categories=[['all','All'],['downloader','Downloader'],['maker','Maker'],['image','Image'],['utility','Utility']];
+function cat(t){if(['tiktok','instagram','spotify','terabox','youtube','facebook','twitter','capcut','savefrom','lahelu'].includes(t.slug))return 'downloader';if(['brat','iqc','sertifikat-tolol','lobby-ml','lobby-ff','fakedana','fakedev'].includes(t.slug))return 'maker';if(['img2link','remove-background','image-enhancer'].includes(t.slug))return 'image';return 'utility'}
+function usernameEmail(username){return `${username.toLowerCase()}@users.nexakitpro.local`}
+function validUsername(u){return /^[a-zA-Z0-9._-]{3,24}$/.test(u)}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function setMode(mode){
+  authForm.dataset.mode=mode;
+  authMode.textContent=mode==='login'?'Masuk':'Daftar';
+  $q('auth-subtitle').textContent=mode==='login'?'Masuk untuk membuka semua tools NexaKit Pro.':'Buat akun NexaKit Pro dengan username dan password.';
+  $q('auth-password').autocomplete=mode==='login'?'current-password':'new-password';
+  authSubmitButton.textContent=mode==='login'?'Masuk':'Daftar';
+  [loginTab,registerTab].forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));
+  authError.textContent='';
+}
+function showAuth(){auth.hidden=false;app.hidden=true}
+function showApp(u){window.nexakitUser=u;auth.hidden=true;app.hidden=false;userName.textContent=u;renderCards();const hashTool=toolFromHash(),savedTool=sessionStorage.getItem('nexakit-active-tool');if(hashTool)openTool(hashTool.slug);else if(savedTool&&tools.some(t=>t.slug===savedTool))openTool(savedTool);else openDashboard();loadProfileIntoUI()}
+async function loadProfileIntoUI(){
+  const {data:{user}}=await supabase.auth.getUser();
+  if(!user)return;
+  const {data,error}=await supabase.from('profiles').select('display_name,avatar_url,is_vip').eq('id',user.id).single();
+  if(error||!data)return;
+  const name=data.display_name||window.nexakitUser;
+  userName.textContent=name;
+  const roleLabel=document.getElementById('role-label');
+  if(roleLabel)roleLabel.textContent=data.is_vip?'VVIP':'Member';
+  if(data.avatar_url){
+    const prevImg=document.getElementById('avatar-preview-img'),prevFallback=document.getElementById('avatar-preview-fallback');
+    if(prevImg){prevImg.src=data.avatar_url;prevImg.hidden=false;if(prevFallback)prevFallback.hidden=true}
+  }
+  const nameInput=document.getElementById('settings-name');
+  if(nameInput)nameInput.value=name;
+}
+window.nexakitApi={
+  async updateProfile({display_name,avatar_url}){
+    const {data:{user}}=await supabase.auth.getUser();
+    if(!user)throw Error('Sesi kamu sudah habis, silakan login lagi.');
+    const fallbackUsername=(user.user_metadata?.username||user.email?.split('@')[0]||'member').replace(/[^A-Za-z0-9._-]/g,'').slice(0,24)||'member';
+    const patch={id:user.id,username:fallbackUsername};
+    if(display_name!==undefined)patch.display_name=display_name;
+    if(avatar_url!==undefined)patch.avatar_url=avatar_url;
+    const {error}=await supabase.from('profiles').upsert(patch,{onConflict:'id'});
+    if(error)throw Error(error.message||'Gagal menyimpan profil.');
+  },
+  async changePassword(newPassword){
+    if(!newPassword||newPassword.length<6)throw Error('Password minimal 6 karakter.');
+    const {error}=await supabase.auth.updateUser({password:newPassword});
+    if(error)throw Error(error.message||'Gagal mengganti password.');
+  }
+};
+function renderCards(){
+  const q=(search.value||'').trim().toLowerCase();
+  const active=tabs.querySelector('.segmented-btn.active')?.dataset.cat||'all';
+  const list=tools.filter(t=>(active==='all'||cat(t)===active)&&(!q||`${t.name} ${t.title} ${t.description}`.toLowerCase().includes(q)));
+  grid.innerHTML=list.length?list.map(t=>`<li><button type="button" data-slug="${esc(t.slug)}"><span>${esc(t.title)}</span><span>${esc(t.description)}</span>${t.tag?`<span>${esc(t.tag)}</span>`:''}</button></li>`).join(''):'<li>Tool tidak ditemukan.</li>';
+  grid.querySelectorAll('button[data-slug]').forEach(b=>b.onclick=()=>openTool(b.dataset.slug));
+}
+function toolHash(t){return '#'+String(t?.title||t?.name||t?.slug||'tool').trim().replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-+|-+$/g,'').toUpperCase()}
+function toolFromHash(){
+  const raw=decodeURIComponent((location.hash||'').replace(/^#/,'')).trim().toLowerCase();
+  if(!raw)return null;
+  return tools.find(t=>toolHash(t).slice(1).toLowerCase()===raw || t.slug.toLowerCase()===raw) || null;
+}
+function openDashboard(){
+  dashboard.hidden=false;workspace.hidden=true;
+  sessionStorage.removeItem('nexakit-active-tool');
+  if(location.hash)history.replaceState(null,'',location.pathname+location.search);
+}
+let healthTool=null;
+const HEALTH_SOURCES={
+ tiktok:'TikWM API',
+ ig:'NexRay API', spotify:'NexRay API', terabox:'NexRay API', enhancer:'NexRay API',
+ fakedana:'NexRay API', lobbyml:'NexRay API', lobbyff:'NexRay API', ytmp4:'NexRay API', ytmp3:'NexRay API',
+ fb:'Siputzx API', tw:'Siputzx API', capcut:'Siputzx API', savefrom:'Siputzx API', lahelu:'Siputzx API',
+ brat:'Siputzx API', sertifikat:'Siputzx API', fakedev:'Ikyyxd API',
+ iqc:'FazzCode API', img2link:'ImgBB API', 'remove-bg':'Remove.bg API', 'image-enhancer':'NexRay API'
+};
+const HEALTH_PROVIDERS={
+ tiktok:'tiktok', youtube:'ytmp4', iqc:null, img2link:null, 'remove-bg':null
+};
+function healthSourceName(t){return HEALTH_SOURCES[t.provider||t.slug] || HEALTH_SOURCES[t.slug] || 'API Endpoint'}
+function healthProviderKey(t){return HEALTH_PROVIDERS[t.slug] || t.provider || null}
+function resetHealthCheck(t){
+ healthTool=t;
+ $q('health-provider').textContent=healthSourceName(t);
+ $q('health-status').textContent='Belum diuji';$q('health-status').className='';
+}
+$q('health-check').onclick=async()=>{
+ if(!healthTool)return;
+ const btn=$q('health-check');btn.disabled=true;
+ $q('health-status').textContent='Mengecek…';$q('health-status').className='';
+ const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),6000);
+ try{
+  const key=healthProviderKey(healthTool);
+  if(!key) throw Error('Endpoint check not configured');
+  await fetch(`/api/proxy?provider=${encodeURIComponent(key)}`,{signal:controller.signal});
+  clearTimeout(timer);
+  $q('health-status').textContent='Aktif';$q('health-status').className='status-ok';
+ }catch(e){
+  clearTimeout(timer);
+  $q('health-status').textContent='Tidak merespons';$q('health-status').className='status-err';
+ }finally{btn.disabled=false}
+};
+function openTool(slug){
+  const t=tools.find(x=>x.slug===slug);if(!t)return;
+  activeTool=t;
+  sessionStorage.setItem('nexakit-active-tool',t.slug);
+  const nextHash=toolHash(t);
+  if(location.hash!==nextHash)history.replaceState(null,'',location.pathname+location.search+nextHash);
+  render(t);
+  $q('workspace-name').textContent=t.title;
+  $q('workspace-desc').textContent=t.description;
+  resetHealthCheck(t);
+  dashboard.hidden=true;workspace.hidden=false;
+}
+let activeTool=TOOLS[0];
+window.addEventListener('hashchange',()=>{
+  const t=toolFromHash();
+  if(t && !workspace.hidden) openTool(t.slug);
+  else if(t && window.nexakitUser) openTool(t.slug);
+  else if(!location.hash && window.nexakitUser) openDashboard();
+});
+function setAuthBusy(b){
+  authSubmitButton.disabled=b;
+  authSubmitButton.textContent=b?'Memproses…':(authForm.dataset.mode==='login'?'Masuk':'Daftar');
+  authForm.setAttribute('aria-busy',String(b));
+}
+function friendlyAuthError(error,mode){
+  const m=String(error?.message||'').toLowerCase();
+  if(m.includes('invalid login credentials'))return 'Username atau password salah.';
+  if(m.includes('user already registered')||m.includes('already been registered')||m.includes('duplicate'))return 'Username sudah terdaftar. Silakan pilih username lain.';
+  if(m.includes('email rate limit'))return 'Terlalu banyak percobaan. Tunggu sebentar lalu coba lagi.';
+  if(m.includes('password'))return 'Password tidak memenuhi aturan Supabase.';
+  if(m.includes('network')||m.includes('fetch'))return 'Tidak dapat terhubung ke server. Periksa koneksi internet.';
+  return mode==='register'?'Pendaftaran gagal. Periksa data lalu coba lagi.':'Login gagal. Periksa username dan password lalu coba lagi.';
+}
+async function authSubmit(e){
+  e.preventDefault();
+  const mode=authForm.dataset.mode||'login';
+  const u=$q('auth-username').value.trim();
+  const p=$q('auth-password').value;
+  authError.textContent='';
+  if(!validUsername(u)){authError.textContent='Username harus 3–24 karakter dan hanya boleh huruf, angka, titik, garis bawah, atau strip.';return}
+  if(p.length<6){authError.textContent='Password minimal 6 karakter.';return}
+  setAuthBusy(true);
+  try{
+    const email=usernameEmail(u);
+    if(mode==='register'){
+      const {data,error}=await supabase.auth.signUp({email,password:p,options:{data:{username:u}}});
+      if(error)throw error;
+      if(!data.session){
+        authError.textContent='Akun berhasil dibuat, tetapi konfirmasi email aktif di Supabase. Untuk mode username-only, nonaktifkan Confirm email di Authentication → Providers → Email.';
+        return;
+      }
+      await notifyAuth('register',u);
+      showApp(u);
+    }else{
+      const {data,error}=await supabase.auth.signInWithPassword({email,password:p});
+      if(error)throw error;
+      const resolved=data.user?.user_metadata?.username||u;
+      await notifyAuth('login',resolved);
+      showApp(resolved);
+    }
+  }catch(error){console.error(error);authError.textContent=friendlyAuthError(error,mode)}
+  finally{setAuthBusy(false)}
+}
+async function notifyAuth(event,username){
+  try{await fetch('/api/telegram-notify',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({event,username})})}catch{}
+}
+async function logout(){
+  window.nexakitUser=null;
+  try{await supabase.auth.signOut()}catch(error){console.error(error)}
+  showAuth();setMode('login');authForm.reset();authError.textContent='';
+}
+function togglePassword(inputId,buttonId){const input=$q(inputId),button=$q(buttonId);if(!input||!button)return;const visible=input.type==='password';input.type=visible?'text':'password';button.textContent=visible?'Sembunyikan password':'Lihat password'}
+async function loadSupabase(){
+  const r=await fetch(CONFIG_ENDPOINT,{cache:'no-store'});
+  if(!r.ok)throw new Error('Supabase configuration unavailable');
+  const cfg=await r.json();
+  if(!cfg.url||!cfg.publishableKey)throw new Error('Supabase environment variables are missing');
+  return createClient(cfg.url,cfg.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+}
+let supabase;
+async function init(){
+  tabs.innerHTML=categories.map(([id,label])=>`<button data-cat="${id}" type="button">${label}</button>`).join('');
+  tabs.querySelectorAll('[data-cat]').forEach(b=>b.onclick=()=>{tabs.querySelectorAll('[data-cat]').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderCards()});
+  search.addEventListener('input',renderCards);
+  loginTab.onclick=()=>setMode('login');registerTab.onclick=()=>setMode('register');
+  authForm.addEventListener('submit',authSubmit);
+  $q('toggle-pass').onclick=()=>togglePassword('auth-password','toggle-pass');
+  $q('logout').onclick=logout;
+  $q('back-tools').onclick=openDashboard;
+  $q('menu-feedback').onclick=()=>{const tpl=`Halo Admin NexaKit Pro%0A%0AJenis: (Saran/Kritik/Request Fitur/Bug)%0ATool terkait: %0ADeskripsi: %0A%0ADikirim dari menu NexaKit Pro`;window.open(`https://wa.me/6285722707676?text=${tpl}`,'_blank','noopener')};
+  $q('menu-settings').onclick=()=>{window.NEXAKIT_openSettings()};
+  localStorage.removeItem('nexakit-auth-v1');localStorage.removeItem('nexakit-session-v1');
+  setMode('login');
+  try{
+    supabase=await loadSupabase();
+    const {data:{session}}=await supabase.auth.getSession();
+    if(session?.user){const u=session.user.user_metadata?.username||session.user.email?.split('@')[0]||'Member';showApp(u)}else showAuth();
+    supabase.auth.onAuthStateChange((_event,session)=>{if(session?.user){const u=session.user.user_metadata?.username||session.user.email?.split('@')[0]||'Member';showApp(u)}else if(!auth.hidden){showAuth()}});
+  }catch(error){console.error(error);showAuth();authError.textContent='Authentication belum terhubung. Pastikan environment Supabase sudah dikonfigurasi.'}
+}
+init();
+if ('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js',{updateViaCache:'none'}).catch(error=>console.warn('Service worker registration failed:',error)));
+</script>
+
+</body>
+</html>
