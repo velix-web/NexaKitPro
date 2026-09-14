@@ -1,6 +1,12 @@
 {
   "cleanUrls": true,
   "trailingSlash": true,
+  "functions": {
+    "api/bratvid.js": {
+      "maxDuration": 60,
+      "includeFiles": "node_modules/ffmpeg-static/**"
+    }
+  },
   "headers": [
     {"source":"/(.*)","headers":[
       {"key":"X-Content-Type-Options","value":"nosniff"},
