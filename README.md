@@ -1,37 +1,17 @@
-# NexaKit Pro — Kerangka Fitur (Skeleton Build)
+# NexaKit Pro — UI/UX + Security + SEO Upgrade
 
-Versi ini adalah `index.html` yang sama fungsinya dengan versi asli, tapi
-**semua UI/UX dibuang**: tidak ada CSS custom, animasi, tema warna per-tool,
-ikon Font Awesome, boot screen, hero video, audio player, drawer menu,
-maupun badge VIP. Yang tersisa cuma HTML polos (form, tombol, list) dan
-JavaScript yang menjalankan fitur aslinya secara utuh:
+Existing tools, API routes, Supabase authentication and Vercel functions are preserved.
 
-- Login/Register/Logout via Supabase Auth (username dipetakan ke email internal)
-- Semua 20 tools (TikTok, Instagram, Spotify, Terabox, YouTube, Facebook,
-  Twitter/X, CapCut, SaveFrom, Lahelu, Brat Generator, iPhone Quote Create,
-  Sertifikat Tolol, Fake Lobby ML/FF, Fake Saldo DANA, FakeDev Profile,
-  Foto To Link, Remove Background, Image Enhancer) — endpoint & parameter API
-  persis sama seperti sebelumnya
-- Pencarian & filter kategori tools
-- Riwayat download TikTok (localStorage)
-- Cek status endpoint (health check) per tool
-- Pengaturan user: ganti nama tampilan, foto profil, ganti password
-- Link "About Dev" dan "Report Bug" (WhatsApp)
+### Upgrade
+- Simple neumorphism UI, responsive desktop/mobile layout, accessible focus states.
+- Search/category UI, redesigned tool cards, workspace input cards.
+- Boot/loading state, offline indicator, reduced-motion support and Ctrl/Cmd+K search shortcut.
+- SEO description, canonical, Open Graph, Twitter metadata and WebApplication JSON-LD.
+- JavaScript/CSS externalized; CSP no longer needs inline scripts.
+- Stronger CSP plus COOP/CORP, frame restrictions, form restrictions and HTTPS upgrade.
+- Service-worker cache refreshed for new assets.
+- Avatar upload type/size validation and client-side compression.
+- No new runtime dependency.
 
-Backend (`/api/*`, `supabase/schema.sql`, `.env.example`, `vercel.json`,
-`manifest.json`, `sw.js`) **tidak diubah sama sekali**.
-
-## Yang sengaja dibuang (bukan bug)
-Boot animation, hero video, audio player/playlist, drawer slide animation,
-badge & tombol upgrade VVIP, panel info device/browser/baterai/negara,
-tema warna per-tool, ikon, drag-and-drop styling, tombol paste/clear
-pada input, dan efek scroll-reveal. Semuanya murni dekorasi/UX, bukan
-fitur — jadi dibuang sesuai permintaan "kerangka doang".
-
-## Catatan
-Ada satu bug kecil di versi asli yang otomatis terperbaiki di sini:
-`isHttpUrl()` sebelumnya didefinisikan di dalam `<script type="module">`
-tapi dipanggil dari script classic lain (TikTok/YouTube/generic downloader),
-yang seharusnya `ReferenceError` di runtime karena scope module tidak
-global. Di versi ini `isHttpUrl()` dipindah ke script bersama yang global,
-supaya validasi link benar-benar jalan.
+### Security note
+The Supabase publishable key is intentionally served to the browser through `/api/supabase-config`; this is normal for a publishable Supabase client key. Database security must remain enforced by Supabase RLS policies. Secret API keys stay in Vercel environment variables.

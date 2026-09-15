@@ -1,11 +1,11 @@
 {
-  "name": "NexaKit Pro",
-  "short_name": "NexaKit",
+  "name": "NexaKit Pro \u2014 All Tools",
+  "short_name": "NexaKit Pro",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#090615",
-  "theme_color": "#090615",
+  "background_color": "#d8dbe3",
+  "theme_color": "#d8dbe3",
   "icons": [
     {
       "src": "/icon-192.png",
