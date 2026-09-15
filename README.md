@@ -3,7 +3,7 @@
 Existing tools, API routes, Supabase authentication and Vercel functions are preserved.
 
 ### Upgrade
-- Simple neumorphism UI, responsive desktop/mobile layout, accessible focus states.
+- Simple glassmorphism + flat design UI, responsive desktop/mobile layout, accessible focus states.
 - Search/category UI, redesigned tool cards, workspace input cards.
 - Boot/loading state, offline indicator, reduced-motion support and Ctrl/Cmd+K search shortcut.
 - SEO description, canonical, Open Graph, Twitter metadata and WebApplication JSON-LD.

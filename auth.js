@@ -25,8 +25,10 @@ function setMode(mode){
   authMode.textContent=mode==='login'?'Masuk':'Daftar';
   $q('auth-subtitle').textContent=mode==='login'?'Masuk untuk membuka semua tools NexaKit Pro.':'Buat akun NexaKit Pro dengan username dan password.';
   $q('auth-password').autocomplete=mode==='login'?'current-password':'new-password';
-  $q('auth-confirm-wrap').hidden=mode!=='register';
-  if(mode!=='register')$q('auth-confirm-password').value='';
+  const confirmWrap=$q('auth-confirm-wrap');
+  if(confirmWrap)confirmWrap.hidden=mode!=='register';
+  const confirmPassword=$q('auth-confirm-password');
+  if(confirmPassword&&mode!=='register')confirmPassword.value='';
   authSubmitButton.textContent=mode==='login'?'Masuk':'Daftar';
   [loginTab,registerTab].forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));
   authError.textContent='';
@@ -199,7 +201,12 @@ async function logout(){
 }
 function togglePassword(inputIds,buttonId){const button=$q(buttonId);if(!button)return;const inputs=(Array.isArray(inputIds)?inputIds:[inputIds]).map($q).filter(Boolean);if(!inputs.length)return;const visible=inputs[0].type==='password';inputs.forEach(i=>i.type=visible?'text':'password');button.textContent=visible?'Sembunyikan password':'Lihat password'}
 async function loadSupabase(){
-  const r=await fetch(CONFIG_ENDPOINT,{cache:'no-store'});
+  const controller=new AbortController();
+  const timeout=setTimeout(()=>controller.abort(),8000);
+  let r;
+  try{
+    r=await fetch(CONFIG_ENDPOINT,{cache:'no-store',signal:controller.signal});
+  }finally{clearTimeout(timeout)}
   if(!r.ok)throw new Error('Supabase configuration unavailable');
   const cfg=await r.json();
   if(!cfg.url||!cfg.publishableKey)throw new Error('Supabase environment variables are missing');
@@ -224,7 +231,8 @@ async function init(){
   search.addEventListener('input',renderCards);
   loginTab.onclick=()=>setMode('login');registerTab.onclick=()=>setMode('register');
   authForm.addEventListener('submit',authSubmit);
-  $q('toggle-pass').onclick=()=>togglePassword(['auth-password','auth-confirm-password'],'toggle-pass');
+  const togglePass=$q('toggle-pass');
+  if(togglePass)togglePass.onclick=()=>togglePassword('auth-password','toggle-pass');
   $q('logout').onclick=logout;
   $q('back-tools').onclick=openDashboard;
   $q('menu-feedback').onclick=()=>{const tpl=`Halo Admin NexaKit Pro%0A%0AJenis: (Saran/Kritik/Request Fitur/Bug)%0ATool terkait: %0ADeskripsi: %0A%0ADikirim dari menu NexaKit Pro`;window.open(`https://wa.me/6285722707676?text=${tpl}`,'_blank','noopener')};
@@ -236,7 +244,7 @@ async function init(){
     const {data:{session}}=await supabase.auth.getSession();
     if(session?.user){const u=session.user.user_metadata?.username||session.user.email?.split('@')[0]||'Member';showApp(u)}else showAuth();
     supabase.auth.onAuthStateChange((_event,session)=>{if(session?.user){const u=session.user.user_metadata?.username||session.user.email?.split('@')[0]||'Member';showApp(u)}else if(!auth.hidden){showAuth()}});
-  }catch(error){console.error(error);showAuth();authError.textContent='Authentication belum terhubung. Pastikan environment Supabase sudah dikonfigurasi.'}
+  }catch(error){console.error(error);showAuth();authError.textContent=error.name==='AbortError'?'Koneksi Supabase timeout. Coba refresh atau cek deployment Vercel.':'Authentication belum terhubung. Pastikan environment Supabase sudah dikonfigurasi.'}
   finally { const boot=$q('boot-screen'); if(boot){boot.classList.add('is-hidden');setTimeout(()=>boot.remove(),450)} updateNetworkState(); }
 }
 init();
