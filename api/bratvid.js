@@ -4,21 +4,20 @@
 // No `export const config = { runtime: 'edge' }` here on purpose: leaving
 // it unset makes Vercel treat this as a Node serverless function.
 
-const { createCanvas, loadImage, GlobalFonts } = require('@napi-rs/canvas');
-const { writeFileSync, readFileSync, existsSync, mkdtempSync, rmSync } = require('fs');
+const { createCanvas } = require('@napi-rs/canvas');
+const { writeFileSync, readFileSync, mkdtempSync, rmSync } = require('fs');
 const path = require('path');
 const os = require('os');
 const { execFile } = require('child_process');
 const { promisify } = require('util');
 const execFileAsync = promisify(execFile);
 const ffmpegPath = require('ffmpeg-static');
+const { EMOJI_REGEX, ensureFont, measureTextCustom, drawAppleEmoji } = require('./_brat-shared');
 
 const FONT_URL = 'https://cdn.jsdelivr.net/gh/Napoleon-Fibonacci/assets@main/font/impact.ttf';
-const EMOJI_JSON_URL = 'https://media.githubusercontent.com/media/Ditzzx-vibecoder/entahlah/main/emoji-apple.json';
 // ponytail: serverless functions only get a writable /tmp — the original
-// script wrote these next to itself (__dirname), which is read-only here.
+// script wrote this next to itself (__dirname), which is read-only here.
 const FONT_PATH = path.join(os.tmpdir(), 'brat-impact.ttf');
-const EMOJI_JSON_PATH = path.join(os.tmpdir(), 'brat-emoji-apple.json');
 
 const THEMES = {
   black: { bg: '#000000', text: '#ffffff' },
@@ -49,74 +48,6 @@ function allow(ip) {
   if (b.count >= limit) return false;
   b.count++;
   return true;
-}
-
-let fontReady = false;
-async function ensureFont() {
-  if (fontReady) return;
-  if (!existsSync(FONT_PATH)) {
-    const res = await fetch(FONT_URL);
-    writeFileSync(FONT_PATH, Buffer.from(await res.arrayBuffer()));
-  }
-  GlobalFonts.registerFromPath(FONT_PATH, 'Impact');
-  fontReady = true;
-}
-
-let emojiMap = null;
-const emojiImageCache = new Map();
-
-function emojiToUnicode(emoji) {
-  return [...emoji].map(c => c.codePointAt(0).toString(16).padStart(4, '0')).join('-');
-}
-
-async function loadEmojiMap() {
-  if (emojiMap) return emojiMap;
-  if (!existsSync(EMOJI_JSON_PATH)) {
-    const res = await fetch(EMOJI_JSON_URL);
-    writeFileSync(EMOJI_JSON_PATH, Buffer.from(await res.arrayBuffer()));
-  }
-  emojiMap = JSON.parse(readFileSync(EMOJI_JSON_PATH, 'utf-8'));
-  return emojiMap;
-}
-
-async function getEmojiImage(emoji) {
-  if (emojiImageCache.has(emoji)) return emojiImageCache.get(emoji);
-  const map = await loadEmojiMap();
-  const base = emojiToUnicode(emoji);
-  const variants = [
-    base,
-    base.replace(/-fe0f/gi, ''),
-    `${base.replace(/-fe0f/gi, '')}-fe0f`,
-    base.toUpperCase(),
-    base.replace(/-fe0f/gi, '').toUpperCase(),
-    base.replace(/-fe0f/gi, '').toUpperCase() + '-FE0F'
-  ];
-  let b64 = null;
-  for (const v of variants) { if (map[v]) { b64 = map[v]; break; } }
-  if (!b64) return null;
-  const img = await loadImage(Buffer.from(b64, 'base64'));
-  emojiImageCache.set(emoji, img);
-  return img;
-}
-
-async function drawAppleEmoji(ctx, emoji, x, y, size) {
-  const img = await getEmojiImage(emoji);
-  if (!img) { ctx.fillText(emoji, x, y); return; }
-  ctx.drawImage(img, x, y, size, size);
-}
-
-const EMOJI_REGEX = /(\p{Emoji_Modifier_Base}\p{Emoji_Modifier}|\p{Emoji_Presentation}\uFE0F?|\p{Emoji}\uFE0F|[\u{1F1E0}-\u{1F1FF}]{2}|\p{Extended_Pictographic}\uFE0F?)/gu;
-
-function measureTextCustom(ctx, text, fontSize) {
-  const parts = text.split(EMOJI_REGEX);
-  let w = 0;
-  for (const part of parts) {
-    if (!part) continue;
-    EMOJI_REGEX.lastIndex = 0;
-    if (EMOJI_REGEX.test(part)) w += fontSize; else w += ctx.measureText(part).width;
-    EMOJI_REGEX.lastIndex = 0;
-  }
-  return w;
 }
 
 async function drawTextWithEmojis(ctx, text, x, y, fontSize) {
@@ -251,8 +182,7 @@ async function renderCanvas({ wordLayouts, fontSize, wordStates, theme, blurAmou
 
 async function generateBratVideo({ text, theme, blur, format, holdDuration, fastProgress }) {
   const blurAmount = [0, 1, 2, 3].includes(blur) ? blur : 0;
-  await ensureFont();
-  await loadEmojiMap();
+  await ensureFont(FONT_URL, FONT_PATH, 'Impact');
 
   // ponytail: everything for this request lives under one tmpDir so a
   // single rmSync cleans it all up, including the final output file — the
