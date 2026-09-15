@@ -112,7 +112,7 @@ $('settings-save-pass').onclick=async()=>{
 };
 $('avatar-input').addEventListener('change',async()=>{
  const file=$('avatar-input').files[0];if(!file)return;
- if(!/^image\\/(jpeg|png|webp|gif)$/i.test(file.type)){settingsMsg('Gunakan JPG, PNG, WEBP, atau GIF.','error');return}
+ if(!/^image\/(jpeg|png|webp|gif)$/i.test(file.type)){settingsMsg('Gunakan JPG, PNG, WEBP, atau GIF.','error');return}
  if(file.size>5*1024*1024){settingsMsg('Foto maksimal 5 MB.','error');return}
  try{
   const dataUrl=await new Promise((resolve,reject)=>{const img=new Image(),reader=new FileReader();reader.onerror=()=>reject(Error('Gagal membaca file.'));reader.onload=()=>{img.onload=()=>{const max=480,scale=Math.min(1,max/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=Math.max(1,Math.round(img.width*scale));c.height=Math.max(1,Math.round(img.height*scale));const ctx=c.getContext('2d');ctx.drawImage(img,0,0,c.width,c.height);resolve(c.toDataURL('image/jpeg',.78))};img.onerror=()=>reject(Error('File gambar tidak valid.'));img.src=reader.result};reader.readAsDataURL(file)});
