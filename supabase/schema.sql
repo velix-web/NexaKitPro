@@ -8,6 +8,14 @@ create table if not exists public.profiles (
   updated_at timestamptz not null default now()
 );
 
+-- ponytail: root cause of "Database error saving new user" / "column
+-- updated_at does not exist" — CREATE TABLE IF NOT EXISTS above is a no-op
+-- when the table already exists (e.g. from an earlier partial run), so it
+-- never adds columns that were missing on that earlier version of the
+-- table. These two lines force them to exist regardless of table history.
+alter table public.profiles add column if not exists created_at timestamptz not null default now();
+alter table public.profiles add column if not exists updated_at timestamptz not null default now();
+
 create unique index if not exists profiles_username_lower_key
   on public.profiles (lower(username));
 
@@ -31,22 +39,30 @@ create trigger on_auth_user_created
 after insert on auth.users
 for each row execute procedure public.handle_new_user();
 
+-- ponytail: "create policy" has no IF NOT EXISTS in Postgres (unlike
+-- table/function/trigger above), so re-running this file previously errored
+-- here with "policy already exists" once it had run successfully once —
+-- drop-then-create makes it safe to re-run this whole file any time.
+drop policy if exists "profiles_select_own" on public.profiles;
 create policy "profiles_select_own"
 on public.profiles for select
 to authenticated
 using (auth.uid() = id);
 
+drop policy if exists "profiles_insert_own" on public.profiles;
 create policy "profiles_insert_own"
 on public.profiles for insert
 to authenticated
 with check (auth.uid() = id);
 
+drop policy if exists "profiles_update_own" on public.profiles;
 create policy "profiles_update_own"
 on public.profiles for update
 to authenticated
 using (auth.uid() = id)
 with check (auth.uid() = id);
 
+drop policy if exists "profiles_delete_own" on public.profiles;
 create policy "profiles_delete_own"
 on public.profiles for delete
 to authenticated

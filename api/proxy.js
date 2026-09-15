@@ -24,6 +24,8 @@ const PROVIDERS = {
   fakedev:    'https://api.ikyyxd.my.id/canvas/fakedev',
   ytmp4:      'https://api.nexray.eu.cc/downloader/ytmp4',
   ytmp3:      'https://api.nexray.eu.cc/downloader/ytmp3',
+  bypass:     'https://api.fazzcode.eu.cc/api/bypass',
+  react:      'https://api.fazzcode.eu.cc/api/react',
 };
 
 // Params whose value is itself a URL (a link the user pasted, or an ImgBB
