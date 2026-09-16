@@ -1,23 +1,15 @@
 {
-  "name": "NexaKit Pro \u2014 All Tools",
+  "name": "NexaKit Pro — All Tools",
   "short_name": "NexaKit Pro",
+  "description": "Downloader, image maker, utility, dan creator tools dalam satu workspace.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#d8dbe3",
-  "theme_color": "#d8dbe3",
+  "background_color": "#eef0f7",
+  "theme_color": "#5847d6",
   "icons": [
-    {
-      "src": "/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }

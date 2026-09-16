@@ -1,5 +1,5 @@
-const CACHE = 'nexakit-pro-v26'; // bumped again: fonts/icons/forms overhaul
-const PRECACHE = ['/', '/index.html', '/styles.css', '/app.js', '/auth.js', '/manifest.json', '/icon-192.png', '/icon-512.png'];
+const CACHE = 'nexakit-pro-v27'; // new icons, dark palette, mobile grid
+const PRECACHE = ['/', '/index.html', '/styles.css', '/app.js', '/auth.js', '/manifest.json', '/favicon.svg', '/icon-192.png', '/icon-512.png', '/apple-touch-icon.png'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => Promise.all(

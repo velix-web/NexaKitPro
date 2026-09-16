@@ -84,13 +84,10 @@ window.nexakitApi={
     if(error)throw Error(error.message||'Gagal mengganti password.');
   }
 };
-const CAT_ICON={
-  downloader:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/></svg>',
-  maker:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"/><path d="m14 7 3 3"/><path d="M5 6v4"/><path d="M19 14v4"/><path d="M10 2v2"/><path d="M7 8H3"/><path d="M21 16h-4"/><path d="M11 3H9"/></svg>',
-  image:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>',
-  utility:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg>'
-};
+const icon=window.NEXAKIT_ICON;
 const ICON_ARROW_RIGHT='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
+// Reveal on scroll — cheap, no library, and the observer disconnects per node once shown.
+const reveal=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-in');reveal.unobserve(e.target)}}),{rootMargin:'0px 0px -40px 0px'});
 function renderCards(){
   const q=(search.value||'').trim().toLowerCase();
   // ponytail: was reading a `.segmented-btn.active` class the tab buttons
@@ -99,11 +96,12 @@ function renderCards(){
   const active=tabs.querySelector('[data-cat].active')?.dataset.cat||'all';
   const list=tools.filter(t=>(active==='all'||cat(t)===active)&&(!q||`${t.name} ${t.title} ${t.description}`.toLowerCase().includes(q)));
   grid.innerHTML=list.length?list.map((t,i)=>{const c=cat(t);return `<li style="--i:${i}"><button type="button" class="tool-card" data-slug="${esc(t.slug)}" data-cat="${c}">`+
-    `<span class="tool-icon" aria-hidden="true">${CAT_ICON[c]||''}</span>`+
+    `<span class="tool-icon" aria-hidden="true">${icon(t.icon)}</span>`+
     (t.tag?`<span class="tool-tag">${esc(t.tag)}</span>`:'')+
     `<span class="tool-copy"><span class="tool-title">${esc(t.title)}</span><span class="tool-desc">${esc(t.description)}</span></span>`+
     `<span class="tool-arrow" aria-hidden="true">${ICON_ARROW_RIGHT}</span></button></li>`}).join(''):'<li class="empty-state"><strong>Tool tidak ditemukan</strong><span>Coba kata kunci lain.</span></li>';
   grid.querySelectorAll('button[data-slug]').forEach(b=>b.onclick=()=>openTool(b.dataset.slug));
+  grid.querySelectorAll('li').forEach(li=>reveal.observe(li));
 }
 function toolHash(t){return '#'+String(t?.title||t?.name||t?.slug||'tool').trim().replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-+|-+$/g,'').toUpperCase()}
 function toolFromHash(){

@@ -2,29 +2,57 @@
    FEATURE LOGIC ONLY — visuals live entirely in the <style>
    block above; nothing here decides how anything looks.
    ============================================================ */
+/* Icon set: one visual language (Lucide, 1.8 stroke) — no emoji, no gradients. */
+const I={
+ video:'<path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/>',
+ camera:'<path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"/><circle cx="12" cy="13" r="3"/>',
+ music:'<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>',
+ drive:'<path d="M10 16h.01"/><path d="M2.212 11.577a2 2 0 0 0-.212.896V18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5.527a2 2 0 0 0-.212-.896L18.55 5.11A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/><path d="M21.946 12.013H2.054"/><path d="M6 16h.01"/>',
+ play:'<path d="M9 9.003a1 1 0 0 1 1.517-.859l4.997 2.997a1 1 0 0 1 0 1.718l-4.997 2.997A1 1 0 0 1 9 14.996z"/><circle cx="12" cy="12" r="10"/>',
+ thumb:'<path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/><path d="M7 10v12"/>',
+ chat:'<path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"/>',
+ scissors:'<circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 12 12"/><path d="M20 4 8.12 15.88"/><circle cx="6" cy="18" r="3"/><path d="M14.8 14.8 20 20"/>',
+ layers:'<path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/>',
+ laugh:'<path d="M15 10V9"/><path d="M7.084 14.302a5.12 5.12 0 009.833 0 .24.24 0 00-.235-.302H7.32a.24.24 0 00-.235.302"/><path d="M9 10V9"/><circle cx="12" cy="12" r="10"/>',
+ type:'<path d="M12 4v16"/><path d="M4 7V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2"/><path d="M9 20h6"/>',
+ unlink:'<path d="m18.84 12.25 1.72-1.71h-.02a5.004 5.004 0 0 0-.12-7.07 5.006 5.006 0 0 0-6.95 0l-1.72 1.71"/><path d="m5.17 11.75-1.71 1.71a5.004 5.004 0 0 0 .12 7.07 5.006 5.006 0 0 0 6.95 0l1.71-1.71"/><path d="M8 2v3"/><path d="M2 8h3"/><path d="M16 19v3"/><path d="M19 16h3"/>',
+ react:'<path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/><path d="M7.5 9.5c0 .687.265 1.383.697 1.844l3.009 3.264a1.14 1.14 0 0 0 .407.314 1 1 0 0 0 .783-.004 1.14 1.14 0 0 0 .398-.31l3.008-3.264A2.77 2.77 0 0 0 16.5 9.5 2.5 2.5 0 0 0 12 8a2.5 2.5 0 0 0-4.5 1.5"/>',
+ note:'<path d="M21 9a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 15 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2z"/><path d="M15 3v5a1 1 0 0 0 1 1h5"/>',
+ award:'<path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"/><circle cx="12" cy="8" r="6"/>',
+ gamepad:'<path d="M6 11h4"/><path d="M8 9v4"/><path d="M15 12h.01"/><path d="M18 10h.01"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/>',
+ flame:'<path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"/>',
+ wallet:'<path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/>',
+ idcard:'<path d="M13 19a4 4 0 00-8 0"/><path d="M16 10h2"/><path d="M16 14h2"/><circle cx="9" cy="12" r="3"/><rect x="2" y="5" width="20" height="14" rx="2"/>',
+ link:'<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
+ eraser:'<path d="M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21"/><path d="m5.082 11.09 8.828 8.828"/>',
+ sparkles:'<path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/>',
+ upload:'<path d="M12 13v8"/><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="m8 17 4-4 4 4"/>'
+};
+const svgIcon=n=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${I[n]||I.layers}</svg>`;
+window.NEXAKIT_ICON=svgIcon;
 const TOOLS=[
-{id:'tt',slug:'tiktok',name:'TikTok',title:'TikTok Downloader',description:'Download video TikTok tanpa watermark',type:'tiktok',tag:'MP4/MP3'},
-{id:'ig',slug:'instagram',name:'Instagram',title:'Instagram Downloader',description:'Unduh video & foto Instagram HD',type:'generic-downloader',provider:'ig',paramKey:'url',tag:'HD'},
-{id:'spotify',slug:'spotify',name:'Spotify',title:'Spotify Downloader',description:'Unduh musik Spotify ke MP3',type:'generic-downloader',provider:'spotify',paramKey:'url',tag:'MP3'},
-{id:'terabox',slug:'terabox',name:'Terabox',title:'Terabox Downloader',description:'Ambil file dari share Terabox',type:'generic-downloader',provider:'terabox',paramKey:'url',tag:'FILE'},
-{id:'yt_engine',slug:'youtube',name:'YouTube',title:'YouTube Downloader',description:'Unduh MP4 360p-1080p atau MP3 dari YouTube',type:'youtube',tag:'MP4/MP3'},
-{id:'fb',slug:'facebook',name:'Facebook',title:'Facebook Downloader',description:'Unduh video Facebook tanpa watermark',type:'generic-downloader',provider:'fb',paramKey:'url',tag:'MP4'},
-{id:'tw',slug:'twitter',name:'Twitter / X',title:'Twitter/X Downloader',description:'Unduh video & foto dari Twitter/X',type:'generic-downloader',provider:'tw',paramKey:'url',tag:'MP4/JPG'},
-{id:'capcut',slug:'capcut',name:'CapCut',title:'CapCut Downloader',description:'Unduh video template/hasil CapCut',type:'generic-downloader',provider:'capcut',paramKey:'url',tag:'MP4'},
-{id:'savefrom',slug:'savefrom',name:'SaveFrom',title:'SaveFrom Downloader',description:'Unduh media dari banyak platform',type:'generic-downloader',provider:'savefrom',paramKey:'url',tag:'MULTI'},
-{id:'lahelu',slug:'lahelu',name:'Lahelu',title:'Lahelu Downloader',description:'Unduh video/gambar dari Lahelu',type:'generic-downloader',provider:'lahelu',paramKey:'url',tag:'MEDIA'},
-{id:'brat_gen',slug:'brat',name:'Brat Generator',title:'Brat Generator',description:'Buat stiker BRAT: static, animated, video bounce, atau stacked 3 baris',type:'brat',provider:'brat',tag:'PNG/GIF/MP4'},
-{id:'bypass_link',slug:'bypass-link',name:'Bypass Link',title:'Bypass Link',description:'Lewatin shortlink/link pengaman jadi link asli',type:'bypass',tag:'LINK'},
-{id:'react_wa',slug:'react-wa',name:'React Channel WA',title:'React Channel WA',description:'React postingan channel WhatsApp pakai emoji',type:'react',tag:'WA'},
-{id:'iqc',slug:'iqc',name:'iPhone Quote Create',title:'iPhone Quote Create',description:'Buat kartu quote ala iPhone Notes',type:'iqc',tag:'IMAGE'},
-{id:'sertifikat_tolol',slug:'sertifikat-tolol',name:'Sertifikat Tolol',title:'Sertifikat Tolol',description:'Buat sertifikat meme kocak',type:'image-generator',provider:'sertifikat',paramKey:'text',tag:'IMAGE'},
-{id:'lobby_ml',slug:'lobby-ml',name:'Fake Lobby ML',title:'Fake Lobby ML',description:'Buat SS Lobby Mobile Legends',type:'lobby-ml',provider:'lobbyml',tag:'IMAGE'},
-{id:'lobby_ff',slug:'lobby-ff',name:'Fake Lobby FF',title:'Fake Lobby FF',description:'Buat SS Lobby Free Fire',type:'image-generator',provider:'lobbyff',paramKey:'nickname',tag:'IMAGE'},
-{id:'fakedana',slug:'fakedana',name:'Fake Saldo DANA',title:'Fake Saldo DANA',description:'Buat gambar saldo DANA palsu',type:'image-generator',provider:'fakedana',paramKey:'nominal',tag:'IMAGE'},
-{id:'fakedev',slug:'fakedev',name:'FakeDev Profile',title:'FakeDev Profile',description:'Generator kartu profil developer',type:'fakedev',provider:'fakedev',tag:'IMAGE'},
-{id:'img2link',slug:'img2link',name:'Foto To Link',title:'Foto To Link',description:'Upload gambar menjadi URL ImgBB',type:'img2link',tag:'LINK'},
-{id:'rmbg',slug:'remove-background',name:'Remove Background',title:'Remove Background',description:'Hapus background foto',type:'remove-bg',tag:'PNG'},
-{id:'enh',slug:'image-enhancer',name:'Image Enhancer',title:'Image Enhancer',description:'Tingkatkan kualitas foto HD',type:'image-enhancer',tag:'HD'}
+{id:'tt',slug:'tiktok',name:'TikTok',title:'TikTok Downloader',description:'Download video TikTok tanpa watermark',type:'tiktok',tag:'MP4/MP3',icon:'video'},
+{id:'ig',slug:'instagram',name:'Instagram',title:'Instagram Downloader',description:'Unduh video & foto Instagram HD',type:'generic-downloader',provider:'ig',paramKey:'url',tag:'HD',icon:'camera'},
+{id:'spotify',slug:'spotify',name:'Spotify',title:'Spotify Downloader',description:'Unduh musik Spotify ke MP3',type:'generic-downloader',provider:'spotify',paramKey:'url',tag:'MP3',icon:'music'},
+{id:'terabox',slug:'terabox',name:'Terabox',title:'Terabox Downloader',description:'Ambil file dari share Terabox',type:'generic-downloader',provider:'terabox',paramKey:'url',tag:'FILE',icon:'drive'},
+{id:'yt_engine',slug:'youtube',name:'YouTube',title:'YouTube Downloader',description:'Unduh MP4 360p-1080p atau MP3 dari YouTube',type:'youtube',tag:'MP4/MP3',icon:'play'},
+{id:'fb',slug:'facebook',name:'Facebook',title:'Facebook Downloader',description:'Unduh video Facebook tanpa watermark',type:'generic-downloader',provider:'fb',paramKey:'url',tag:'MP4',icon:'thumb'},
+{id:'tw',slug:'twitter',name:'Twitter / X',title:'Twitter/X Downloader',description:'Unduh video & foto dari Twitter/X',type:'generic-downloader',provider:'tw',paramKey:'url',tag:'MP4/JPG',icon:'chat'},
+{id:'capcut',slug:'capcut',name:'CapCut',title:'CapCut Downloader',description:'Unduh video template/hasil CapCut',type:'generic-downloader',provider:'capcut',paramKey:'url',tag:'MP4',icon:'scissors'},
+{id:'savefrom',slug:'savefrom',name:'SaveFrom',title:'SaveFrom Downloader',description:'Unduh media dari banyak platform',type:'generic-downloader',provider:'savefrom',paramKey:'url',tag:'MULTI',icon:'layers'},
+{id:'lahelu',slug:'lahelu',name:'Lahelu',title:'Lahelu Downloader',description:'Unduh video/gambar dari Lahelu',type:'generic-downloader',provider:'lahelu',paramKey:'url',tag:'MEDIA',icon:'laugh'},
+{id:'brat_gen',slug:'brat',name:'Brat Generator',title:'Brat Generator',description:'Buat stiker BRAT: static, animated, video bounce, atau stacked 3 baris',type:'brat',provider:'brat',tag:'PNG/GIF/MP4',icon:'type'},
+{id:'bypass_link',slug:'bypass-link',name:'Bypass Link',title:'Bypass Link',description:'Lewatin shortlink/link pengaman jadi link asli',type:'bypass',tag:'LINK',icon:'unlink'},
+{id:'react_wa',slug:'react-wa',name:'React Channel WA',title:'React Channel WA',description:'React postingan channel WhatsApp pakai emoji',type:'react',tag:'WA',icon:'react'},
+{id:'iqc',slug:'iqc',name:'iPhone Quote Create',title:'iPhone Quote Create',description:'Buat kartu quote ala iPhone Notes',type:'iqc',tag:'IMAGE',icon:'note'},
+{id:'sertifikat_tolol',slug:'sertifikat-tolol',name:'Sertifikat Tolol',title:'Sertifikat Tolol',description:'Buat sertifikat meme kocak',type:'image-generator',provider:'sertifikat',paramKey:'text',tag:'IMAGE',icon:'award'},
+{id:'lobby_ml',slug:'lobby-ml',name:'Fake Lobby ML',title:'Fake Lobby ML',description:'Buat SS Lobby Mobile Legends',type:'lobby-ml',provider:'lobbyml',tag:'IMAGE',icon:'gamepad'},
+{id:'lobby_ff',slug:'lobby-ff',name:'Fake Lobby FF',title:'Fake Lobby FF',description:'Buat SS Lobby Free Fire',type:'image-generator',provider:'lobbyff',paramKey:'nickname',tag:'IMAGE',icon:'flame'},
+{id:'fakedana',slug:'fakedana',name:'Fake Saldo DANA',title:'Fake Saldo DANA',description:'Buat gambar saldo DANA palsu',type:'image-generator',provider:'fakedana',paramKey:'nominal',tag:'IMAGE',icon:'wallet'},
+{id:'fakedev',slug:'fakedev',name:'FakeDev Profile',title:'FakeDev Profile',description:'Generator kartu profil developer',type:'fakedev',provider:'fakedev',tag:'IMAGE',icon:'idcard'},
+{id:'img2link',slug:'img2link',name:'Foto To Link',title:'Foto To Link',description:'Upload gambar menjadi URL ImgBB',type:'img2link',tag:'LINK',icon:'link'},
+{id:'rmbg',slug:'remove-background',name:'Remove Background',title:'Remove Background',description:'Hapus background foto',type:'remove-bg',tag:'PNG',icon:'eraser'},
+{id:'enh',slug:'image-enhancer',name:'Image Enhancer',title:'Image Enhancer',description:'Tingkatkan kualitas foto HD',type:'image-enhancer',tag:'HD',icon:'sparkles'}
 ];
 const $=id=>document.getElementById(id);
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -55,6 +83,18 @@ function renderApiJson(json){
   return `${link?`<p><a href="${esc(link)}" target="_blank" rel="noopener">Buka Hasil</a></p>`:''}<pre>${esc(JSON.stringify(json,null,2))}</pre>`;
 }
 function uploadPreview(file,id){if(!file)return;const img=$(id);if(!img)return;const r=new FileReader();r.onload=e=>{img.src=e.target.result;img.hidden=false};r.readAsDataURL(file)}
+// Drag & drop + click-to-browse over a hidden native input (keeps a11y, kills the native button).
+function dropzone(id,label='Pilih gambar'){return `<label class="dropzone" for="${id}" data-dropzone><span class="dz-icon" aria-hidden="true">${svgIcon('upload')}</span><span class="dz-text"><b>${esc(label)}</b><small>atau tarik & lepas file ke sini</small></span><input id="${id}" type="file" accept="image/*"></label>`}
+function initDropzones(root=document){root.querySelectorAll('[data-dropzone]').forEach(dz=>{
+ if(dz.dataset.dzReady)return;dz.dataset.dzReady='1';
+ const input=dz.querySelector('input[type=file]');
+ const name=()=>{const f=input.files[0];const s=dz.querySelector('.dz-text b');if(f&&s)s.textContent=f.name.length>28?f.name.slice(0,25)+'…':f.name};
+ ['dragenter','dragover'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.add('is-over')}));
+ ['dragleave','drop'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.remove('is-over')}));
+ dz.addEventListener('drop',e=>{const f=e.dataTransfer?.files?.[0];if(!f)return;const dt=new DataTransfer();dt.items.add(f);input.files=dt.files;input.dispatchEvent(new Event('change',{bubbles:true}))});
+ input.addEventListener('change',name);
+})}
+window.NEXAKIT_initDropzones=initDropzones;
 async function uploadToImgBB(file){const f=new FormData();f.append('image',file);const j=await safeJson('/api/imgbb-upload',{method:'POST',body:f});if(j.success)return j.data.url;throw Error('Gagal unggah foto ke ImgBB.')}
 
 let tiktokData=null,tiktokFormat='hd',ytInfo=null;
@@ -73,19 +113,19 @@ function initMaker(tool){const form=$('maker-form'),box=$('result-container'),co
 const area=$('tool-area');
 let activeTool=TOOLS[0];
 function clearView(){area.innerHTML='';$('result-container').hidden=true;$('result-content').innerHTML='';$('dl-history-container').innerHTML=''}
-function base(title,desc,form){area.innerHTML=`<div class="tool-form-card"><div class="tool-form-heading"><span class="eyebrow">TOOL INPUT</span><h3>${esc(title)}</h3>${desc?`<p>${esc(desc)}</p>`:''}</div><div class="tool-form-body">${form}</div></div>`}
+function base(title,desc,form){area.innerHTML=`<div class="tool-form-card"><div class="tool-form-heading"><span class="eyebrow">TOOL INPUT</span><h3>${esc(title)}</h3>${desc?`<p>${esc(desc)}</p>`:''}</div><div class="tool-form-body">${form}</div></div>`;initDropzones(area)}
 function render(tool){clearView();
  if(tool.type==='tiktok'){base('Link TikTok','',`<p><input id="tiktok-url" type="url" placeholder="Tempel link TikTok..."></p><button id="preview-tiktok" type="button">Preview</button>`);initTiktok();return}
  if(tool.type==='youtube'){base('Link YouTube','',`<p><input id="youtube-url" type="url" placeholder="Tempel link YouTube..."></p><button id="preview-youtube" type="button">Preview</button>`);initYoutube();return}
  if(tool.type==='generic-downloader'){base('Link '+tool.name,'',`<form id="tool-form"><p><input id="tool-input" type="url" placeholder="Tempel link ${esc(tool.name)}..."></p><button type="submit">Preview</button></form>`);initGeneric(tool);return}
- if(['remove-bg','img2link','image-enhancer'].includes(tool.type)){const action=tool.type==='remove-bg'?'Remove Background':tool.type==='img2link'?'Upload':'Enhance';base(tool.title,'',`<form><p><input id="image-file" type="file" accept="image/*"></p><p><img id="file-preview" hidden alt="Preview"></p><button id="tool-submit" type="submit">${action}</button></form>`);initImageTool(tool.type);return}
+ if(['remove-bg','img2link','image-enhancer'].includes(tool.type)){const action=tool.type==='remove-bg'?'Remove Background':tool.type==='img2link'?'Upload':'Enhance';base(tool.title,'',`<form><p>${dropzone('image-file')}</p><p><img id="file-preview" hidden alt="Preview"></p><button id="tool-submit" type="submit">${action}</button></form>`);initImageTool(tool.type);return}
  let form='';
  if(tool.type==='bypass')form=`<form id="maker-form"><p><input id="bypass-url" type="url" placeholder="Tempel link yang mau di-bypass..." required></p><button type="submit">Bypass</button></form>`;
  else if(tool.type==='react')form=`<form id="maker-form"><p><input id="react-url" type="url" placeholder="Link postingan channel WhatsApp..." required></p><p><input id="react-emoji" placeholder="Emoji, cth: 👍" maxlength="8"></p><button type="submit">React</button></form>`;
  else if(tool.type==='brat')form=`<form id="maker-form"><p><label>Jenis</label><span class="pill-radio-group"><label class="pill-radio"><input type="radio" name="brat-variant" value="static" checked><span>Static (PNG)</span></label><label class="pill-radio"><input type="radio" name="brat-variant" value="animated"><span>Animated (GIF)</span></label><label class="pill-radio"><input type="radio" name="brat-variant" value="bratvid"><span>Video Bounce</span></label><label class="pill-radio"><input type="radio" name="brat-variant" value="brat3"><span>Stacked 3 Baris</span></label></span></p><p id="brat-text-wrap"><label for="maker-text">Teks</label><input id="maker-text" placeholder="Tulis teks..." maxlength="80"></p><p id="brat-delay-wrap" hidden><label for="brat-delay">Delay animasi</label><input id="brat-delay" type="number" min="100" step="100" value="500" placeholder="Delay (ms), cth: 500"></p><p id="bratvid-theme-wrap" hidden><label>Warna</label><span class="pill-radio-group"><label class="pill-radio"><input type="radio" name="bratvid-theme" value="white" checked><span>Putih</span></label><label class="pill-radio"><input type="radio" name="bratvid-theme" value="black"><span>Hitam</span></label><label class="pill-radio"><input type="radio" name="bratvid-theme" value="green"><span>Hijau Brat</span></label></span></p><p id="bratvid-format-wrap" hidden><label>Format</label><span class="pill-radio-group"><label class="pill-radio"><input type="radio" name="bratvid-format" value="mp4" checked><span>MP4</span></label><label class="pill-radio"><input type="radio" name="bratvid-format" value="gif"><span>GIF</span></label></span></p><p id="brat3-wrap" hidden><label for="brat3-top">Baris atas</label><input id="brat3-top" placeholder="Baris atas (abu-abu)" maxlength="60"><label for="brat3-mid">Baris tengah</label><input id="brat3-mid" placeholder="Baris tengah (hitam, besar)" maxlength="60"><label for="brat3-bottom">Baris bawah</label><input id="brat3-bottom" placeholder="Baris bawah (abu-abu)" maxlength="60"></p><button type="submit">Buat</button></form>`;
  else if(tool.type==='iqc')form=`<form id="maker-form"><p><label for="maker-text">Quote</label><textarea id="maker-text" placeholder="Tulis quote..."></textarea></p><p><label for="maker-time">Waktu (opsional)</label><input id="maker-time" type="time"></p><button type="submit">Buat</button></form>`;
- else if(tool.type==='lobby-ml')form=`<form id="maker-form"><p><label for="maker-text">Nickname</label><input id="maker-text" placeholder="Nickname"></p><p><label for="maker-file">Avatar</label><input id="maker-file" type="file" accept="image/*"></p><button type="submit">Buat</button></form>`;
- else if(tool.type==='fakedev')form=`<form id="maker-form"><p><label for="maker-name">Nama</label><input id="maker-name" placeholder="Nama"></p><p><label for="maker-bio">Bio</label><textarea id="maker-bio" placeholder="Bio"></textarea></p><p><label for="maker-file">Avatar</label><input id="maker-file" type="file" accept="image/*"></p><button type="submit">Buat</button></form>`;
+ else if(tool.type==='lobby-ml')form=`<form id="maker-form"><p><label for="maker-text">Nickname</label><input id="maker-text" placeholder="Nickname"></p><p><label for="maker-file">Avatar</label>${dropzone('maker-file','Pilih avatar')}</p><button type="submit">Buat</button></form>`;
+ else if(tool.type==='fakedev')form=`<form id="maker-form"><p><label for="maker-name">Nama</label><input id="maker-name" placeholder="Nama"></p><p><label for="maker-bio">Bio</label><textarea id="maker-bio" placeholder="Bio"></textarea></p><p><label for="maker-file">Avatar</label>${dropzone('maker-file','Pilih avatar')}</p><button type="submit">Buat</button></form>`;
  else form=`<form id="maker-form"><p><input id="maker-text" ${tool.paramKey==='nominal'?'inputmode="numeric" pattern="[0-9]*"':''} placeholder="${esc(tool.paramKey==='nominal'?'Nominal, cth: 500000':tool.title+' input')}"></p><button type="submit">Buat</button></form>`;
  base(tool.title,tool.description,form);initMaker(tool)
 }
@@ -94,7 +134,7 @@ window.addEventListener('online',()=>setBusy(false));
 window.addEventListener('offline',()=>setBusy(false));
 
 // Settings dialog (backdrop click or close button dismisses it)
-function openSettings(){$('settings-overlay').hidden=false;$('settings-modal').hidden=false}
+function openSettings(){$('settings-overlay').hidden=false;$('settings-modal').hidden=false;initDropzones($('settings-modal'))}
 function closeSettings(){$('settings-overlay').hidden=true;$('settings-modal').hidden=true}
 window.NEXAKIT_openSettings=openSettings;
 $('settings-overlay').onclick=closeSettings;

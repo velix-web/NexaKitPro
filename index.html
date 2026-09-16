@@ -7,11 +7,12 @@
 <link rel="manifest" href="/manifest.json">
 <meta name="description" content="NexaKit Pro — kumpulan tools downloader, image maker, utility, dan creator dalam satu workspace.">
 <meta name="robots" content="index,follow,max-image-preview:large">
-<meta name="theme-color" content="#eef1f7" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0d0b1a" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#eef0f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#12111c" media="(prefers-color-scheme: dark)">
 <meta name="color-scheme" content="light dark">
-<link rel="icon" href="/icon-192.png" type="image/png">
-<link rel="apple-touch-icon" href="/icon-512.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script>(function(){try{var t=localStorage.getItem('nexakit-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.dataset.theme=t}catch(e){}})()</script>
 <link rel="canonical" href="https://nexakitpro.my.id/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,7 +35,6 @@
 <a class="skip-link" href="#main-content">Lewati ke konten</a>
 <div id="boot-screen" aria-live="polite">
   <div class="boot-card">
-    <div class="brand-mark" aria-hidden="true"></div>
     <strong>NexaKit Pro</strong>
     <span>Menyiapkan workspace…</span>
   </div>
@@ -73,16 +73,12 @@
 
 <!-- ================= APP ================= -->
 <div id="app-shell" hidden>
-  <div class="app-bg-orb orb-one" aria-hidden="true"></div>
-  <div class="app-bg-orb orb-two" aria-hidden="true"></div>
   <header class="topbar">
     <div class="brand-lockup">
-      <span class="brand-mark small" aria-hidden="true"></span>
-      <div><strong>NexaKit Pro</strong><span class="brand-caption">Tools workspace</span></div>
+      <strong>NexaKit Pro</strong><span class="brand-caption">Tools workspace</span>
     </div>
     <div class="user-cluster">
       <div class="user-greeting">Halo, <b id="user-name">Member</b><span id="role-label">Member</span></div>
-    <div>
       <button type="button" class="theme-toggle" data-theme-toggle aria-pressed="false" aria-label="Ganti tema terang/gelap"><span class="theme-toggle-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg></span></button>
       <button type="button" id="menu-settings">Pengaturan</button>
       <button type="button" id="logout">Logout</button>
@@ -135,18 +131,21 @@
 <div id="settings-overlay" hidden></div>
 <div id="settings-modal" hidden>
   <h2>Setting User</h2>
-  <p>
+  <p class="avatar-row">
     <span id="avatar-preview-fallback">?</span>
-    <img id="avatar-preview-img" hidden alt="Foto profil" width="56" height="56">
-    <br><br>
-    <input id="avatar-input" type="file" accept="image/*">
+    <img id="avatar-preview-img" hidden alt="Foto profil" width="72" height="72">
+    <label class="dropzone compact" for="avatar-input" data-dropzone>
+      <span class="dz-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 13v8"/><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="m8 17 4-4 4 4"/></svg></span>
+      <span class="dz-text"><b>Pilih foto</b><small>atau tarik gambar ke sini</small></span>
+      <input id="avatar-input" type="file" accept="image/*">
+    </label>
   </p>
   <p>
     <label for="settings-name">Nama Tampilan</label>
     <input id="settings-name" maxlength="30">
   </p>
   <button type="button" id="settings-save-profile">Simpan Perubahan</button>
-  <hr>
+  <div class="settings-divider"></div>
   <p>
     <label for="settings-newpass">Password Baru</label>
     <input id="settings-newpass" type="password" autocomplete="new-password">
