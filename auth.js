@@ -17,6 +17,20 @@ const loginTab = document.querySelector('[data-mode="login"]');
 const registerTab = document.querySelector('[data-mode="register"]');
 const categories=[['all','All'],['downloader','Downloader'],['maker','Maker'],['image','Image'],['utility','Utility']];
 function cat(t){if(['tiktok','instagram','spotify','terabox','youtube','facebook','twitter','capcut','savefrom','lahelu'].includes(t.slug))return 'downloader';if(['brat','iqc','sertifikat-tolol','lobby-ml','lobby-ff','fakedana','fakedev'].includes(t.slug))return 'maker';if(['img2link','remove-background','image-enhancer'].includes(t.slug))return 'image';return 'utility'}
+const ICON_MOON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>';
+const ICON_SUN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>';
+function applyTheme(theme){
+  document.documentElement.dataset.theme=theme;
+  try{localStorage.setItem('nexakit-theme',theme)}catch{}
+  document.querySelectorAll('[data-theme-toggle]').forEach(b=>{
+    b.setAttribute('aria-pressed',String(theme==='dark'));
+    const icon=b.querySelector('.theme-toggle-icon');if(icon)icon.innerHTML=theme==='dark'?ICON_SUN:ICON_MOON;
+  });
+}
+function initTheme(){
+  applyTheme(document.documentElement.dataset.theme||'light'); // head script already set it; this just syncs the buttons
+  document.querySelectorAll('[data-theme-toggle]').forEach(b=>b.onclick=()=>applyTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
+}
 function usernameEmail(username){return `${username.toLowerCase()}@users.nexakitpro.local`}
 function validUsername(u){return /^[a-zA-Z0-9._-]{3,24}$/.test(u)}
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
@@ -44,8 +58,10 @@ async function loadProfileIntoUI(){
   userName.textContent=name;
   const roleLabel=document.getElementById('role-label');
   if(roleLabel)roleLabel.textContent=data.is_vip?'VVIP':'Member';
+  const prevFallback=document.getElementById('avatar-preview-fallback');
+  if(prevFallback)prevFallback.textContent=(name||'?').trim().charAt(0).toUpperCase()||'?';
   if(data.avatar_url){
-    const prevImg=document.getElementById('avatar-preview-img'),prevFallback=document.getElementById('avatar-preview-fallback');
+    const prevImg=document.getElementById('avatar-preview-img');
     if(prevImg){prevImg.src=data.avatar_url;prevImg.hidden=false;if(prevFallback)prevFallback.hidden=true}
   }
   const nameInput=document.getElementById('settings-name');
@@ -68,11 +84,25 @@ window.nexakitApi={
     if(error)throw Error(error.message||'Gagal mengganti password.');
   }
 };
+const CAT_ICON={
+  downloader:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/></svg>',
+  maker:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"/><path d="m14 7 3 3"/><path d="M5 6v4"/><path d="M19 14v4"/><path d="M10 2v2"/><path d="M7 8H3"/><path d="M21 16h-4"/><path d="M11 3H9"/></svg>',
+  image:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>',
+  utility:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg>'
+};
+const ICON_ARROW_RIGHT='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
 function renderCards(){
   const q=(search.value||'').trim().toLowerCase();
-  const active=tabs.querySelector('.segmented-btn.active')?.dataset.cat||'all';
+  // ponytail: was reading a `.segmented-btn.active` class the tab buttons
+  // never had (they get `.active` directly on the `[data-cat]` button), so
+  // this always fell through to 'all' — category tabs silently did nothing.
+  const active=tabs.querySelector('[data-cat].active')?.dataset.cat||'all';
   const list=tools.filter(t=>(active==='all'||cat(t)===active)&&(!q||`${t.name} ${t.title} ${t.description}`.toLowerCase().includes(q)));
-  grid.innerHTML=list.length?list.map(t=>`<li><button type="button" data-slug="${esc(t.slug)}"><span>${esc(t.title)}</span><span>${esc(t.description)}</span>${t.tag?`<span>${esc(t.tag)}</span>`:''}</button></li>`).join(''):'<li>Tool tidak ditemukan.</li>';
+  grid.innerHTML=list.length?list.map((t,i)=>{const c=cat(t);return `<li style="--i:${i}"><button type="button" class="tool-card" data-slug="${esc(t.slug)}" data-cat="${c}">`+
+    `<span class="tool-icon" aria-hidden="true">${CAT_ICON[c]||''}</span>`+
+    (t.tag?`<span class="tool-tag">${esc(t.tag)}</span>`:'')+
+    `<span class="tool-copy"><span class="tool-title">${esc(t.title)}</span><span class="tool-desc">${esc(t.description)}</span></span>`+
+    `<span class="tool-arrow" aria-hidden="true">${ICON_ARROW_RIGHT}</span></button></li>`}).join(''):'<li class="empty-state"><strong>Tool tidak ditemukan</strong><span>Coba kata kunci lain.</span></li>';
   grid.querySelectorAll('button[data-slug]').forEach(b=>b.onclick=()=>openTool(b.dataset.slug));
 }
 function toolHash(t){return '#'+String(t?.title||t?.name||t?.slug||'tool').trim().replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-+|-+$/g,'').toUpperCase()}
@@ -160,14 +190,18 @@ function friendlyAuthError(error,mode){
   const fallback=mode==='register'?'Pendaftaran gagal.':'Login gagal.';
   return error?.message?`${fallback} (${error.message})`:`${fallback} Periksa data lalu coba lagi.`;
 }
+function clearFieldErrors(){['auth-username','auth-password','auth-confirm-password'].forEach(id=>{const el=$q(id);if(el){el.classList.remove('field-error');el.removeAttribute('aria-invalid')}})}
+function markFieldError(id){const el=$q(id);if(!el)return;el.classList.add('field-error');el.setAttribute('aria-invalid','true');el.focus();el.addEventListener('input',()=>{el.classList.remove('field-error');el.removeAttribute('aria-invalid')},{once:true})}
 async function authSubmit(e){
   e.preventDefault();
   const mode=authForm.dataset.mode||'login';
   const u=$q('auth-username').value.trim();
   const p=$q('auth-password').value;
   authError.textContent='';
-  if(!validUsername(u)){authError.textContent='Username harus 3–24 karakter dan hanya boleh huruf, angka, titik, garis bawah, atau strip.';return}
-  if(p.length<6){authError.textContent='Password minimal 6 karakter.';return}
+  clearFieldErrors();
+  if(!validUsername(u)){authError.textContent='Username harus 3–24 karakter dan hanya boleh huruf, angka, titik, garis bawah, atau strip.';markFieldError('auth-username');return}
+  if(p.length<6){authError.textContent='Password minimal 6 karakter.';markFieldError('auth-password');return}
+  if(mode==='register'&&p!==$q('auth-confirm-password').value){authError.textContent='Konfirmasi password tidak cocok.';markFieldError('auth-confirm-password');return}
   
   setAuthBusy(true);
   try{
@@ -226,13 +260,14 @@ document.addEventListener('keydown',e=>{
  if(e.key==='Escape' && !$q('settings-modal').hidden) $q('settings-close')?.click();
 });
 async function init(){
-  tabs.innerHTML=categories.map(([id,label])=>`<button data-cat="${id}" type="button">${label}</button>`).join('');
+  initTheme();
+  tabs.innerHTML=categories.map(([id,label],i)=>`<button data-cat="${id}" type="button"${i===0?' class="active"':''}>${label}</button>`).join('');
   tabs.querySelectorAll('[data-cat]').forEach(b=>b.onclick=()=>{tabs.querySelectorAll('[data-cat]').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderCards()});
   search.addEventListener('input',renderCards);
   loginTab.onclick=()=>setMode('login');registerTab.onclick=()=>setMode('register');
   authForm.addEventListener('submit',authSubmit);
   const togglePass=$q('toggle-pass');
-  if(togglePass)togglePass.onclick=()=>togglePassword('auth-password','toggle-pass');
+  if(togglePass)togglePass.onclick=()=>togglePassword(['auth-password','auth-confirm-password'],'toggle-pass');
   $q('logout').onclick=logout;
   $q('back-tools').onclick=openDashboard;
   $q('menu-feedback').onclick=()=>{const tpl=`Halo Admin NexaKit Pro%0A%0AJenis: (Saran/Kritik/Request Fitur/Bug)%0ATool terkait: %0ADeskripsi: %0A%0ADikirim dari menu NexaKit Pro`;window.open(`https://wa.me/6285722707676?text=${tpl}`,'_blank','noopener')};
