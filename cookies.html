@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kebijakan Cookie — NexaKit Pro</title>
+<meta name="description" content="Kebijakan cookie dan penyimpanan lokal NexaKit Pro.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://nexakitpro.my.id/cookies">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script>(function(){try{var t=localStorage.getItem('nexakit-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.dataset.theme=t}catch(e){}})()</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/styles.css">
+<style>
+.legal-wrap{position:relative;z-index:1;width:min(760px,calc(100% - 32px));margin:0 auto;padding:48px 0 60px}
+.legal-wrap a.back{display:inline-flex;align-items:center;gap:8px;margin-bottom:20px;font-weight:650;color:var(--muted)}
+.legal-wrap h1{margin:0 0 4px;font-size:clamp(28px,5vw,42px);font-weight:800;letter-spacing:-1.2px}
+.legal-wrap .updated{color:var(--muted);font-size:13px;margin:0 0 28px}
+.legal-card{padding:28px clamp(20px,4vw,32px);border-radius:var(--r-xl);background:var(--surface);
+border:1px solid var(--border);box-shadow:var(--shadow-sm);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.legal-card h2{font-size:17px;font-weight:700;margin:26px 0 8px}
+.legal-card h2:first-child{margin-top:0}
+.legal-card p,.legal-card li{color:var(--muted);font-size:14px;line-height:1.7}
+.legal-card ul{margin:0;padding-left:20px}
+.legal-card table{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px}
+.legal-card th,.legal-card td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border-dark);color:var(--muted)}
+.legal-card th{color:var(--text)}
+</style>
+</head>
+<body>
+<div class="legal-wrap">
+  <a class="back" href="/"><i class="fa fa-arrow-left" aria-hidden="true"></i> Kembali</a>
+  <h1>Kebijakan Cookie</h1>
+  <p class="updated">Terakhir diperbarui: <span id="updated-date"></span></p>
+  <div class="legal-card">
+    <h2>Kami tidak pakai cookie pelacak/iklan</h2>
+    <p>NexaKit Pro tidak memasang cookie iklan atau cookie pelacak pihak ketiga. Sesi login dan preferensi kamu disimpan lewat <b>localStorage</b>/<b>sessionStorage</b> browser, bukan cookie HTTP — datanya hanya ada di perangkatmu sendiri.</p>
+    <h2>Yang kami simpan di browser kamu</h2>
+    <table>
+      <tr><th>Nama</th><th>Fungsi</th><th>Bertahan</th></tr>
+      <tr><td>Sesi Supabase Auth</td><td>Menjaga kamu tetap login</td><td>Sampai logout</td></tr>
+      <tr><td>nexakit-theme</td><td>Mengingat mode terang/gelap</td><td>Sampai diubah</td></tr>
+      <tr><td>Riwayat download TikTok</td><td>Ditampilkan di tool TikTok Downloader</td><td>Sampai dihapus manual</td></tr>
+      <tr><td>Pengumuman yang ditutup</td><td>Supaya banner tidak muncul lagi</td><td>Sampai dihapus manual</td></tr>
+    </table>
+    <h2>Kontrol kamu</h2>
+    <p>Kamu bisa hapus semua data ini kapan saja lewat pengaturan browser (clear site data) atau dengan logout. Karena kami tidak pakai cookie consent banner pihak ketiga, tidak ada consent yang perlu diberikan untuk penggunaan dasar situs ini.</p>
+  </div>
+</div>
+<script>document.getElementById('updated-date').textContent=new Date().toLocaleDateString('id-ID',{year:'numeric',month:'long',day:'numeric'})</script>
+</body>
+</html>

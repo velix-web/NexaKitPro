@@ -18,6 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="/styles.css">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nexakitpro.my.id/">
@@ -48,7 +49,7 @@
       <button type="button" data-mode="login">Masuk</button>
       <button type="button" data-mode="register">Daftar</button>
     </div>
-    <button type="button" class="theme-toggle" data-theme-toggle aria-pressed="false" aria-label="Ganti tema terang/gelap"><span class="theme-toggle-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg></span></button>
+    <button type="button" class="theme-toggle" data-theme-toggle aria-pressed="false" aria-label="Ganti tema terang/gelap"><span class="theme-toggle-icon" aria-hidden="true"><i class="fa fa-moon-o" aria-hidden="true"></i></span></button>
   </div>
   <h2 id="auth-mode">Masuk</h2>
   <p id="auth-subtitle">Masuk untuk membuka semua tools NexaKit Pro.</p>
@@ -65,6 +66,9 @@
       <label for="auth-confirm-password">Konfirmasi Password</label>
       <input id="auth-confirm-password" type="password" autocomplete="new-password">
     </p>
+    <p id="auth-consent-wrap" hidden class="consent-row">
+      <label class="consent-label"><input id="auth-consent" type="checkbox"> Saya setuju dengan <a href="/terms" target="_blank" rel="noopener">Syarat &amp; Ketentuan</a> dan <a href="/privacy" target="_blank" rel="noopener">Kebijakan Privasi</a>.</label>
+    </p>
     <p><button type="button" id="toggle-pass">Lihat password</button></p>
     <p id="auth-error" role="alert"></p>
     <button type="submit">Masuk</button>
@@ -74,19 +78,40 @@
 <!-- ================= APP ================= -->
 <div id="app-shell" hidden>
   <header class="topbar">
-    <div class="brand-lockup">
+    <button type="button" class="brand-lockup" id="brand-home" aria-label="Kembali ke Semua Tools">
       <strong>NexaKit Pro</strong><span class="brand-caption">Tools workspace</span>
-    </div>
+    </button>
     <div class="user-cluster">
       <div class="user-greeting">Halo, <b id="user-name">Member</b><span id="role-label">Member</span></div>
-      <button type="button" class="theme-toggle" data-theme-toggle aria-pressed="false" aria-label="Ganti tema terang/gelap"><span class="theme-toggle-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg></span></button>
+      <button type="button" class="theme-toggle" data-theme-toggle aria-pressed="false" aria-label="Ganti tema terang/gelap"><span class="theme-toggle-icon" aria-hidden="true"><i class="fa fa-moon-o" aria-hidden="true"></i></span></button>
+      <a href="/admin" id="admin-panel-link" hidden><i class="fa fa-shield" aria-hidden="true"></i> Admin Panel</a>
       <button type="button" id="menu-settings">Pengaturan</button>
       <button type="button" id="logout">Logout</button>
     </div>
   </header>
 
+  <div class="status-bar" id="status-bar">
+    <div class="status-avatar" id="status-avatar">
+      <img id="status-avatar-img" alt="" hidden>
+      <span id="status-avatar-fallback">?</span>
+    </div>
+    <div class="status-pills">
+      <span class="status-chip"><i class="fa fa-globe" aria-hidden="true"></i> Negara <b id="status-country">—</b></span>
+      <span class="status-chip"><i class="fa fa-desktop" aria-hidden="true"></i> Device <b id="status-device">—</b></span>
+      <span class="status-chip"><i class="fa fa-compass" aria-hidden="true"></i> Browser <b id="status-browser">—</b></span>
+      <span class="status-chip" id="status-online-chip"><span class="status-dot"></span> <b id="status-online-text">Online</b></span>
+      <span class="status-chip" id="status-battery-chip" hidden><i class="fa fa-bolt" aria-hidden="true"></i> <b id="status-battery-text">—</b></span>
+      <span class="status-chip status-chip-role" id="status-role-chip"><i class="fa fa-user" aria-hidden="true"></i> Role <b id="status-role-text">Member</b></span>
+    </div>
+  </div>
+
   <main id="main-content">
   <section id="dashboard-view">
+    <div id="announcement-banner" class="announcement-banner" hidden>
+      <i class="fa fa-bullhorn" aria-hidden="true"></i>
+      <div><b id="announcement-title"></b><p id="announcement-body"></p></div>
+      <button type="button" id="announcement-dismiss" aria-label="Tutup pengumuman"><i class="fa fa-times" aria-hidden="true"></i></button>
+    </div>
     <div class="page-heading">
       <div>
         <span class="eyebrow">NEXAKIT / WORKSPACE</span>
@@ -96,7 +121,7 @@
       <div class="status-pill"><span class="status-dot"></span> Online</div>
     </div>
     <div class="search-shell">
-      <span class="search-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg></span>
+      <span class="search-icon" aria-hidden="true"><i class="fa fa-search" aria-hidden="true"></i></span>
       <input id="tool-search" type="search" autocomplete="off" placeholder="Cari TikTok, Instagram, Remove BG..." aria-label="Cari tools">
       <kbd>⌘ K</kbd>
     </div>
@@ -121,21 +146,29 @@
 
   </main>
   <footer class="app-footer">
+    <span>&copy; <span id="footer-year">2026</span> NexaKit Pro</span>
+    &middot;
     <a href="https://portofshakz.biz.id" target="_blank" rel="noopener noreferrer">About Dev</a>
+    &middot;
+    <a href="/privacy">Privasi</a>
+    &middot;
+    <a href="/terms">Syarat &amp; Ketentuan</a>
+    &middot;
+    <a href="/cookies">Cookie</a>
     &middot;
     <button type="button" id="menu-feedback">Report Bug / Saran</button>
   </footer>
 </div>
 
 <!-- ================= SETTINGS ================= -->
-<div id="settings-overlay" hidden></div>
-<div id="settings-modal" hidden>
+<div id="settings-overlay" class="modal-overlay" hidden></div>
+<div id="settings-modal" class="modal-panel" hidden>
   <h2>Setting User</h2>
   <p class="avatar-row">
     <span id="avatar-preview-fallback">?</span>
     <img id="avatar-preview-img" hidden alt="Foto profil" width="72" height="72">
     <label class="dropzone compact" for="avatar-input" data-dropzone>
-      <span class="dz-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 13v8"/><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="m8 17 4-4 4 4"/></svg></span>
+      <span class="dz-icon" aria-hidden="true"><i class="fa fa-upload" aria-hidden="true"></i></span>
       <span class="dz-text"><b>Pilih foto</b><small>atau tarik gambar ke sini</small></span>
       <input id="avatar-input" type="file" accept="image/*">
     </label>
@@ -153,6 +186,28 @@
   <button type="button" id="settings-save-pass">Ganti Password</button>
   <p id="settings-msg" hidden></p>
   <p><button type="button" id="settings-close">Tutup</button></p>
+</div>
+
+<!-- ================= FEEDBACK ================= -->
+<div id="feedback-overlay" class="modal-overlay" hidden></div>
+<div id="feedback-modal" class="modal-panel" hidden>
+  <h2>Report Bug / Saran</h2>
+  <p>
+    <label for="feedback-kind">Jenis</label>
+    <select id="feedback-kind">
+      <option value="bug">Bug</option>
+      <option value="suggestion">Saran</option>
+    </select>
+  </p>
+  <p>
+    <label for="feedback-message">Ceritakan detailnya</label>
+    <textarea id="feedback-message" rows="4" maxlength="1000" placeholder="Tool apa yang bermasalah? Apa yang terjadi?"></textarea>
+  </p>
+  <button type="button" id="feedback-submit">Kirim</button>
+  <p id="feedback-msg" hidden></p>
+  <div class="settings-divider"></div>
+  <p class="feedback-alt">Butuh respons cepat? <a id="feedback-wa" href="#" target="_blank" rel="noopener noreferrer">Chat lewat WhatsApp</a></p>
+  <p><button type="button" id="feedback-close">Tutup</button></p>
 </div>
 
 <div id="toast" hidden role="status" aria-live="polite"></div>

@@ -17,8 +17,8 @@ const loginTab = document.querySelector('[data-mode="login"]');
 const registerTab = document.querySelector('[data-mode="register"]');
 const categories=[['all','All'],['downloader','Downloader'],['maker','Maker'],['image','Image'],['utility','Utility']];
 function cat(t){if(['tiktok','instagram','spotify','terabox','youtube','facebook','twitter','capcut','savefrom','lahelu'].includes(t.slug))return 'downloader';if(['brat','iqc','sertifikat-tolol','lobby-ml','lobby-ff','fakedana','fakedev'].includes(t.slug))return 'maker';if(['img2link','remove-background','image-enhancer'].includes(t.slug))return 'image';return 'utility'}
-const ICON_MOON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>';
-const ICON_SUN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>';
+const ICON_MOON='<i class="fa fa-moon-o" aria-hidden="true"></i>';
+const ICON_SUN='<i class="fa fa-sun-o" aria-hidden="true"></i>';
 function applyTheme(theme){
   document.documentElement.dataset.theme=theme;
   try{localStorage.setItem('nexakit-theme',theme)}catch{}
@@ -43,26 +43,51 @@ function setMode(mode){
   if(confirmWrap)confirmWrap.hidden=mode!=='register';
   const confirmPassword=$q('auth-confirm-password');
   if(confirmPassword&&mode!=='register')confirmPassword.value='';
+  const consentWrap=$q('auth-consent-wrap');
+  if(consentWrap)consentWrap.hidden=mode!=='register';
+  const consentBox=$q('auth-consent');
+  if(consentBox)consentBox.checked=false;
   authSubmitButton.textContent=mode==='login'?'Masuk':'Daftar';
   [loginTab,registerTab].forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));
   authError.textContent='';
 }
 function showAuth(){auth.hidden=false;app.hidden=true}
-function showApp(u){window.nexakitUser=u;auth.hidden=true;app.hidden=false;userName.textContent=u;renderCards();const hashTool=toolFromHash(),savedTool=sessionStorage.getItem('nexakit-active-tool');if(hashTool)openTool(hashTool.slug);else if(savedTool&&tools.some(t=>t.slug===savedTool))openTool(savedTool);else openDashboard();loadProfileIntoUI()}
+function showApp(u){window.nexakitUser=u;auth.hidden=true;app.hidden=false;userName.textContent=u;renderCards();const hashTool=toolFromHash(),savedTool=sessionStorage.getItem('nexakit-active-tool');if(hashTool)openTool(hashTool.slug);else if(savedTool&&tools.some(t=>t.slug===savedTool))openTool(savedTool);else openDashboard();loadProfileIntoUI();loadAnnouncement()}
+const ROLE_LABEL={user:'Member',admin:'Admin',owner:'Developer'};
 async function loadProfileIntoUI(){
   const {data:{user}}=await supabase.auth.getUser();
   if(!user)return;
-  const {data,error}=await supabase.from('profiles').select('display_name,avatar_url,is_vip').eq('id',user.id).single();
+  const {data,error}=await supabase.from('profiles').select('display_name,avatar_url,is_vip,role,banned').eq('id',user.id).single();
   if(error||!data)return;
+  if(data.banned){
+    // Client-side enforcement only — see README for the known gap: the
+    // downloader/maker API routes don't check auth yet, so a banned user's
+    // browser session is blocked here, but a direct API call isn't (todo).
+    await logout();
+    authError.textContent='Akun kamu telah dinonaktifkan oleh admin.';
+    return;
+  }
   const name=data.display_name||window.nexakitUser;
+  window.nexakitRole=data.role||'user';
   userName.textContent=name;
+  const displayRole=data.is_vip&&data.role!=='admin'&&data.role!=='owner'?'VVIP':(ROLE_LABEL[data.role]||'Member');
   const roleLabel=document.getElementById('role-label');
-  if(roleLabel)roleLabel.textContent=data.is_vip?'VVIP':'Member';
+  if(roleLabel)roleLabel.textContent=displayRole;
+  const statusRoleText=$q('status-role-text');if(statusRoleText)statusRoleText.textContent=displayRole;
+  const statusRoleChip=$q('status-role-chip');
+  if(statusRoleChip)statusRoleChip.classList.toggle('status-chip-vip',displayRole==='VVIP');
+  const adminLink=$q('admin-panel-link');
+  if(adminLink)adminLink.hidden=!(data.role==='admin'||data.role==='owner');
+  const initial=(name||'?').trim().charAt(0).toUpperCase()||'?';
   const prevFallback=document.getElementById('avatar-preview-fallback');
-  if(prevFallback)prevFallback.textContent=(name||'?').trim().charAt(0).toUpperCase()||'?';
+  if(prevFallback)prevFallback.textContent=initial;
+  const statusFallback=$q('status-avatar-fallback');
+  if(statusFallback)statusFallback.textContent=initial;
   if(data.avatar_url){
     const prevImg=document.getElementById('avatar-preview-img');
     if(prevImg){prevImg.src=data.avatar_url;prevImg.hidden=false;if(prevFallback)prevFallback.hidden=true}
+    const statusImg=$q('status-avatar-img');
+    if(statusImg){statusImg.src=data.avatar_url;statusImg.hidden=false;if(statusFallback)statusFallback.hidden=true}
   }
   const nameInput=document.getElementById('settings-name');
   if(nameInput)nameInput.value=name;
@@ -82,10 +107,20 @@ window.nexakitApi={
     if(!newPassword||newPassword.length<6)throw Error('Password minimal 6 karakter.');
     const {error}=await supabase.auth.updateUser({password:newPassword});
     if(error)throw Error(error.message||'Gagal mengganti password.');
+  },
+  async submitFeedback({kind,message}){
+    const {data:{user}}=await supabase.auth.getUser();
+    if(!user)throw Error('Sesi kamu sudah habis, silakan login lagi.');
+    if(!message||!message.trim())throw Error('Pesan tidak boleh kosong.');
+    const {error}=await supabase.from('feedback').insert({
+      user_id:user.id,username:window.nexakitUser||user.user_metadata?.username||null,
+      kind:kind==='suggestion'?'suggestion':'bug',message:message.trim().slice(0,1000)
+    });
+    if(error)throw Error(error.message||'Gagal mengirim.');
   }
 };
 const icon=window.NEXAKIT_ICON;
-const ICON_ARROW_RIGHT='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
+const ICON_ARROW_RIGHT='<i class="fa fa-arrow-right" aria-hidden="true"></i>';
 // Reveal on scroll — cheap, no library, and the observer disconnects per node once shown.
 const reveal=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-in');reveal.unobserve(e.target)}}),{rootMargin:'0px 0px -40px 0px'});
 function renderCards(){
@@ -95,9 +130,14 @@ function renderCards(){
   // this always fell through to 'all' — category tabs silently did nothing.
   const active=tabs.querySelector('[data-cat].active')?.dataset.cat||'all';
   const list=tools.filter(t=>(active==='all'||cat(t)===active)&&(!q||`${t.name} ${t.title} ${t.description}`.toLowerCase().includes(q)));
-  grid.innerHTML=list.length?list.map((t,i)=>{const c=cat(t);return `<li style="--i:${i}"><button type="button" class="tool-card" data-slug="${esc(t.slug)}" data-cat="${c}">`+
+  grid.innerHTML=list.length?list.map((t,i)=>{
+    const c=cat(t);
+    const st=toolStatusMap[t.slug];
+    const blocked=st&&(st.enabled===false||st.maintenance);
+    const badge=blocked?`<span class="tool-tag tool-tag-blocked">${st.maintenance?'MAINTENANCE':'OFF'}</span>`:(t.tag?`<span class="tool-tag">${esc(t.tag)}</span>`:'');
+    return `<li style="--i:${i}"><button type="button" class="tool-card${blocked?' is-blocked':''}" data-slug="${esc(t.slug)}" data-cat="${c}">`+
     `<span class="tool-icon" aria-hidden="true">${icon(t.icon)}</span>`+
-    (t.tag?`<span class="tool-tag">${esc(t.tag)}</span>`:'')+
+    badge+
     `<span class="tool-copy"><span class="tool-title">${esc(t.title)}</span><span class="tool-desc">${esc(t.description)}</span></span>`+
     `<span class="tool-arrow" aria-hidden="true">${ICON_ARROW_RIGHT}</span></button></li>`}).join(''):'<li class="empty-state"><strong>Tool tidak ditemukan</strong><span>Coba kata kunci lain.</span></li>';
   grid.querySelectorAll('button[data-slug]').forEach(b=>b.onclick=()=>openTool(b.dataset.slug));
@@ -113,6 +153,7 @@ function openDashboard(){
   dashboard.hidden=false;workspace.hidden=true;
   sessionStorage.removeItem('nexakit-active-tool');
   if(location.hash)history.replaceState(null,'',location.pathname+location.search);
+  document.title='NexaKit Pro — Semua Tools';
 }
 let healthTool=null;
 const HEALTH_SOURCES={
@@ -149,17 +190,41 @@ $q('health-check').onclick=async()=>{
   $q('health-status').textContent='Tidak merespons';$q('health-status').className='status-err';
  }finally{btn.disabled=false}
 };
+let toolStatusMap={};
+async function loadToolStatus(){
+  if(!supabase)return;
+  try{
+    const {data}=await supabase.from('tool_status').select('slug,enabled,maintenance');
+    toolStatusMap=Object.fromEntries((data||[]).map(r=>[r.slug,r]));
+  }catch{}
+}
 function openTool(slug){
   const t=tools.find(x=>x.slug===slug);if(!t)return;
   activeTool=t;
   sessionStorage.setItem('nexakit-active-tool',t.slug);
   const nextHash=toolHash(t);
   if(location.hash!==nextHash)history.replaceState(null,'',location.pathname+location.search+nextHash);
-  render(t);
   $q('workspace-name').textContent=t.title;
   $q('workspace-desc').textContent=t.description;
-  resetHealthCheck(t);
   dashboard.hidden=true;workspace.hidden=false;
+  document.title=t.title+' — NexaKit Pro';
+  const st=toolStatusMap[t.slug];
+  if(st&&(st.enabled===false||st.maintenance)){
+    $q('tool-area').innerHTML=`<p class="tool-blocked"><i class="fa fa-wrench" aria-hidden="true"></i> Tool ini sedang ${st.maintenance?'maintenance':'dinonaktifkan sementara'}. Coba lagi nanti.</p>`;
+    $q('health-provider').textContent='—';$q('health-status').textContent='Tidak tersedia';
+    $q('workspace-status').textContent='Tidak tersedia';
+    return;
+  }
+  render(t);
+  resetHealthCheck(t);
+  logToolUsage(t.slug);
+}
+function logToolUsage(slug){
+  if(!supabase)return;
+  supabase.auth.getUser().then(({data:{user}})=>{
+   if(!user)return;
+   supabase.from('tool_usage').insert({tool_slug:slug,user_id:user.id}).then(()=>{},()=>{});
+  }).catch(()=>{});
 }
 let activeTool=TOOLS[0];
 window.addEventListener('hashchange',()=>{
@@ -200,6 +265,7 @@ async function authSubmit(e){
   if(!validUsername(u)){authError.textContent='Username harus 3–24 karakter dan hanya boleh huruf, angka, titik, garis bawah, atau strip.';markFieldError('auth-username');return}
   if(p.length<6){authError.textContent='Password minimal 6 karakter.';markFieldError('auth-password');return}
   if(mode==='register'&&p!==$q('auth-confirm-password').value){authError.textContent='Konfirmasi password tidak cocok.';markFieldError('auth-confirm-password');return}
+  if(mode==='register'&&!$q('auth-consent').checked){authError.textContent='Kamu harus menyetujui Syarat & Ketentuan dan Kebijakan Privasi dulu.';$q('auth-consent').focus();return}
   
   setAuthBusy(true);
   try{
@@ -246,8 +312,37 @@ async function loadSupabase(){
 }
 let supabase;
 function updateNetworkState(){
- const e=$q('network-status'); if(!e)return;
- e.hidden=navigator.onLine;
+ const e=$q('network-status'); if(e)e.hidden=navigator.onLine;
+ const chip=$q('status-online-chip'),text=$q('status-online-text');
+ if(chip&&text){chip.classList.toggle('is-offline',!navigator.onLine);text.textContent=navigator.onLine?'Online':'Offline'}
+}
+function detectDevice(){return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)?(/iPad|Tablet/i.test(navigator.userAgent)?'Tablet':'Mobile'):'Desktop'}
+function detectBrowser(){
+ const ua=navigator.userAgent;
+ if(/Edg\//.test(ua))return 'Edge';
+ if(/OPR\//.test(ua))return 'Opera';
+ if(/Firefox\//.test(ua))return 'Firefox';
+ if(/Chrome\//.test(ua)&&!/Chromium/.test(ua))return 'Chrome';
+ if(/Safari\//.test(ua)&&!/Chrome/.test(ua))return 'Safari';
+ return 'Browser';
+}
+async function initStatusBar(){
+ const deviceEl=$q('status-device');if(deviceEl)deviceEl.textContent=detectDevice();
+ const browserEl=$q('status-browser');if(browserEl)browserEl.textContent=detectBrowser();
+ try{
+  const r=await fetch('/api/whoami',{cache:'no-store'});
+  if(r.ok){const {country}=await r.json();const el=$q('status-country');if(el)el.textContent=country||'Tidak diketahui'}
+ }catch{}
+ if('getBattery' in navigator){
+  try{
+   const bat=await navigator.getBattery();
+   const chip=$q('status-battery-chip'),text=$q('status-battery-text');
+   if(chip&&text){
+    const update=()=>{text.textContent=Math.round(bat.level*100)+'%'+(bat.charging?' (mengisi)':'');chip.hidden=false};
+    update();bat.addEventListener('levelchange',update);bat.addEventListener('chargingchange',update);
+   }
+  }catch{}
+ }
 }
 window.addEventListener('online',updateNetworkState);
 window.addEventListener('offline',updateNetworkState);
@@ -257,6 +352,23 @@ document.addEventListener('keydown',e=>{
  }
  if(e.key==='Escape' && !$q('settings-modal').hidden) $q('settings-close')?.click();
 });
+async function loadAnnouncement(){
+  const banner=$q('announcement-banner');if(!banner||!supabase)return;
+  try{
+    const {data,error}=await supabase.from('announcements').select('id,title,body').eq('active',true).order('created_at',{ascending:false}).limit(1).maybeSingle();
+    if(error||!data)return;
+    let dismissed=[];try{dismissed=JSON.parse(localStorage.getItem('nexakit-dismissed-ann')||'[]')}catch{}
+    if(dismissed.includes(data.id))return;
+    $q('announcement-title').textContent=data.title;
+    $q('announcement-body').textContent=data.body;
+    banner.hidden=false;
+    $q('announcement-dismiss').onclick=()=>{
+      banner.hidden=true;
+      dismissed.push(data.id);
+      try{localStorage.setItem('nexakit-dismissed-ann',JSON.stringify(dismissed.slice(-20)))}catch{}
+    };
+  }catch{}
+}
 async function init(){
   initTheme();
   tabs.innerHTML=categories.map(([id,label],i)=>`<button data-cat="${id}" type="button"${i===0?' class="active"':''}>${label}</button>`).join('');
@@ -268,13 +380,16 @@ async function init(){
   if(togglePass)togglePass.onclick=()=>togglePassword(['auth-password','auth-confirm-password'],'toggle-pass');
   $q('logout').onclick=logout;
   $q('back-tools').onclick=openDashboard;
-  $q('menu-feedback').onclick=()=>{const tpl=`Halo Admin NexaKit Pro%0A%0AJenis: (Saran/Kritik/Request Fitur/Bug)%0ATool terkait: %0ADeskripsi: %0A%0ADikirim dari menu NexaKit Pro`;window.open(`https://wa.me/6285722707676?text=${tpl}`,'_blank','noopener')};
+  $q('menu-feedback').onclick=()=>{window.NEXAKIT_openFeedback()};
   $q('menu-settings').onclick=()=>{window.NEXAKIT_openSettings()};
+  $q('brand-home').onclick=()=>{if(!app.hidden)openDashboard()};
+  const footerYear=$q('footer-year');if(footerYear)footerYear.textContent=new Date().getFullYear();
   localStorage.removeItem('nexakit-auth-v1');localStorage.removeItem('nexakit-session-v1');
+  initStatusBar();
   setMode('login');
   try{
     supabase=await loadSupabase();
-    const {data:{session}}=await supabase.auth.getSession();
+    const [,{data:{session}}]=await Promise.all([loadToolStatus(),supabase.auth.getSession()]);
     if(session?.user){const u=session.user.user_metadata?.username||session.user.email?.split('@')[0]||'Member';showApp(u)}else showAuth();
     supabase.auth.onAuthStateChange((_event,session)=>{if(session?.user){const u=session.user.user_metadata?.username||session.user.email?.split('@')[0]||'Member';showApp(u)}else if(!auth.hidden){showAuth()}});
   }catch(error){console.error(error);showAuth();authError.textContent=error.name==='AbortError'?'Koneksi Supabase timeout. Coba refresh atau cek deployment Vercel.':'Authentication belum terhubung. Pastikan environment Supabase sudah dikonfigurasi.'}

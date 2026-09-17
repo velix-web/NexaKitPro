@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kebijakan Privasi — NexaKit Pro</title>
+<meta name="description" content="Kebijakan privasi NexaKit Pro: data apa yang kami simpan dan bagaimana digunakan.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://nexakitpro.my.id/privacy">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script>(function(){try{var t=localStorage.getItem('nexakit-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.dataset.theme=t}catch(e){}})()</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/styles.css">
+<style>
+.legal-wrap{position:relative;z-index:1;width:min(760px,calc(100% - 32px));margin:0 auto;padding:48px 0 60px}
+.legal-wrap a.back{display:inline-flex;align-items:center;gap:8px;margin-bottom:20px;font-weight:650;color:var(--muted)}
+.legal-wrap h1{margin:0 0 4px;font-size:clamp(28px,5vw,42px);font-weight:800;letter-spacing:-1.2px}
+.legal-wrap .updated{color:var(--muted);font-size:13px;margin:0 0 28px}
+.legal-card{padding:28px clamp(20px,4vw,32px);border-radius:var(--r-xl);background:var(--surface);
+border:1px solid var(--border);box-shadow:var(--shadow-sm);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.legal-card h2{font-size:17px;font-weight:700;margin:26px 0 8px}
+.legal-card h2:first-child{margin-top:0}
+.legal-card p,.legal-card li{color:var(--muted);font-size:14px;line-height:1.7}
+.legal-card ul{margin:0;padding-left:20px}
+</style>
+</head>
+<body>
+<div class="legal-wrap">
+  <a class="back" href="/"><i class="fa fa-arrow-left" aria-hidden="true"></i> Kembali</a>
+  <h1>Kebijakan Privasi</h1>
+  <p class="updated">Terakhir diperbarui: <span id="updated-date"></span></p>
+  <div class="legal-card">
+    <h2>Data yang kami kumpulkan</h2>
+    <p>NexaKit Pro menyimpan username, password (terenkripsi lewat Supabase Auth), dan data profil opsional seperti nama tampilan serta foto profil yang kamu unggah sendiri.</p>
+    <h2>Cara kami menggunakan link/file yang kamu masukkan</h2>
+    <ul>
+      <li>Link (TikTok, Instagram, YouTube, dll.) diteruskan ke penyedia API pihak ketiga hanya untuk mengambil hasil unduhan — tidak disimpan permanen di server kami.</li>
+      <li>Gambar yang kamu unggah untuk tools seperti Remove Background, Foto To Link, atau Fake Lobby diproses lewat API pihak ketiga dan/atau ImgBB sesuai kebutuhan tool tersebut.</li>
+      <li>Riwayat download TikTok disimpan di perangkatmu sendiri (localStorage), bukan di server.</li>
+    </ul>
+    <h2>Pihak ketiga</h2>
+    <p>Autentikasi ditangani oleh Supabase. Beberapa tools memanggil API downloader/generator pihak ketiga untuk memproses permintaanmu.</p>
+    <h2>Kontak</h2>
+    <p>Ada pertanyaan soal privasi datamu? Hubungi kami lewat tombol "Report Bug / Saran" di dalam aplikasi.</p>
+  </div>
+</div>
+<script>document.getElementById('updated-date').textContent=new Date().toLocaleDateString('id-ID',{year:'numeric',month:'long',day:'numeric'})</script>
+</body>
+</html>
