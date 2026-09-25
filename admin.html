@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin Panel — NexaKit Pro</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script src="/theme-init.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="/load-fa.js"></script>
+<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="/admin.css">
+</head>
+<body>
+
+<div id="admin-gate" hidden>
+  <div class="card">
+    <i class="fa fa-shield" aria-hidden="true"></i>
+    <h1 id="admin-gate-title">Memeriksa akses…</h1>
+    <p id="admin-gate-msg">Mohon tunggu sebentar.</p>
+    <a href="/" class="gate-cta">Kembali ke NexaKit Pro</a>
+  </div>
+</div>
+
+<div id="admin-shell" hidden>
+  <aside id="admin-sidebar">
+    <span class="brand">NexaKitPro Admin<small id="admin-role-tag">—</small></span>
+    <button type="button" class="admin-nav-btn active" data-section="dashboard"><i class="fa fa-home" aria-hidden="true"></i> Dashboard</button>
+    <button type="button" class="admin-nav-btn" data-section="users"><i class="fa fa-users" aria-hidden="true"></i> Users</button>
+    <button type="button" class="admin-nav-btn" data-section="tools"><i class="fa fa-wrench" aria-hidden="true"></i> Tools</button>
+    <button type="button" class="admin-nav-btn" data-section="reports"><i class="fa fa-bug" aria-hidden="true"></i> Reports</button>
+    <button type="button" class="admin-nav-btn" data-section="announcements"><i class="fa fa-bullhorn" aria-hidden="true"></i> Announcements</button>
+    <button type="button" class="admin-nav-btn" data-section="logs"><i class="fa fa-list-alt" aria-hidden="true"></i> Logs</button>
+    <button type="button" class="admin-nav-btn" data-section="settings"><i class="fa fa-cog" aria-hidden="true"></i> Settings</button>
+  </aside>
+
+  <main id="admin-main">
+
+    <section class="admin-section active" id="sec-dashboard">
+      <h1>Dashboard</h1>
+      <p class="hint">Ringkasan aktivitas NexaKit Pro.</p>
+      <div class="stat-grid">
+        <div class="stat-card"><span class="n" id="stat-users">—</span><span class="l">Total user</span></div>
+        <div class="stat-card"><span class="n" id="stat-usage">—</span><span class="l">Total penggunaan tools</span></div>
+        <div class="stat-card"><span class="n" id="stat-bugs">—</span><span class="l">Bug report pending</span></div>
+        <div class="stat-card"><span class="n" id="stat-suggestions">—</span><span class="l">Suggestion pending</span></div>
+      </div>
+    </section>
+
+    <section class="admin-section" id="sec-users">
+      <h1>Users</h1>
+      <p class="hint">Kelola akun terdaftar.</p>
+      <div class="table-wrap"><table class="admin-table">
+        <thead><tr><th>Username</th><th>Nama</th><th>Role</th><th>Status</th><th>Terdaftar</th><th></th></tr></thead>
+        <tbody id="users-tbody"><tr><td colspan="6">Memuat…</td></tr></tbody>
+      </table></div>
+    </section>
+
+    <section class="admin-section" id="sec-tools">
+      <h1>Tools</h1>
+      <p class="hint">Nyalakan/matikan tool, set maintenance, kunci ke VVIP, atau bikin tool baru.</p>
+      <p><button type="button" class="btn primary" id="tool-new"><i class="fa fa-plus" aria-hidden="true"></i> Tool Baru</button></p>
+      <div class="table-wrap"><table class="admin-table">
+        <thead><tr><th>Tool</th><th>Status</th><th>Maintenance</th><th>VVIP</th><th></th></tr></thead>
+        <tbody id="tools-tbody"><tr><td colspan="5">Memuat…</td></tr></tbody>
+      </table></div>
+    </section>
+
+    <section class="admin-section" id="sec-reports">
+      <h1>Reports</h1>
+      <p class="hint">Bug report &amp; saran dari pengguna.</p>
+      <div class="admin-toolbar">
+        <select id="reports-filter-kind">
+          <option value="">Semua Jenis</option><option value="bug">Bug</option><option value="suggestion">Saran</option>
+        </select>
+        <select id="reports-filter-status">
+          <option value="">Semua Status</option><option value="pending">Pending</option><option value="reviewed">Reviewed</option><option value="done">Done</option>
+        </select>
+      </div>
+      <div class="table-wrap"><table class="admin-table">
+        <thead><tr><th>Dari</th><th>Jenis</th><th>Pesan</th><th>Status</th><th>Tanggal</th></tr></thead>
+        <tbody id="reports-tbody"><tr><td colspan="6">Memuat…</td></tr></tbody>
+      </table></div>
+    </section>
+
+    <section class="admin-section" id="sec-announcements">
+      <h1>Announcements</h1>
+      <p class="hint">Pengumuman kecil yang tampil di dashboard user.</p>
+      <p><button type="button" class="btn primary" id="ann-new"><i class="fa fa-plus" aria-hidden="true"></i> Pengumuman Baru</button></p>
+      <div id="ann-list"></div>
+    </section>
+
+    <section class="admin-section" id="sec-logs">
+      <h1>Activity Logs</h1>
+      <p class="hint">Jejak aktivitas admin: login admin, ban user, edit tool, dan perubahan penting lainnya.</p>
+      <div class="table-wrap"><table class="admin-table">
+        <thead><tr><th>Waktu</th><th>Admin</th><th>Aksi</th><th>Target</th></tr></thead>
+        <tbody id="logs-tbody"><tr><td colspan="4">Memuat…</td></tr></tbody>
+      </table></div>
+    </section>
+
+    <section class="admin-section" id="sec-settings">
+      <h1>Settings</h1>
+      <p class="hint">Pengaturan akun admin kamu.</p>
+      <p>Login sebagai <b id="settings-whoami">—</b></p>
+      <p><a href="/">&laquo; Kembali ke NexaKit Pro</a></p>
+    </section>
+
+  </main>
+</div>
+
+<div id="ann-overlay" class="modal-overlay" hidden></div>
+<div id="ann-modal" class="modal-panel" hidden>
+  <h2 id="ann-modal-title">Pengumuman Baru</h2>
+  <input type="hidden" id="ann-id">
+  <p><label for="ann-title">Judul</label><input id="ann-title" maxlength="120"></p>
+  <p><label for="ann-body">Isi</label><textarea id="ann-body" rows="4" maxlength="500"></textarea></p>
+  <button type="button" class="btn primary" id="ann-save">Simpan</button>
+  <p id="ann-msg" hidden></p>
+  <p><button type="button" class="btn" id="ann-close">Batal</button></p>
+</div>
+
+<div id="tool-overlay" class="modal-overlay" hidden></div>
+<div id="tool-modal" class="modal-panel" hidden>
+  <h2>Tool Baru</h2>
+  <p class="hint" style="margin-bottom:14px">Tool baru pakai template yang sudah ada (butuh link, atau butuh satu input teks) dan memanggil salah satu provider yang sudah diizinkan server. Untuk integrasi API baru yang belum ada di daftar provider, itu masih butuh perubahan kode.</p>
+  <p><label for="tool-title">Judul</label><input id="tool-title" maxlength="60" placeholder="cth: Threads Downloader"></p>
+  <p><label for="tool-desc">Deskripsi</label><input id="tool-desc" maxlength="120" placeholder="cth: Unduh video & foto Threads"></p>
+  <p><label for="tool-tag">Tag (badge kecil di card)</label><input id="tool-tag" maxlength="16" placeholder="cth: MP4/JPG"></p>
+  <p><label for="tool-category">Kategori</label>
+    <select id="tool-category">
+      <option value="downloader">Downloader</option>
+      <option value="maker">Maker</option>
+      <option value="tools">Tools</option>
+      <option value="vault">Vault</option>
+      <option value="external">External</option>
+    </select>
+  </p>
+  <p><label for="tool-icon">Icon</label>
+    <select id="tool-icon">
+      <option value="tiktok">TikTok (brand)</option>
+      <option value="instagram">Instagram (brand)</option>
+      <option value="spotify">Spotify (brand)</option>
+      <option value="youtube">YouTube (brand)</option>
+      <option value="facebook">Facebook (brand)</option>
+      <option value="twitter">X / Twitter (brand)</option>
+      <option value="whatsapp">WhatsApp (brand)</option>
+      <option value="drive">Cloud download</option>
+      <option value="scissors">Gunting</option>
+      <option value="layers">Layers</option>
+      <option value="laugh">Smiley</option>
+      <option value="type">Huruf/Font</option>
+      <option value="unlink">Chain broken</option>
+      <option value="note">Sticky note</option>
+      <option value="award">Sertifikat</option>
+      <option value="gamepad">Gamepad</option>
+      <option value="flame">Api</option>
+      <option value="wallet">Dompet</option>
+      <option value="idcard">ID Card</option>
+      <option value="link">Link</option>
+      <option value="eraser">Eraser</option>
+      <option value="sparkles" selected>Sparkles</option>
+      <option value="upload">Upload</option>
+    </select>
+  </p>
+  <p><label for="tool-type">Tipe</label>
+    <select id="tool-type">
+      <option value="generic-downloader">Downloader (input: link)</option>
+      <option value="image-generator">Generator (input: 1 teks)</option>
+    </select>
+  </p>
+  <p><label for="tool-provider">Provider</label>
+    <select id="tool-provider">
+      <option value="tiktok">tiktok — TikTok</option>
+      <option value="ig">ig — Instagram</option>
+      <option value="spotify">spotify — Spotify</option>
+      <option value="terabox">terabox — Terabox</option>
+      <option value="fb">fb — Facebook</option>
+      <option value="tw">tw — Twitter/X</option>
+      <option value="capcut">capcut — CapCut</option>
+      <option value="savefrom">savefrom — SaveFrom (multi-platform)</option>
+      <option value="lahelu">lahelu — Lahelu</option>
+      <option value="ytmp4">ytmp4 — YouTube video (belum dipakai tool manapun)</option>
+      <option value="ytmp3">ytmp3 — YouTube audio (belum dipakai tool manapun)</option>
+      <option value="bypass">bypass — Bypass shortlink</option>
+      <option value="react">react — React channel WA</option>
+      <option value="enhancer">enhancer — Image enhancer</option>
+      <option value="brat">brat — Brat generator</option>
+      <option value="sertifikat">sertifikat — Sertifikat parodi</option>
+      <option value="fakedana">fakedana — Fake saldo DANA</option>
+      <option value="lobbyml">lobbyml — Fake lobby ML</option>
+      <option value="lobbyff">lobbyff — Fake lobby FF</option>
+      <option value="fakedev">fakedev — FakeDev profile</option>
+    </select>
+  </p>
+  <p><label for="tool-paramkey">Nama parameter yang dikirim ke provider</label><input id="tool-paramkey" maxlength="24" value="url" placeholder="url (downloader) / text, nominal, dll (generator)"></p>
+  <button type="button" class="btn primary" id="tool-save">Buat Tool</button>
+  <p id="tool-msg" hidden></p>
+  <p><button type="button" class="btn" id="tool-close">Batal</button></p>
+</div>
+
+<div id="toast" hidden role="status" aria-live="polite"></div>
+
+<script type="module" src="/admin.js"></script>
+</body>
+</html>
