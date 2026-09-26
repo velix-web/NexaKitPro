@@ -4,6 +4,15 @@ const $ = id => document.getElementById(id);
 const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const roleLabel = r => r === 'owner' ? 'Developer' : r === 'admin' ? 'Admin' : 'User';
 const fmtDate = iso => { try { return new Date(iso).toLocaleString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }); } catch { return iso || '—'; } };
+// Explicit ✓/✕ pill instead of a bare <input type=checkbox> — the site-wide
+// `input{width:100%;min-height:48px;...}` rule (meant for text fields)
+// was stretching checkboxes into blank unstyled boxes with no visible
+// checked state, so there was no way to tell on/off apart at a glance.
+// A <button> sidesteps that rule entirely instead of fighting it with overrides.
+function togglePill(key, slug, isOn, label) {
+  return `<button type="button" class="toggle-pill ${isOn ? 'is-on' : 'is-off'}" data-toggle="${key}" data-slug="${esc(slug)}" data-val="${isOn}">`
+    + `<i class="fa-solid ${isOn ? 'fa-check' : 'fa-xmark'}" aria-hidden="true"></i> ${esc(label)}</button>`;
+}
 
 function showToast(msg, type = 'success') {
   const e = $('toast'); if (!e) return;
@@ -107,15 +116,16 @@ async function loadTools() {
     if (!tools.length) { tbody.innerHTML = '<tr><td colspan="5">Belum ada tool.</td></tr>'; return; }
     tbody.innerHTML = tools.map(t => `<tr>
         <td>${esc(t.title)}${t.custom ? ' <span class="badge badge-admin">custom</span>' : ''}</td>
-        <td><label style="display:flex;align-items:center;gap:7px;cursor:pointer"><input type="checkbox" data-act="enabled" data-slug="${t.slug}" ${t.enabled ? 'checked' : ''}> ${t.enabled ? 'Aktif' : 'Nonaktif'}</label></td>
-        <td><label style="display:flex;align-items:center;gap:7px;cursor:pointer"><input type="checkbox" data-act="maintenance" data-slug="${t.slug}" ${t.maintenance ? 'checked' : ''}> ${t.maintenance ? 'Ya' : 'Tidak'}</label></td>
-        <td><label style="display:flex;align-items:center;gap:7px;cursor:pointer"><input type="checkbox" data-act="vvipOnly" data-slug="${t.slug}" ${t.vvipOnly ? 'checked' : ''}> ${t.vvipOnly ? 'VVIP' : 'Semua'}</label></td>
+        <td>${togglePill('enabled', t.slug, t.enabled, t.enabled ? 'Aktif' : 'Nonaktif')}</td>
+        <td>${togglePill('maintenance', t.slug, t.maintenance, t.maintenance ? 'Maintenance' : 'Normal')}</td>
+        <td>${togglePill('vvipOnly', t.slug, t.vvipOnly, t.vvipOnly ? 'VVIP' : 'Semua')}</td>
         <td>${t.custom ? `<button type="button" class="btn danger" data-act="delete" data-id="${t.id}">Hapus</button>` : ''}</td>
       </tr>`).join('');
-    tbody.querySelectorAll('input[data-act]').forEach(inp => inp.onchange = async () => {
-      const key = inp.dataset.act;
-      try { await call('tools.toggle', { slug: inp.dataset.slug, [key]: inp.checked }); showToast('Tool diperbarui.'); loadTools(); }
-      catch (e) { showToast(e.message, 'error'); inp.checked = !inp.checked; }
+    tbody.querySelectorAll('button[data-toggle]').forEach(btn => btn.onclick = async () => {
+      const key = btn.dataset.toggle, slug = btn.dataset.slug, next = btn.dataset.val !== 'true';
+      btn.disabled = true;
+      try { await call('tools.toggle', { slug, [key]: next }); showToast('Tool diperbarui.'); loadTools(); }
+      catch (e) { showToast(e.message, 'error'); btn.disabled = false; }
     });
     tbody.querySelectorAll('[data-act="delete"]').forEach(b => b.onclick = async () => {
       if (!confirm('Hapus tool custom ini? Card-nya akan hilang dari dashboard user.')) return;

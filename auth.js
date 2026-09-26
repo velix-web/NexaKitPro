@@ -19,12 +19,15 @@ const categories=[['all','All','th-large'],['downloader','Downloader','download'
 ['tools','Tools','wrench'],['vault','Vault','archive'],['external','External','external-link'],['vvip','VVIP','crown']];
 function cat(t){
  if(t._customCategory)return t._customCategory;
- if(['ff-stalk','ml-stalk','tiktok-stalk','instagram-stalk','github-stalk','nexadrama'].includes(t.slug))return 'external';
+ if(['ff-stalk','ml-stalk','tiktok-stalk','instagram-stalk','github-stalk','nexadrama',
+     'youtube-stalk','twitter-stalk','threads-stalk','snackvideo-stalk','roblox-stalk',
+     'pinterest-stalk','genshin-stalk','komikindo'].includes(t.slug))return 'external';
  if(['shortlink','website-screenshot'].includes(t.slug))return 'tools';
  if(['terabox','savefrom'].includes(t.slug))return 'vault';
  if(['bypass-link','react-wa'].includes(t.slug))return 'external';
  if(['tiktok','instagram','spotify','youtube','facebook','twitter','capcut','lahelu'].includes(t.slug))return 'downloader';
- if(['brat','iqc','sertifikat-tolol','lobby-ml','lobby-ff','fakedana','fakedev'].includes(t.slug))return 'maker';
+ if(['brat','iqc','sertifikat-tolol','lobby-ml','lobby-ff','fakedana','fakedev',
+     'fakebank-jago','fakegopay','fakeovo','ektp','afinitas','nulis','smeme','ustadz'].includes(t.slug))return 'maker';
  return 'tools';
 }
 const ICON_MOON='<i class="fa fa-moon-o" aria-hidden="true"></i>';
@@ -149,7 +152,12 @@ function renderCards(){
   // never had (they get `.active` directly on the `[data-cat]` button), so
   // this always fell through to 'all' — category tabs silently did nothing.
   const active=tabs.querySelector('[data-cat].active')?.dataset.cat||'all';
-  const list=tools.filter(t=>active==='all'||cat(t)===active);
+  // ponytail: 'vvip' was in the tab list but cat(t) never returns it for any
+  // tool — vvip_only is an admin-configurable DB flag per slug, not a fixed
+  // category, so it can't live inside cat()'s static slug lists. The VVIP
+  // tab now matches directly against tool_status instead, on top of
+  // whatever base category(ies) that tool already has.
+  const list=tools.filter(t=>active==='all'||(active==='vvip'?!!toolStatusMap[t.slug]?.vvip_only:cat(t)===active));
   grid.innerHTML=list.length?list.map((t,i)=>{
     const c=cat(t);
     const st=toolStatusMap[t.slug];
@@ -165,6 +173,28 @@ function renderCards(){
     `<span class="tool-arrow" aria-hidden="true">${locked?'<i class="fa-solid fa-lock" aria-hidden="true"></i>':ICON_ARROW_RIGHT}</span></button></li>`}).join(''):'<li class="empty-state"><strong>Belum ada tool</strong><span>Coba kategori lain.</span></li>';
   grid.querySelectorAll('button[data-slug]').forEach(b=>b.onclick=()=>openTool(b.dataset.slug));
   grid.querySelectorAll('li').forEach(li=>reveal.observe(li));
+  renderVvipSection(active);
+}
+function renderVvipSection(active){
+  const section=$q('vvip-section'),vgrid=$q('vvip-grid');
+  if(!section||!vgrid)return;
+  // Shown on the 'all' view only — the VVIP tab itself already filters the
+  // main grid to the same tools, so repeating them there would be redundant.
+  if(active!=='all'){section.hidden=true;vgrid.innerHTML='';return}
+  const vvipTools=tools.filter(t=>!!toolStatusMap[t.slug]?.vvip_only);
+  if(!vvipTools.length){section.hidden=true;vgrid.innerHTML='';return}
+  section.hidden=false;
+  vgrid.innerHTML=vvipTools.map((t,i)=>{
+    const st=toolStatusMap[t.slug];
+    const blocked=st&&(st.enabled===false||st.maintenance);
+    const locked=!window.nexakitEntitledToVvip;
+    return `<li style="--i:${i}"><button type="button" class="tool-card tool-card-vvip${blocked?' is-blocked':''}${locked?' is-locked':''}" data-slug="${esc(t.slug)}">`+
+    `<span class="tool-icon" aria-hidden="true">${icon(t.icon)}</span>`+
+    `<span class="tool-tag tool-tag-vvip"><i class="fa-solid fa-crown" aria-hidden="true"></i> VVIP</span>`+
+    `<span class="tool-copy"><span class="tool-title">${esc(t.title)}</span><span class="tool-desc">${esc(t.description)}</span></span>`+
+    `<span class="tool-arrow" aria-hidden="true">${locked?'<i class="fa-solid fa-lock" aria-hidden="true"></i>':ICON_ARROW_RIGHT}</span></button></li>`;
+  }).join('');
+  vgrid.querySelectorAll('button[data-slug]').forEach(b=>b.onclick=()=>openTool(b.dataset.slug));
 }
 function toolHash(t){return '#'+String(t?.title||t?.name||t?.slug||'tool').trim().replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-+|-+$/g,'').toUpperCase()}
 function toolFromHash(){

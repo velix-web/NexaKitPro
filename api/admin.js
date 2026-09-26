@@ -17,6 +17,11 @@ const TOOL_CATALOG = [
   ['image-enhancer', 'Image Enhancer'], ['ff-stalk', 'FF Stalk'], ['ml-stalk', 'ML Stalk'],
   ['tiktok-stalk', 'TikTok Stalk'], ['instagram-stalk', 'Instagram Stalk'], ['github-stalk', 'GitHub Stalk'],
   ['shortlink', 'Shortlink'], ['website-screenshot', 'Website Screenshot'], ['nexadrama', 'NexaDrama'],
+  ['fakebank-jago', 'Fake Saldo Jago'], ['fakegopay', 'Fake Saldo GoPay'], ['komikindo', 'Komikindo Manga'],
+  ['fakeovo', 'Fake Saldo OVO'], ['ektp', 'KTP Generator'], ['afinitas', 'Kalkulator Afinitas'],
+  ['youtube-stalk', 'YouTube Stalk'], ['twitter-stalk', 'Twitter Stalk'], ['threads-stalk', 'Threads Stalk'],
+  ['snackvideo-stalk', 'SnackVideo Stalk'], ['roblox-stalk', 'Roblox Stalk'], ['pinterest-stalk', 'Pinterest Stalk'],
+  ['genshin-stalk', 'Genshin Impact Stalk'], ['nulis', 'Nulis Generator'], ['smeme', 'Simple Meme'], ['ustadz', 'Kata Ustadz'],
 ];
 
 // Mirrors api/proxy.js's PROVIDERS keys exactly — an admin-created tool can only
@@ -25,6 +30,7 @@ const ALLOWED_PROVIDERS = [
   'tiktok', 'ig', 'spotify', 'terabox', 'enhancer', 'fakedana', 'lobbyml', 'lobbyff',
   'fb', 'tw', 'capcut', 'savefrom', 'lahelu', 'brat', 'sertifikat', 'fakedev',
   'ytmp4', 'ytmp3', 'bypass', 'react',
+  'fakebankjago', 'fakegopay', 'fakeovo', 'ektp', 'afinitas', 'nulis', 'smeme', 'ustadz',
 ];
 const ALLOWED_CATEGORIES = ['downloader', 'maker', 'tools', 'vault', 'external'];
 

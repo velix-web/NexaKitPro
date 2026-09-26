@@ -25,8 +25,10 @@ const PROVIDERS = {
   fakedev:    'https://api.ikyyxd.my.id/canvas/fakedev',
   ytmp4:      'https://api.nexray.eu.cc/downloader/ytmp4',
   ytmp3:      'https://api.nexray.eu.cc/downloader/ytmp3',
-  bypass:     'https://api.fazzcode.eu.cc/api/bypass',
-  react:      'https://api.fazzcode.eu.cc/api/react',
+  // Bypass Link + React Channel WA: old fazzcode.eu.cc upstreams were stuck
+  // in maintenance, swapped to the replacements given in chat.
+  bypass:     'https://albyoffc.my.id/api/bypass/all',
+  react:      'https://api-faa.my.id/faa/react-channel',
   // Stalk / lookup tools (VVIP) — enforced server-side below via tool_status,
   // not by this list. This comment just documents intent; the actual gate
   // is whatever an admin has set for the tool's slug in the database.
@@ -41,6 +43,29 @@ const PROVIDERS = {
   dramasearch:  'https://api.fazzcode.eu.cc/api/freedrama/search',
   dramadetail:  'https://api.fazzcode.eu.cc/api/freedrama/detail',
   dramastream:  'https://api.fazzcode.eu.cc/api/freedrama/stream',
+  // New batch added on request. Param names are our best guess from naming
+  // convention (nominal/text/username/uid) since these hosts aren't
+  // reachable from the sandbox that wrote this — test each one after
+  // deploy and tell me if a param name needs adjusting.
+  fakebankjago:   'https://api.nexray.eu.cc/maker/fakebank-jago',   // VVIP
+  fakegopay:      'https://kyzznekoo.zone.id/api/canvas/fakegopay', // VVIP
+  komikindosearch:   'https://api.theresav.biz.id/api/manga/komikindo/search',   // VVIP
+  komikindolatest:   'https://api.theresav.biz.id/api/manga/komikindo/latest',   // VVIP
+  komikindoinfo:     'https://api.theresav.biz.id/api/manga/komikindo/info',     // VVIP
+  komikindodownload: 'https://api.theresav.biz.id/api/manga/komikindo/download', // VVIP
+  fakeovo:        'https://kyzznekoo.zone.id/api/canvas/ovo',
+  ektp:           'https://kyzznekoo.zone.id/api/canvas/ektp',
+  afinitas:       'https://kyzznekoo.zone.id/api/canvas/fakeafinitas',
+  youtubestalk:      'https://api.nexray.eu.cc/stalker/youtube',
+  twitterstalk:      'https://api.nexray.eu.cc/stalker/twitter',
+  threadsstalk:      'https://api.nexray.eu.cc/stalker/threads',
+  snackvideostalk:   'https://api.nexray.eu.cc/stalker/snackvideo',
+  robloxstalk:       'https://api.nexray.eu.cc/stalker/roblox',
+  pintereststalk:    'https://api.nexray.eu.cc/stalker/pinterest',
+  genshinstalk:      'https://api.nexray.eu.cc/stalker/genshin',
+  nulis:          'https://api.nexray.eu.cc/maker/nulis',
+  smeme:          'https://api.nexray.eu.cc/maker/smeme',
+  ustadz:         'https://api.nexray.eu.cc/maker/ustadz',
 };
 
 // Authorization source of truth for which slug may call which provider(s).
@@ -59,6 +84,14 @@ const BUILT_IN_SLUG_PROVIDERS = {
   'image-enhancer': ['enhancer'], 'ff-stalk': ['ffstalk'], 'ml-stalk': ['mlstalk'],
   'tiktok-stalk': ['tiktokstalk'], 'instagram-stalk': ['igstalk'], 'github-stalk': ['githubstalk'],
   nexadrama: ['dramahome', 'dramasearch', 'dramadetail', 'dramastream'],
+  // New batch:
+  'fakebank-jago': ['fakebankjago'], fakegopay: ['fakegopay'],
+  komikindo: ['komikindosearch', 'komikindolatest', 'komikindoinfo', 'komikindodownload'],
+  fakeovo: ['fakeovo'], ektp: ['ektp'], afinitas: ['afinitas'],
+  'youtube-stalk': ['youtubestalk'], 'twitter-stalk': ['twitterstalk'], 'threads-stalk': ['threadsstalk'],
+  'snackvideo-stalk': ['snackvideostalk'], 'roblox-stalk': ['robloxstalk'],
+  'pinterest-stalk': ['pintereststalk'], 'genshin-stalk': ['genshinstalk'],
+  nulis: ['nulis'], smeme: ['smeme'], ustadz: ['ustadz'],
 };
 
 async function resolveAllowedProviders(slug) {

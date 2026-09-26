@@ -115,10 +115,15 @@ flex:0 0 auto;transition:transform var(--t),background-color var(--t)}
 .status-chip-vvip-cta:hover{background:rgba(232,161,60,.12);transform:translateY(-1px)}
 .status-chip-vvip-cta.status-chip-vip{background:linear-gradient(135deg,#f5c451,#e8a13c);border-color:transparent;color:#3a2a06}
 @media (max-width:620px){
-  .status-bar{gap:10px;padding:12px}
+  /* ponytail: previously .status-chip-vvip-cta went flex-basis:100% here,
+     dropping it onto its own full-width row below every pill — the
+     reference layout in chat keeps it inline as a compact pill next to
+     Role instead, which reads faster and costs less vertical space. */
+  .status-bar{gap:10px 8px;padding:12px;flex-wrap:wrap}
   .status-chip{font-size:11px;padding:5px 10px}
-  .status-pills{gap:6px}
-  .status-chip-vvip-cta{flex-basis:100%;justify-content:center;font-size:12px;padding:8px 12px;margin-top:2px}
+  .status-pills{gap:6px;order:2;flex-basis:100%}
+  .status-chip-vvip-cta{font-size:11px;padding:6px 12px;order:1;margin-left:auto}
+  .status-avatar{order:0}
 }
 #auth-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
 gap:14px;padding:32px 18px;position:relative;overflow:hidden}
@@ -239,6 +244,13 @@ mask-image:linear-gradient(to right,#000 calc(100% - 28px),transparent 100%)}
 
 /* ---------- tool grid ---------- */
 #tool-grid{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px}
+#vvip-section{margin-top:32px;padding-top:24px;border-top:1px solid var(--border)}
+.vvip-section-head{display:flex;align-items:center;gap:10px;margin-bottom:16px;color:#f5c451}
+.vvip-section-head i{font-size:18px}
+.vvip-section-head h2{font-size:18px;margin:0;color:var(--text)}
+#vvip-grid{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px}
+.tool-card-vvip{border-color:rgba(245,196,81,.35)}
+.tool-card-vvip:hover{border-color:rgba(245,196,81,.6)}
 #tool-grid li{opacity:0;transform:translateY(18px) scale(.97);
 transition:opacity var(--t-slow),transform var(--t-slow);transition-delay:calc(min(var(--i,0),11) * 45ms)}
 #tool-grid li.is-in{opacity:1;transform:none}
@@ -328,6 +340,8 @@ background:var(--accent-soft);color:var(--accent);font-size:22px}
 .drama-back{display:inline-flex;align-items:center;gap:6px;margin-bottom:14px;color:var(--muted);font-weight:650;font-size:13px}
 .drama-back:hover{color:var(--accent)}
 .drama-detail-poster{width:130px;aspect-ratio:2/3;object-fit:cover;border-radius:var(--r-md);float:left;margin:0 16px 12px 0}
+.manga-pages{display:flex;flex-direction:column;gap:8px;max-width:640px;margin:0 auto}
+.manga-pages img{width:100%;border-radius:var(--r-sm,8px);display:block}
 .drama-detail h3{margin:0 0 8px;font-size:19px}
 .drama-synopsis{color:var(--muted);font-size:13.5px;line-height:1.6}
 .drama-eps{display:flex;flex-wrap:wrap;gap:8px;clear:both}
@@ -418,7 +432,7 @@ select option{background:var(--bg);color:var(--text)}
 }
 /* phones: 3 compact cards per row, icon-first like an app grid */
 @media (max-width:620px){
-  #tool-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  #tool-grid,#vvip-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
   .tool-card{min-height:192px;align-items:center;text-align:center;padding:16px 9px 12px;border-radius:var(--r-lg)}
   .tool-icon{margin-bottom:10px}
   .tool-icon i{font-size:26px}

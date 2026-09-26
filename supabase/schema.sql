@@ -156,6 +156,16 @@ alter table public.tool_status enable row level security;
 drop policy if exists "tool_status_select_all" on public.tool_status;
 create policy "tool_status_select_all" on public.tool_status for select to anon, authenticated using (true);
 
+-- Seed VVIP defaults for the new/moved tools discussed in chat. Uses
+-- ON CONFLICT DO NOTHING so this only sets vvip_only the first time each
+-- row is created — re-running this file later (e.g. after an admin has
+-- since flipped one of these back off in the panel) won't silently
+-- re-enable it.
+insert into public.tool_status (slug, vvip_only)
+values ('bypass-link', true), ('react-wa', true), ('fakebank-jago', true),
+       ('fakegopay', true), ('komikindo', true)
+on conflict (slug) do nothing;
+
 -- Tools the admin creates from the panel itself (built-in tools stay
 -- hardcoded in app.js — this table is only for genuinely new cards). Type is
 -- constrained to the two generic templates the frontend already knows how to

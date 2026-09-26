@@ -8,7 +8,8 @@ const I={
  drive:'cloud-download',scissors:'cut',layers:'clone',laugh:'smile-o',type:'font',
  unlink:'chain-broken',note:'sticky-note-o',award:'certificate',gamepad:'gamepad',
  flame:'fire',wallet:'money',idcard:'id-card-o',link:'link',eraser:'eraser',sparkles:'magic',
- upload:'upload',
+ upload:'upload',book:'book',heart:'heart',at:'at',star:'star',video:'video-camera',
+ pen:'pencil',image:'picture-o',
  tiktok:'tiktok:brand',instagram:'instagram:brand',spotify:'spotify:brand',
  youtube:'youtube:brand',facebook:'facebook:brand',twitter:'x-twitter:brand',whatsapp:'whatsapp:brand',
  github:'github:brand',desktop:'desktop',film:'film'
@@ -49,7 +50,25 @@ const TOOLS=[
 {id:'githubstalk',slug:'github-stalk',name:'GitHub Stalk',title:'GitHub Stalk',description:'Cek info profil GitHub dari username',type:'profile-lookup',provider:'githubstalk',paramKey:'q',inputLabel:'Username GitHub',placeholder:'cth: octocat',tag:'INFO',icon:'github'},
 {id:'shortlink',slug:'shortlink',name:'Shortlink',title:'Shortlink',description:'Pendekin link jadi lebih ringkas',type:'shortlink',tag:'LINK',icon:'link'},
 {id:'ssweb',slug:'website-screenshot',name:'Website Screenshot',title:'Website Screenshot',description:'Ambil screenshot full-page dari URL manapun',type:'ssweb',tag:'PNG',icon:'desktop'},
-{id:'nexadrama',slug:'nexadrama',name:'NexaDrama',title:'NexaDrama',description:'Nonton & download drama pendek, lengkap sama episode-nya',type:'nexadrama',tag:'STREAM',icon:'film'}
+{id:'nexadrama',slug:'nexadrama',name:'NexaDrama',title:'NexaDrama',description:'Nonton & download drama pendek, lengkap sama episode-nya',type:'nexadrama',tag:'STREAM',icon:'film'},
+// New batch. Upstream param names are our best guess (see api/proxy.js) —
+// test each after deploy since these hosts weren't reachable to verify.
+{id:'fakebankjago',slug:'fakebank-jago',name:'Fake Saldo Jago',title:'Fake Saldo Jago',description:'Buat gambar saldo Bank Jago palsu',type:'image-generator',provider:'fakebankjago',paramKey:'nominal',tag:'IMAGE',icon:'wallet'},
+{id:'fakegopay',slug:'fakegopay',name:'Fake Saldo GoPay',title:'Fake Saldo GoPay',description:'Buat gambar saldo GoPay palsu',type:'image-generator',provider:'fakegopay',paramKey:'nominal',tag:'IMAGE',icon:'wallet'},
+{id:'komikindo',slug:'komikindo',name:'Komikindo Manga',title:'Komikindo Manga',description:'Cari & baca info manga dari Komikindo, lengkap link download chapter',type:'komikindo',tag:'MANGA',icon:'book'},
+{id:'fakeovo',slug:'fakeovo',name:'Fake Saldo OVO',title:'Fake Saldo OVO',description:'Buat gambar saldo OVO palsu',type:'image-generator',provider:'fakeovo',paramKey:'nominal',tag:'IMAGE',icon:'wallet'},
+{id:'ektp',slug:'ektp',name:'KTP Generator',title:'KTP Generator',description:'Template KTP meme buat konten iseng — bukan dokumen resmi',type:'image-generator',provider:'ektp',paramKey:'nama',tag:'IMAGE',icon:'idcard'},
+{id:'afinitas',slug:'afinitas',name:'Kalkulator Afinitas',title:'Kalkulator Afinitas',description:'Cek persentase kecocokan dua nama, buat konten iseng',type:'image-generator',provider:'afinitas',paramKey:'nama1',paramKey2:'nama2',inputLabel:'Nama Pertama',placeholder:'cth: Andi',inputLabel2:'Nama Kedua',placeholder2:'cth: Budi',tag:'IMAGE',icon:'heart'},
+{id:'youtubestalk',slug:'youtube-stalk',name:'YouTube Stalk',title:'YouTube Stalk',description:'Cek info channel YouTube dari username',type:'profile-lookup',provider:'youtubestalk',paramKey:'username',inputLabel:'Username/Handle YouTube',placeholder:'cth: mrbeast',tag:'INFO',icon:'youtube'},
+{id:'twitterstalk',slug:'twitter-stalk',name:'Twitter Stalk',title:'Twitter Stalk',description:'Cek info profil Twitter/X dari username',type:'profile-lookup',provider:'twitterstalk',paramKey:'username',inputLabel:'Username Twitter/X',placeholder:'tanpa @, cth: elonmusk',tag:'INFO',icon:'twitter'},
+{id:'threadsstalk',slug:'threads-stalk',name:'Threads Stalk',title:'Threads Stalk',description:'Cek info profil Threads dari username',type:'profile-lookup',provider:'threadsstalk',paramKey:'username',inputLabel:'Username Threads',placeholder:'tanpa @, cth: zuck',tag:'INFO',icon:'at'},
+{id:'snackvideostalk',slug:'snackvideo-stalk',name:'SnackVideo Stalk',title:'SnackVideo Stalk',description:'Cek info profil SnackVideo dari username',type:'profile-lookup',provider:'snackvideostalk',paramKey:'username',inputLabel:'Username SnackVideo',placeholder:'cth: nexakit',tag:'INFO',icon:'video'},
+{id:'robloxstalk',slug:'roblox-stalk',name:'Roblox Stalk',title:'Roblox Stalk',description:'Cek info akun Roblox dari username',type:'profile-lookup',provider:'robloxstalk',paramKey:'username',inputLabel:'Username Roblox',placeholder:'cth: builderman',tag:'INFO',icon:'gamepad'},
+{id:'pintereststalk',slug:'pinterest-stalk',name:'Pinterest Stalk',title:'Pinterest Stalk',description:'Cek info profil Pinterest dari username',type:'profile-lookup',provider:'pintereststalk',paramKey:'username',inputLabel:'Username Pinterest',placeholder:'cth: nexakit',tag:'INFO',icon:'image'},
+{id:'genshinstalk',slug:'genshin-stalk',name:'Genshin Stalk',title:'Genshin Stalk',description:'Cek info akun Genshin Impact dari UID',type:'profile-lookup',provider:'genshinstalk',paramKey:'uid',inputLabel:'UID Genshin Impact',placeholder:'cth: 800000000',tag:'INFO',icon:'star'},
+{id:'nulis',slug:'nulis',name:'Nulis Generator',title:'Nulis Generator',description:'Buat gambar tulisan tangan dari teks',type:'image-generator',provider:'nulis',paramKey:'text',tag:'IMAGE',icon:'pen'},
+{id:'smeme',slug:'smeme',name:'Simple Meme',title:'Simple Meme',description:'Buat meme sederhana dari teks',type:'image-generator',provider:'smeme',paramKey:'text',tag:'IMAGE',icon:'laugh'},
+{id:'ustadz',slug:'ustadz',name:'Kata Ustadz',title:'Kata Ustadz',description:'Buat kartu kata mutiara ala ceramah ustadz',type:'image-generator',provider:'ustadz',paramKey:'text',tag:'IMAGE',icon:'note'}
 ];
 const $=id=>document.getElementById(id);
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -234,6 +253,78 @@ async function loadDramaStream(id,episode,title){
   $('drama-download').onclick=()=>downloadFile(stream,`nexadrama-${id}-ep${episode}.mp4`);
  }catch(e){body.innerHTML=resultError(e)+'<p><button type="button" class="drama-back" id="drama-back-detail2">&larr; Kembali</button></p>';$('drama-back-detail2').onclick=()=>loadDramaDetail(id)}
 }
+// Komikindo manga browser — same search/grid/detail shape as NexaDrama
+// above (reuses its drama-grid/drama-card/drama-back CSS classes, since the
+// list->detail pattern is identical, just manga instead of drama). Field
+// names in extractMangaList/loadMangaDetail are guessed defensively with
+// `??` fallbacks since the upstream host wasn't reachable to confirm its
+// exact response shape — check these once real data comes back and tell me
+// if a field needs adjusting.
+function initKomikindo(){
+ $('drama-search-btn').onclick=()=>{
+  const q=$('drama-search-input').value.trim();
+  if(q)loadMangaList('komikindosearch',{q});else loadMangaLatest();
+ };
+ $('drama-search-input').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('drama-search-btn').click()}});
+ loadMangaLatest();
+}
+function extractMangaList(j){
+ const raw=Array.isArray(j.result)?j.result:Array.isArray(j.data)?j.data:Array.isArray(j)?j:[];
+ return raw.map(m=>({
+  id:m.id??m.slug??m.endpoint??m.komik_id,
+  title:m.title??m.name??m.judul??'Tanpa Judul',
+  poster:m.poster??m.cover??m.thumbnail??m.image,
+ })).filter(m=>m.id!=null);
+}
+async function loadMangaLatest(){
+ const body=$('drama-body');body.innerHTML=resultLoading();
+ try{renderMangaGrid(extractMangaList(await safeJson('/api/proxy?provider=komikindolatest&slug=komikindo')))}
+ catch(e){body.innerHTML=resultError(e)}
+}
+async function loadMangaList(provider,params){
+ const body=$('drama-body');body.innerHTML=resultLoading();
+ try{renderMangaGrid(extractMangaList(await safeJson(`/api/proxy?provider=${provider}&slug=komikindo&${new URLSearchParams(params)}`)))}
+ catch(e){body.innerHTML=resultError(e)}
+}
+// renderDramaGrid calls loadDramaDetail(id) on click — swap that binding for
+// manga since it's the same markup/CSS but a different detail loader.
+function renderMangaGrid(list){
+ renderDramaGrid(list);
+ $('drama-body').querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>loadMangaDetail(b.dataset.id));
+}
+async function loadMangaDetail(id){
+ const body=$('drama-body');body.innerHTML=resultLoading();
+ try{
+  const j=await safeJson(`/api/proxy?provider=komikindoinfo&slug=komikindo&id=${encodeURIComponent(id)}`);
+  const d=(j.result&&typeof j.result==='object'&&!Array.isArray(j.result))?j.result:(j.data||j);
+  const title=d.title??d.name??d.judul??'Tanpa Judul';
+  const poster=d.poster??d.cover??d.thumbnail??d.image;
+  const synopsis=d.synopsis??d.description??d.sinopsis??'';
+  const chRaw=Array.isArray(d.chapters)?d.chapters:Array.isArray(d.chapter_list)?d.chapter_list:[];
+  const chapters=chRaw.map((c,i)=>({num:c.chapter??c.number??c.title??(i+1),id:c.id??c.chapter??c.slug??(i+1)}));
+  body.innerHTML=`<button type="button" class="drama-back" id="manga-back-home">&larr; Semua Manga</button>
+   <div class="drama-detail">${poster?`<img src="${esc(poster)}" alt="${esc(title)}" class="drama-detail-poster">`:''}<h3>${esc(title)}</h3>
+   ${synopsis?`<p class="drama-synopsis">${esc(synopsis)}</p>`:''}
+   <div class="eyebrow" style="margin:14px 0 8px;display:block">CHAPTER</div>
+   <div class="drama-eps">${chapters.length?chapters.map(c=>`<button type="button" class="drama-ep-btn" data-ch="${esc(c.id)}">${esc(c.num)}</button>`).join(''):'<p>Info chapter tidak tersedia.</p>'}</div></div>`;
+  $('manga-back-home').onclick=loadMangaLatest;
+  body.querySelectorAll('[data-ch]').forEach(b=>b.onclick=()=>loadMangaChapter(id,b.dataset.ch,title));
+ }catch(e){body.innerHTML=resultError(e)+'<p><button type="button" class="drama-back" id="manga-back-home2">&larr; Semua Manga</button></p>';$('manga-back-home2').onclick=loadMangaLatest}
+}
+async function loadMangaChapter(id,chapter,title){
+ const body=$('drama-body');body.innerHTML=resultLoading();
+ try{
+  const j=await safeJson(`/api/proxy?provider=komikindodownload&slug=komikindo&id=${encodeURIComponent(id)}&chapter=${encodeURIComponent(chapter)}`);
+  const d=(j.result&&typeof j.result==='object'&&!Array.isArray(j.result))?j.result:(j.data||j);
+  const pages=Array.isArray(d)?d:Array.isArray(d.pages)?d.pages:Array.isArray(d.images)?d.images:[];
+  const directLink=!pages.length?(d.url??d.download??d.link??(typeof j.result==='string'?j.result:null)):null;
+  body.innerHTML=`<button type="button" class="drama-back" id="manga-back-detail">&larr; ${esc(title||'Detail')}</button>`+
+   (pages.length?`<div class="manga-pages">${pages.map(p=>`<img src="${esc(typeof p==='string'?p:p.url??p.image)}" alt="Halaman" loading="lazy">`).join('')}</div>`
+    :directLink?`<p><a href="${esc(directLink)}" target="_blank" rel="noopener">Buka link download chapter</a></p>`
+    :'<p>Halaman/chapter tidak ditemukan.</p>');
+  $('manga-back-detail').onclick=()=>loadMangaDetail(id);
+ }catch(e){body.innerHTML=resultError(e)+'<p><button type="button" class="drama-back" id="manga-back-detail2">&larr; Kembali</button></p>';$('manga-back-detail2').onclick=()=>loadMangaDetail(id)}
+}
 function initGeneric(tool){const form=$('tool-form'),input=$('tool-input'),box=$('result-container'),content=$('result-content');form.onsubmit=async e=>{e.preventDefault();const v=input.value.trim();box.hidden=false;content.innerHTML=resultLoading();setBusy(true,'Mengambil media…');try{if(!v)throw Error('Link-nya belum diisi nih.');if(!isHttpUrl(v))throw Error('Link-nya kelihatannya belum valid, pastiin pakai http:// atau https://.');const j=await safeJson(`/api/proxy?provider=${encodeURIComponent(tool.provider)}&slug=${encodeURIComponent(tool.slug)}&${tool.paramKey}=${encodeURIComponent(v)}`);let u,title;if(Array.isArray(j.result)&&j.result.length){u=j.result[0].url||j.result[0].link;title=j.result[0].title||j.result[0].caption}else if(Array.isArray(j.data)&&j.data.length){u=j.data[0]?.url||j.data[0]?.link||j.data[0];title=j.data[0]?.title||j.data[0]?.caption}else{u=j.result||j.url||j.link||j.data?.url||j.data?.downloadUrl;title=j.title||j.caption||j.data?.title}if(!u||typeof u!=='string')throw Error(j.error||j.message||'Gagal mendapatkan media.');const video=/\.(mp4|mov|webm)(\?|$)/i.test(u)||tool.id==='ig';const audio=!video&&(/\.(mp3|wav|m4a)(\?|$)/i.test(u)||tool.id==='spotify');let media=video?`<video src="${esc(u)}" controls playsinline></video>`:audio?`<audio src="${esc(u)}" controls></audio>`:`<img src="${esc(u)}" alt="Preview">`;content.innerHTML=media+(title?`<p><b>Info:</b> ${esc(title)}</p>`:'')+`<p><button id="download-result" type="button">Download</button></p>`;$('download-result').onclick=()=>downloadFile(u,`nexakit-${tool.slug}-${Date.now()}`)}catch(e){content.innerHTML=resultError(e)}finally{setBusy(false)}}}
 function initImageTool(type){const input=$('image-file'),btn=$('tool-submit'),box=$('result-container'),content=$('result-content');input.addEventListener('change',()=>uploadPreview(input.files[0],'file-preview'));btn.onclick=async e=>{e.preventDefault();box.hidden=false;content.innerHTML=resultLoading();setBusy(true,'Memproses gambar…');try{const file=input.files[0];if(!file)throw Error('Pilih gambar terlebih dahulu.');if(type==='remove-bg'){const f=new FormData();f.append('image_file',file);f.append('size','auto');const r=await window.nexakitAuthedFetch('/api/remove-bg',{method:'POST',body:f});if(!r.ok){const j=await r.json().catch(()=>({}));throw Error(j.error||'Gagal menghapus background.')}const blob=await r.blob(),u=URL.createObjectURL(blob);content.innerHTML=`<img src="${u}" alt="Hasil Remove Background"><p><a href="${u}" download="removebg-result.png">Unduh PNG</a></p>`}else if(type==='img2link'){const u=await uploadToImgBB(file,'img2link');content.innerHTML=`<img src="${esc(u)}" alt="Uploaded image"><p><input value="${esc(u)}" readonly></p><p><button id="copy-url" type="button">Salin Link</button></p>`;$('copy-url').onclick=()=>navigator.clipboard.writeText(u).then(()=>showToast('Link tersalin'))}else{const up=await uploadToImgBB(file,'image-enhancer');const u=`/api/proxy?provider=enhancer&slug=image-enhancer&url=${encodeURIComponent(up)}`;content.innerHTML=`<p>Sebelum</p><img src="${esc(up)}" alt="Sebelum"><p>Sesudah</p><img src="${esc(u)}" alt="Sesudah"><p><button id="download-image-result" type="button">Unduh Hasil</button></p>`;$('download-image-result').onclick=()=>downloadFile(u,`nexakit-enhanced-${Date.now()}.png`)}}catch(e){content.innerHTML=resultError(e)}finally{setBusy(false)}}}
 function stampWatermark(ctx,w,h,text){
@@ -275,7 +366,7 @@ async function renderImageResult(content,u,name,altText,watermark){
   $('maker-download').onclick=()=>downloadFile(u,name);
  }
 }
-function initMaker(tool){const form=$('maker-form'),box=$('result-container'),content=$('result-content');form.onsubmit=async e=>{e.preventDefault();box.hidden=false;content.innerHTML=resultLoading();setBusy(true,'Membuat gambar…');try{let u,name='nexakit-result.png';if(tool.type==='bypass'){const link=$('bypass-url').value.trim();if(!link)throw Error('Masukkan link yang mau di-bypass.');if(!isHttpUrl(link))throw Error('Link tidak valid.');const j=await safeJson(`/api/proxy?provider=bypass&slug=bypass-link&url=${encodeURIComponent(link)}`);content.innerHTML=renderApiJson(j);return}if(tool.type==='react'){const link=$('react-url').value.trim(),emoji=$('react-emoji').value.trim()||'👍';if(!link)throw Error('Masukkan link postingan channel.');if(!isHttpUrl(link))throw Error('Link tidak valid.');const j=await safeJson(`/api/proxy?provider=react&slug=react-wa&url=${encodeURIComponent(link)}&emoji=${encodeURIComponent(emoji)}`);content.innerHTML=renderApiJson(j);return}if(tool.type==='brat'){const variant=radioValue('brat-variant');if(variant==='brat3'){const top=$('brat3-top').value.trim(),mid=$('brat3-mid').value.trim(),bottom=$('brat3-bottom').value.trim();if(!top||!mid||!bottom)throw Error('Baris atas, tengah, dan bawah wajib diisi.');const r=await window.nexakitAuthedFetch('/api/brat3',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({top,mid,bottom})});if(!r.ok){const j=await r.json().catch(()=>({}));throw Error(j.error||'Gagal membuat gambar.')}const blob=await r.blob();u=URL.createObjectURL(blob);name=`nexakit-brat3-${Date.now()}.png`;content.innerHTML=`<img src="${u}" alt="Hasil"><p><button id="maker-download" type="button">Simpan Gambar</button></p>`;$('maker-download').onclick=()=>downloadFile(u,name);return}if(variant==='bratvid'){const text=$('maker-text').value.trim();if(!text)throw Error('Masukkan teks untuk Brat Video.');const theme='white',format='mp4';setBusy(true,'Merender video, bisa sampai 30 detik…');const r=await window.nexakitAuthedFetch('/api/bratvid',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({text,theme,format})});if(!r.ok){const j=await r.json().catch(()=>({}));throw Error(j.error||'Gagal membuat video.')}const blob=await r.blob();u=URL.createObjectURL(blob);name=`nexakit-bratvid-${Date.now()}.${format}`;content.innerHTML=`<video src="${u}" controls playsinline loop></video><p><button id="maker-download" type="button">Simpan Video</button></p>`;$('maker-download').onclick=()=>downloadFile(u,name);return}const text=$('maker-text').value.trim();if(!text)throw Error('Masukkan teks untuk Brat.');const animated=variant==='animated',delay=$('brat-delay').value||500;u=`/api/proxy?provider=brat&slug=brat&text=${encodeURIComponent(text)}${animated?'&isAnimated=true&delay='+encodeURIComponent(delay):''}`;name=`nexakit-brat-${Date.now()}.${animated?'gif':'png'}`}else if(tool.type==='iqc'){const text=$('maker-text').value.trim(),time=$('maker-time').value.trim();if(!text)throw Error('Masukkan quote.');u=`/api/iqc-text?text=${encodeURIComponent(text)}&time=${encodeURIComponent(time||Date.now())}`;name=`nexakit-iqc-${Date.now()}.png`}else if(tool.type==='lobby-ml'){const nick=$('maker-text').value.trim(),file=$('maker-file').files[0];if(!nick||!file)throw Error('Nickname dan avatar wajib diisi.');const av=await uploadToImgBB(file,'lobby-ml');u=`/api/proxy?provider=lobbyml&slug=lobby-ml&nickname=${encodeURIComponent(nick)}&avatar=${encodeURIComponent(av)}`;name=`nexakit-lobby-ml-${Date.now()}.png`}else if(tool.type==='fakedev'){const n=$('maker-name').value.trim(),bio=$('maker-bio').value.trim(),file=$('maker-file').files[0];if(!n||!bio||!file)throw Error('Nama, bio, dan avatar wajib diisi.');const av=await uploadToImgBB(file,'fakedev');u=`/api/proxy?provider=fakedev&slug=fakedev&nama=${encodeURIComponent(n)}&bio=${encodeURIComponent(bio)}&image=${encodeURIComponent(av)}`;name=`nexakit-fakedev-${Date.now()}.png`}else{let v=$('maker-text').value.trim();if(!v)throw Error('Input wajib diisi.');if(tool.provider==='fakedana'){v=v.replace(/\D/g,'');if(!v)throw Error('Nominal saldo harus diisi dengan angka.');}u=`/api/proxy?provider=${encodeURIComponent(tool.provider)}&slug=${encodeURIComponent(tool.slug)}&${encodeURIComponent(tool.paramKey)}=${encodeURIComponent(v)}`;name=`nexakit-${tool.slug}-${Date.now()}.png`}await renderImageResult(content,u,name,`Hasil ${tool.title}`,tool.provider==='fakedana'?'CONTOH — BUKAN BUKTI TRANSAKSI ASLI':null)}catch(e){content.innerHTML=resultError(e)}finally{setBusy(false)}};if(tool.type==='brat'){const sync=()=>{const v=radioValue('brat-variant')||'static';$('brat-text-wrap').hidden=v==='brat3';$('brat-delay-wrap').hidden=v!=='animated';$('brat3-wrap').hidden=v!=='brat3'};onRadioGroup('brat-variant',sync);sync()}}
+function initMaker(tool){const form=$('maker-form'),box=$('result-container'),content=$('result-content');form.onsubmit=async e=>{e.preventDefault();box.hidden=false;content.innerHTML=resultLoading();setBusy(true,'Membuat gambar…');try{let u,name='nexakit-result.png';if(tool.type==='bypass'){const link=$('bypass-url').value.trim();if(!link)throw Error('Masukkan link yang mau di-bypass.');if(!isHttpUrl(link))throw Error('Link tidak valid.');const j=await safeJson(`/api/proxy?provider=bypass&slug=bypass-link&url=${encodeURIComponent(link)}`);content.innerHTML=renderApiJson(j);return}if(tool.type==='react'){const link=$('react-url').value.trim(),emoji=$('react-emoji').value.trim()||'👍';if(!link)throw Error('Masukkan link postingan channel.');if(!isHttpUrl(link))throw Error('Link tidak valid.');const j=await safeJson(`/api/proxy?provider=react&slug=react-wa&url=${encodeURIComponent(link)}&emoji=${encodeURIComponent(emoji)}`);content.innerHTML=renderApiJson(j);return}if(tool.type==='brat'){const variant=radioValue('brat-variant');if(variant==='brat3'){const top=$('brat3-top').value.trim(),mid=$('brat3-mid').value.trim(),bottom=$('brat3-bottom').value.trim();if(!top||!mid||!bottom)throw Error('Baris atas, tengah, dan bawah wajib diisi.');const r=await window.nexakitAuthedFetch('/api/brat3',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({top,mid,bottom})});if(!r.ok){const j=await r.json().catch(()=>({}));throw Error(j.error||'Gagal membuat gambar.')}const blob=await r.blob();u=URL.createObjectURL(blob);name=`nexakit-brat3-${Date.now()}.png`;content.innerHTML=`<img src="${u}" alt="Hasil"><p><button id="maker-download" type="button">Simpan Gambar</button></p>`;$('maker-download').onclick=()=>downloadFile(u,name);return}if(variant==='bratvid'){const text=$('maker-text').value.trim();if(!text)throw Error('Masukkan teks untuk Brat Video.');const theme='white',format='mp4';setBusy(true,'Merender video, bisa sampai 30 detik…');const r=await window.nexakitAuthedFetch('/api/bratvid',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({text,theme,format})});if(!r.ok){const j=await r.json().catch(()=>({}));throw Error(j.error||'Gagal membuat video.')}const blob=await r.blob();u=URL.createObjectURL(blob);name=`nexakit-bratvid-${Date.now()}.${format}`;content.innerHTML=`<video src="${u}" controls playsinline loop></video><p><button id="maker-download" type="button">Simpan Video</button></p>`;$('maker-download').onclick=()=>downloadFile(u,name);return}const text=$('maker-text').value.trim();if(!text)throw Error('Masukkan teks untuk Brat.');const animated=variant==='animated',delay=$('brat-delay').value||500;u=`/api/proxy?provider=brat&slug=brat&text=${encodeURIComponent(text)}${animated?'&isAnimated=true&delay='+encodeURIComponent(delay):''}`;name=`nexakit-brat-${Date.now()}.${animated?'gif':'png'}`}else if(tool.type==='iqc'){const text=$('maker-text').value.trim(),time=$('maker-time').value.trim();if(!text)throw Error('Masukkan quote.');u=`/api/iqc-text?text=${encodeURIComponent(text)}&time=${encodeURIComponent(time||Date.now())}`;name=`nexakit-iqc-${Date.now()}.png`}else if(tool.type==='lobby-ml'){const nick=$('maker-text').value.trim(),file=$('maker-file').files[0];if(!nick||!file)throw Error('Nickname dan avatar wajib diisi.');const av=await uploadToImgBB(file,'lobby-ml');u=`/api/proxy?provider=lobbyml&slug=lobby-ml&nickname=${encodeURIComponent(nick)}&avatar=${encodeURIComponent(av)}`;name=`nexakit-lobby-ml-${Date.now()}.png`}else if(tool.type==='fakedev'){const n=$('maker-name').value.trim(),bio=$('maker-bio').value.trim(),file=$('maker-file').files[0];if(!n||!bio||!file)throw Error('Nama, bio, dan avatar wajib diisi.');const av=await uploadToImgBB(file,'fakedev');u=`/api/proxy?provider=fakedev&slug=fakedev&nama=${encodeURIComponent(n)}&bio=${encodeURIComponent(bio)}&image=${encodeURIComponent(av)}`;name=`nexakit-fakedev-${Date.now()}.png`}else{let v,extra='';if(tool.paramKey2){const v1=$('maker-name1').value.trim(),v2=$('maker-name2').value.trim();if(!v1||!v2)throw Error('Kedua input wajib diisi.');v=v1;extra=`&${encodeURIComponent(tool.paramKey2)}=${encodeURIComponent(v2)}`}else{v=$('maker-text').value.trim();if(!v)throw Error('Input wajib diisi.');if(tool.paramKey==='nominal'){v=v.replace(/\D/g,'');if(!v)throw Error('Nominal saldo harus diisi dengan angka.');}}u=`/api/proxy?provider=${encodeURIComponent(tool.provider)}&slug=${encodeURIComponent(tool.slug)}&${encodeURIComponent(tool.paramKey)}=${encodeURIComponent(v)}${extra}`;name=`nexakit-${tool.slug}-${Date.now()}.png`}await renderImageResult(content,u,name,`Hasil ${tool.title}`,['fakedana','fakebankjago','fakegopay','fakeovo'].includes(tool.provider)?'CONTOH — BUKAN BUKTI TRANSAKSI ASLI':null)}catch(e){content.innerHTML=resultError(e)}finally{setBusy(false)}};if(tool.type==='brat'){const sync=()=>{const v=radioValue('brat-variant')||'static';$('brat-text-wrap').hidden=v==='brat3';$('brat-delay-wrap').hidden=v!=='animated';$('brat3-wrap').hidden=v!=='brat3'};onRadioGroup('brat-variant',sync);sync()}}
 
 const area=$('tool-area');
 let activeTool=TOOLS[0];
@@ -296,6 +387,10 @@ function render(tool){clearView();
   base(tool.title,tool.description,`<div id="drama-app"><div id="drama-search-row"><input id="drama-search-input" type="search" placeholder="Cari judul drama..."><button type="button" id="drama-search-btn">Cari</button></div><div id="drama-body"></div></div>`);
   initNexaDrama();return;
  }
+ if(tool.type==='komikindo'){
+  base(tool.title,tool.description,`<div id="drama-app"><div id="drama-search-row"><input id="drama-search-input" type="search" placeholder="Cari judul manga..."><button type="button" id="drama-search-btn">Cari</button></div><div id="drama-body"></div></div>`);
+  initKomikindo();return;
+ }
  if(['remove-bg','img2link','image-enhancer'].includes(tool.type)){const action=tool.type==='remove-bg'?'Remove Background':tool.type==='img2link'?'Upload':'Enhance';base(tool.title,'',`<form><p>${dropzone('image-file')}</p><p><img id="file-preview" hidden alt="Preview"></p><button id="tool-submit" type="submit">${action}</button></form>`);initImageTool(tool.type);return}
  let form='';
  if(tool.type==='bypass')form=`<form id="maker-form"><p><input id="bypass-url" type="url" placeholder="Tempel link yang mau di-bypass..." required></p><button type="submit">Bypass</button></form>`;
@@ -304,6 +399,7 @@ function render(tool){clearView();
  else if(tool.type==='iqc')form=`<form id="maker-form"><p><label for="maker-text">Quote</label><textarea id="maker-text" placeholder="Tulis quote..."></textarea></p><p><label for="maker-time">Waktu (opsional)</label><input id="maker-time" type="time"></p><button type="submit">Buat</button></form>`;
  else if(tool.type==='lobby-ml')form=`<form id="maker-form"><p><label for="maker-text">Nickname</label><input id="maker-text" placeholder="Nickname"></p><p><label for="maker-file">Avatar</label>${dropzone('maker-file','Pilih avatar')}</p><button type="submit">Buat</button></form>`;
  else if(tool.type==='fakedev')form=`<form id="maker-form"><p><label for="maker-name">Nama</label><input id="maker-name" placeholder="Nama"></p><p><label for="maker-bio">Bio</label><textarea id="maker-bio" placeholder="Bio"></textarea></p><p><label for="maker-file">Avatar</label>${dropzone('maker-file','Pilih avatar')}</p><button type="submit">Buat</button></form>`;
+ else if(tool.paramKey2)form=`<form id="maker-form"><p><label for="maker-name1">${esc(tool.inputLabel||'Input 1')}</label><input id="maker-name1" placeholder="${esc(tool.placeholder||'')}"></p><p><label for="maker-name2">${esc(tool.inputLabel2||'Input 2')}</label><input id="maker-name2" placeholder="${esc(tool.placeholder2||'')}"></p><button type="submit">Buat</button></form>`;
  else form=`<form id="maker-form"><p><input id="maker-text" ${tool.paramKey==='nominal'?'inputmode="numeric" pattern="[0-9]*"':''} placeholder="${esc(tool.paramKey==='nominal'?'Nominal, cth: 500000':tool.title+' input')}"></p><button type="submit">Buat</button></form>`;
  base(tool.title,tool.description,form);initMaker(tool)
 }

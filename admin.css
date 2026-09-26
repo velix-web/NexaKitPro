@@ -49,6 +49,12 @@ background:var(--surface-strong);border:1px solid var(--border-dark);font-weight
 .badge-pending{background:var(--danger-soft);color:var(--danger)}
 .badge-reviewed{background:var(--accent-soft);color:var(--accent)}
 .badge-done{background:rgba(44,125,96,.15);color:var(--success)}
+.toggle-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:99px;
+  font-size:12.5px;font-weight:700;border:1px solid var(--border);cursor:pointer;transition:filter var(--t)}
+.toggle-pill:hover{filter:brightness(1.08)}
+.toggle-pill:disabled{opacity:.6;cursor:wait}
+.toggle-pill.is-on{background:rgba(44,125,96,.15);color:var(--success);border-color:rgba(44,125,96,.35)}
+.toggle-pill.is-off{background:var(--danger-soft);color:var(--danger);border-color:var(--danger-soft)}
 .admin-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:6px}
 .admin-toolbar select,.admin-toolbar input{min-height:38px;width:auto}
 .ann-card{padding:16px 18px;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--border);margin-bottom:10px}
