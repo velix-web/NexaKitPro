@@ -1,7 +1,7 @@
 {
   "private": true,
   "engines": {
-    "node": "24.x"
+    "node": "22.x"
   },
   "dependencies": {
     "@napi-rs/canvas": "^1.0.9",
