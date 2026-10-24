@@ -1,0 +1,8 @@
+/* Error pages (404) — shared tokens come from styles.css */
+.error-screen { min-height: 100vh; min-height: 100dvh; display: grid; place-items: center; padding: 28px 18px; text-align: center; }
+.error-card { width: min(460px, 100%); padding: 40px 30px; border-radius: var(--r-xl); background: var(--glass); border: 1px solid var(--edge); box-shadow: var(--shadow); -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur); }
+.error-card .fa { font-size: 38px; color: var(--muted); margin-bottom: 14px; }
+.error-card h1 { margin: 0 0 8px; font-size: clamp(40px, 9vw, 56px); font-weight: 800; letter-spacing: -.04em; }
+.error-card p { margin: 0 0 24px; color: var(--muted); }
+.error-card a { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 48px; border-radius: var(--r-md); font-weight: 650; color: var(--on-ink); background: linear-gradient(180deg, var(--ink-hover), var(--ink)); text-decoration: none; }
+.error-card a:hover { filter: brightness(1.08); }

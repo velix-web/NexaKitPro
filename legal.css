@@ -1,0 +1,16 @@
+/* Legal pages (privacy / terms / cookies) — shared tokens come from styles.css */
+.legal-wrap { width: min(780px, calc(100% - 32px)); margin: 0 auto; padding: 44px 0 64px; }
+.legal-wrap a.back { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; margin-bottom: 18px; padding: 8px 14px; border-radius: var(--r-md); font-weight: 600; font-size: 14px; color: var(--text-2); text-decoration: none; background: var(--glass); border: 1px solid var(--edge); }
+.legal-wrap a.back:hover { color: var(--text); border-color: var(--border-strong); }
+.legal-wrap h1 { margin: 0 0 6px; font-size: clamp(28px, 5vw, 40px); font-weight: 780; letter-spacing: -.03em; }
+.legal-wrap .updated { color: var(--muted); font-size: 13px; margin: 0 0 24px; }
+.legal-card { padding: 30px clamp(20px, 4vw, 36px); border-radius: var(--r-xl); background: var(--glass); border: 1px solid var(--edge); box-shadow: var(--shadow); -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur); }
+.legal-card h2 { font-size: 17px; font-weight: 700; margin: 28px 0 8px; }
+.legal-card h2:first-child { margin-top: 0; }
+.legal-card p, .legal-card li { color: var(--text-2); font-size: 14.5px; line-height: 1.75; }
+.legal-card ul { margin: 0 0 12px; padding-left: 22px; }
+.legal-card a { color: var(--text); font-weight: 550; }
+.legal-card .callout { margin-top: 10px; padding: 14px 16px; border-radius: var(--r-md); background: var(--warn-bg); border: 1px solid rgba(214,158,20,.35); color: var(--text); }
+.legal-card table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 13.5px; display: block; overflow-x: auto; }
+.legal-card th, .legal-card td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--text-2); vertical-align: top; }
+.legal-card th { color: var(--text); font-weight: 650; white-space: nowrap; }

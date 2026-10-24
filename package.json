@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "engines": {
+    "node": "20.x"
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "^1.0.9",
+    "ffmpeg-static": "^5.3.0"
+  },
+  "scripts": {
+    "test": "node scripts/check-icons.js && node scripts/check-tools.js && node scripts/check-security.js && node scripts/check-admin.js",
+    "smoke": "node scripts/smoke-dom.js",
+    "test:rls": "bash scripts/rls-test.sh"
+  },
+  "devDependencies": {
+    "jsdom": "^24.1.3"
+  }
+}
